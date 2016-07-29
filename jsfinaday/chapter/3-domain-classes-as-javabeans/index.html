@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>3 Domain Classes as JavaBeans | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
+<link rel='next' title='4 Internationalization' href='http://www.turngeek.press/jsfinaday/chapter/4-internationalization/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=20' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F3-domain-classes-as-javabeans%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F3-domain-classes-as-javabeans%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-20" id="3domainclassesasjavabeans">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">3 Domain Classes as JavaBeans</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">3 Domain Classes as JavaBeans</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">Next</a></span>
+    </div>				<div id="post-20" class="type-1 post-20 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>No new technology is required for the implementation of domain classes. The domain classes can be developed as ordinary JavaBeans. During implementation, we will adhere to the specifications laid out, <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">previously</a>. The directory <code>srcmainjava</code> already exists within the structure of our project. In it will be  stored the directory structures for the packages and the sources of the Java classes for the entire project. The domain classes are required for all use cases.</p>
+<p>We can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=dxx4mhv7vq8cnuk8" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=j88vp07rkv3cy3f8--></p>
+<h3>3.1 Account</h3>
+<p>The domain class <code>Account</code> represents a bank account. This account could belong to either a campaign or a donor.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Account class">package press.turngeek.mycampaign.model;
+
+public class Account {
+	private String name;
+	private String nameOfBank;
+	private String iban;
+
+	public Account() {
+		this(null, null, null);
+	}
+	public Account(String name, String nameOfBank, String iban) {
+		super();
+		this.name = name;
+		this.nameOfBank = nameOfBank;
+		this.iban = iban;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getNameOfBank() {
+		return nameOfBank;
+	}
+	public void setNameOfBank(String nameOfBank) {
+		this.nameOfBank = nameOfBank;
+	}
+	public String getIban() {
+		return iban;
+	}
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+}
+</pre>
+<p><strong>Listing 3-1</strong>     <em>Account</em> class</p>
+<h3>3.2 Donation</h3>
+<p>The <code>Donation</code> class represents a donation to a campaign. A donation can be in one of two states: in process, or already transferred. An inner enumeration class (<code>enum Status</code>) is therefore defined in the <code>Donation</code> class to represent the status of the donation. Within the <code>Donation</code> class, the elements of the type can be addressed directly with the name of the enumeration <code>Status</code>. The enumeration is public to enable access from outside the classes.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Donation class">package press.turngeek.mycampaign.model;
+public class Donation {
+	private Double amount;
+	private String donorName;
+	private Boolean receiptRequested;
+	private Status status;
+	private Account account;
+
+	public enum Status {
+		TRANSFERRED, IN_PROCESS;
+	}
+	public Donation() {
+		this.account = new Account();
+	}
+	public Double getAmount() {
+		return amount;
+	}
+	public void setAmount(Double amount) {
+		this.amount = amount;
+	}
+	public String getDonorName() {
+		return donorName;
+	}
+	public void setDonorName(String donorName) {
+		this.donorName = donorName;
+	}
+	public Boolean getReceiptRequested() {
+		return receiptRequested;
+	}
+	public void setReceiptRequested(Boolean receiptRequested) {
+		this.receiptRequested = receiptRequested;
+	}
+	public Status getStatus() {
+		return status;
+	}
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+}
+</pre>
+<p><strong>Listing 3.2</strong>     <em>Donation</em> class</p>
+<h3>3.3 Campaign</h3>
+<p>A donation campaign is described by the class <code>Campaign</code>. The class uses a list represented by the generic interface <code>java.util.List&lt;E&gt;</code> to implement the <em>1:n relation</em> to the class <code>Donation</code>. The <code>Donation</code> class is specified for the element type <code>E</code> to make it possible to check at compile time whether all objects stored in the list are compatible with the <code>Donation</code> class. The setter method <code>setDonations</code> can be used to assign a concrete list and therefore also a concrete instance of an implementation class (e.g. <code>java.util.LinkedList</code>) belonging to the interface <code>List</code>.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Campaign class">package press.turngeek.mycampaign.model;
+import java.util.List;
+
+public class Campaign {
+	private String name;
+	private Double targetAmount;
+	private Double donationMinimum;
+	private Double amountDonatedSoFar;
+	private Account account;
+	private Long id;
+	private List&lt;Donation&gt; donations;
+
+	public Campaign() {
+		account = new Account();
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Double getTargetAmount() {
+		return targetAmount;
+	}
+	public void setTargetAmount(Double targetAmount) {
+		this.targetAmount = targetAmount;
+	}
+	public Double getDonationMinimum() {
+		return donationMinimum;
+	}
+	public void setDonationMinimum(Double donationMinimum) {
+		this.donationMinimum = donationMinimum;
+	}
+	public Double getAmountDonatedSoFar() {
+		return amountDonatedSoFar;
+	}
+	public void setAmountDonatedSoFar(Double amountDonatedSoFar) {
+		this.amountDonatedSoFar = amountDonatedSoFar;
+	}
+	public Account getAccount() {
+		return account;
+	}
+	public void setAccount(Account account) {
+		this.account = account;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public Long getId() {
+		return id;
+	}
+	public List&lt;Donation&gt; getDonations() {
+		return donations;
+	}
+	public void setDonations(List&lt;Donation&gt; donations) {
+		this.donations = donations;
+	}
+}
+</pre>
+<p><strong>Listing 3-3     </strong><em>Campaign</em> class</p>
+<p>Now we&#8217;ve created the domain classes. We’ll look at the internationalization of JSF applications in the next chapter. If you currently use our temporary workspace, please do not close the IDE at this point. We do not provide a new link at the beginning of the next chapter. Please continue with your current project.</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JavaServer%20Faces%20in%20a%20Day&amp;body=3%20Domain%20Classes%20as%20JavaBeans%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F3-domain-classes-as-javabeans%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

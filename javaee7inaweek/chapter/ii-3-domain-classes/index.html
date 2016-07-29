@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='alternativeHeadline' content='Java EE 7 in a Working Week' id='alternativeHeadline'>
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-18' id='datePublished'>
+<meta itemprop='description' content='The Cloud Tutorial Series Java EE describes how to develop a sample web application using the Java EE platform using a Cloud IDE. You can jump start into development without any special installations.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7inaweek/wp-content/uploads/sites/6/2015/10/javaee7inaweek.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>II.3 Domain Classes | Cloud Tutorial Series &#8211; Java EE 7</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7inaweek/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7inaweek\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7inaweek/wp-content/uploads/sites/6/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7inaweek/wp-json/' />
+<link rel='prev' title='II.2 Overview of Use Cases' href='http://www.turngeek.press/javaee7inaweek/chapter/ii-2-overview-of-use-cases/' />
+<link rel='next' title='II.4 Use Cases' href='http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7inaweek/?p=53' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7inaweek/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7inaweek%2Fchapter%2Fii-3-domain-classes%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7inaweek/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7inaweek%2Fchapter%2Fii-3-domain-classes%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-53" id="ii.3domainclasses">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaee7inaweek/" title="Cloud Tutorial Series &#8211; Java EE 7" rel="home">Cloud Tutorial Series &#8211; Java EE 7</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">II.3 Domain Classes</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-2-overview-of-use-cases/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">II.3 Domain Classes</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/">Next</a></span>
+    </div>				<div id="post-53" class="type-1 post-53 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>Fig. II-2 is a diagram showing domain classes used. The three independent main classes are <em>organizer, campaign </em>and <em>donation</em>. The first names, surnames, emails and passwords of all organizers supported by the application are stored in the <em>organizer</em> class. The values of these attributes must fulfil the conditions listed in Tab. 3-1. The use cases check these conditions and, if the conditions are not fulfilled, display the corresponding user message. The use case definitions (see <a title="3.4 Use Cases" href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/">section 3.4</a>) will elaborate on this condition checking in detail.</p>
+<p>Each <em>organizer</em> is free to create as many campaigns as they wish. The corresponding class, <em>campaign</em>, contains the attributes <em>name, target amount</em> and <em>donation</em>. Additionally, each campaign contains an account into which donation money is received. The conditions for the domain class <em>campaign </em>are detailed in Tab. II-2.</p>
+<p>The total amount of donations that can be received by one campaign is unrestricted. The corresponding donation transactions are stored by the class <em>donation</em>.</p>
+<p><a href="http://www.turngeek.press/images/javaee7/chapter3/3-2.svg" target="_blank"><img src="http://www.turngeek.press/images/javaee7/chapter3/3-2.svg" alt="Domain classes of the application" width="100%" /></a><br />
+<strong>Fig. II-2</strong>     Domain classes of the application</p>
+<p>This stores the amount of the donation, the name of the donor and whether a donation receipt has been requested. The donor’s account data is also stored for each donation. Finally, each donation contains a transaction status; the two known conditions, either <em>TRANSFERRED</em> or <em>IN_PROGRESS</em>, are defined in the enumeration<em> status</em>. The conditions for the <em>donation </em>class are defined in Tab. II-3.</p>
+<p>The dependent class <em>account </em>exists for the storage of account data. This defines an account using the name of the owner, the name of the bank and the IBAN. The conditions of this dependent class are listed in Tab. II-4.</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Attribute Name</strong></td>
+<td><strong>Condition</strong></td>
+<td><strong>User Message</strong></td>
+</tr>
+<tr>
+<td>First name</td>
+<td>Min. 3 characters and max. 20 characters</td>
+<td>The organizer’s first name must be a minimum of 3 characters long and a maximum of 20.</td>
+</tr>
+<tr>
+<td>Surname</td>
+<td>Min. 3 characters and max. 30 characters</td>
+<td>The organizer’s surname must be a minimum of 3 characters long and a maximum of 20.</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>A valid email address</td>
+<td>Please enter a valid email address</td>
+</tr>
+<tr>
+<td>Password</td>
+<td>Min. 6 characters and max. 20 characters</td>
+<td>Passwords must be a minimum of 3 characters long and a maximum of 20.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. II-1</strong>     Conditions for the domain class <em>organizer</em></p>
+<table>
+<tbody>
+<tr>
+<td><strong>Attribute Name</strong></td>
+<td><strong>Condition</strong></td>
+<td><strong>User Message</strong></td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Min. 4 characters and max. 30 characters</td>
+<td>The name of a campaign must be a minimum of 4 characters long and a maximum of 30.</td>
+</tr>
+<tr>
+<td>Donation</td>
+<td>&gt;=1</td>
+<td>The donation must be a minimum of 1 Euro.</td>
+</tr>
+<tr>
+<td>Target amount</td>
+<td>&gt;=10</td>
+<td>The target amount for the campaign must be a minimum of 10 Euros.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. II-2     </strong>Conditions for the domain class <em>campaign</em></p>
+<table>
+<tbody>
+<tr>
+<td><strong>Attribute Name</strong></td>
+<td><strong>Condition</strong></td>
+<td><strong>User Message</strong></td>
+</tr>
+<tr>
+<td>Donor name</td>
+<td>Min. 5 characters and max. 40 characters</td>
+<td>The name of a donor must be a minimum of 5 characters long and a maximum of 40.</td>
+</tr>
+<tr>
+<td>Donation</td>
+<td>&gt;=1</td>
+<td>The donation must be a minimum of 1 Euro.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. II-3     </strong>Conditions for the domain class <em>donation</em></p>
+<table>
+<tbody>
+<tr>
+<td><strong>Attribute Name</strong></td>
+<td><strong>Condition</strong></td>
+<td><strong>User Message</strong></td>
+</tr>
+<tr>
+<td>Name</td>
+<td>Min. 5 characters and max. 60 characters</td>
+<td style="text-align: justify;">The name of the account holder must be a minimum of 5 letters long and a maximum of 60.</td>
+</tr>
+<tr>
+<td>Name of bank</td>
+<td>Min.4 characters and max. 40 characters</td>
+<td>The name of a bank must be a minimum of 4 characters long and a maximum of 40.</td>
+</tr>
+<tr>
+<td>IBAN</td>
+<td>See user message</td>
+<td>An IBAN consists of two letters followed by two digits and 12 to 30 alphanumeric characters.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. II-4     </strong>Conditions for the domain class <em>account</em></p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20Series%20-%20Java%20EE%207&amp;body=II.3%20Domain%20Classes%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaee7inaweek%2Fchapter%2Fii-3-domain-classes%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaee7inaweek">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaee7inaweek/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaee7inaweek/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7inaweek/part/main-body/">				I A Profiled Introduction				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-1-java-ee-7-the-standard-for-enterprise-java/">I.1 Java EE 7 – The Standard for Enterprise Java</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-2-the-component-architecture-of-java-ee-7/">I.2 The Component Architecture of Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-3-the-target-architecture/">I.3 The Target Architecture</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-4-what-next/">I.4 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7inaweek/part/3-requirements-of-the-sample-application-my-campaign/">				II Requirements of the Sample Application “My-Campaign”				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-1-introduction/">II.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-2-overview-of-use-cases/">II.2 Overview of Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/">II.3 Domain Classes</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/">II.4 Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/what-next/">II.5 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

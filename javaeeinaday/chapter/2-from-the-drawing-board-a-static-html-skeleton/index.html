@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>2 From the Drawing Board – A Static HTML Skeleton | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+<link rel="alternate" type="application/rss+xml" title="Cloud Tutorial - Java EE in a Day &raquo; 2 From the Drawing Board – A Static HTML Skeleton Comments Feed" href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<link rel='prev' title='1 Our Sample Application – My-Memo' href='http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/' />
+<link rel='next' title='3 The Rise of Server-Side Java – Java Servlets' href='http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=36' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F2-from-the-drawing-board-a-static-html-skeleton%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F2-from-the-drawing-board-a-static-html-skeleton%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-36" id="2fromthedrawingboard–astatichtmlskeleton">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">2 From the Drawing Board – A Static HTML Skeleton</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">2 From the Drawing Board – A Static HTML Skeleton</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">Next</a></span>
+    </div>				<div id="post-36" class="type-1 post-36 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter you will learn how to start an application with our cloud IDE <a href="https://codenvy.com" target="_blank">Codenvy </a>and you will serve an HTML mockup of our application using the embedded WildFly application server.</p>
+<h3>2.1 Starting the Application</h3>
+<p>For running the application we are using the <a href="http://wildfly.org/" target="_blank">WildFly</a> application server. To simplify development we provide a preconfigured server (Docker image) inside of Codenvy. If you&#8217;re not familiar with this cloud IDE yet, you can start their <a href="https://codenvy.com/f?id=u1n24qy8m6hw6gq9" target="_blank">guided tour</a> first.</p>
+<p>As you might have guessed, all the changes you are doing in the cloud IDE are volatile and will be lost after closing the browser. If you want, you can <a href="https://codenvy.com/site/create-account" target="_blank">sign up to Codenvy</a> which allows you to persist the project in your own dedicated workspace. If you don&#8217;t want to sign up, don&#8217;t worry: throughout the book we provide links that allow you to start an IDE in the needed state.</p>
+<p>In the following steps we will start the application server from inside the IDE. Firstly start the cloud IDE by clicking the following link:</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=h7yq7nqzfa7ghhqh" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=43ybjd2keos9ff6p--></p>
+<p>After a while you will see the IDE with a project tree on the left side. There you’ll find the project structure that we already set up for you. Besides the folder structure, you&#8217;ll find the file <code>pom.xml</code> in the root folder. It is the configuration file for <a href="http://maven.apache.org/" target="_blank">Maven</a>, the build system we are using. Don’t bother about it, we won’t go into any detail about the file &#8211; just think of it as a black box that takes care of the building of our project.</p>
+<p>To start the application server, we&#8217;ll click on the &#8216;<em>Run</em>&#8216; submenu you’ll find under the main menu ‘<em>Run</em>’. In the console log in the bottom part of the screen you will see the log entries of the server. After starting up our server the cloud IDE will deploy our application, which consists of an empty <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnaby.html" target="_blank">WAR file</a><a class="footnote" title="We're linking here to the old Java EE 6 tutorial as we think the explanation for WAR files is better there than in the newer Java EE 7 tutorial" id="return-footnote-36-1" href="#footnote-36-1"><sup class="footnote">[1]</sup></a> (short for web archive) for the time being.</p>
+<p>After the deployment in the console log, you will find a blue colored link labeled with “<em>Application:</em>” as shown in Figure 2-1. Press this link to start the deployed application. Please memorize this procedure as you&#8217;ll repeat it a lot of times throughout this book.</p>
+<p><a href="http://www.turngeek.press/images/javaeeinaday/chapter2/2-1.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter2/2-1.png" alt="Screen shot of the application starting link" width="100%" /></a><br />
+<strong>Fig. 2-1 </strong>Screen shot of the application starting link</p>
+<p>As the application doesn&#8217;t contain any valid content yet, we will just see a white screen with the text &#8216;<code>Forbidden</code>&#8216;. We will change that in the next section, by adding an HTML file that will be served by the application server.</p>
+<h3>2.2 Serving a HTML File</h3>
+<p>Listing 2-1 shows the HTML file that we want to serve. We assume the reader knows HTML, so we won’t go into detail. For a good introduction to HTML go to <a href="http://www.w3schools.com/html/html_intro.asp" target="_blank">w3schools</a>.</p>
+<pre class="lang:xhtml decode:true">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My-Memo&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="screen.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="container"&gt;
+    &lt;div id="header"&gt;
+        &lt;p&gt;
+            &lt;b&gt;My-Memo&lt;/b&gt; – A Simple Web App for Managing Memos
+        &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id="content"&gt;
+        &lt;h1&gt;Add Memo:&lt;/h1&gt;
+
+        &lt;form method="POST" action=""&gt;
+            &lt;input type="text" name="memo" size="30"
+                   placeholder="Enter your memo here"/&gt;
+            &lt;button type="submit" id="save"&gt;Add&lt;/button&gt;
+
+            &lt;h1&gt;My Memos:&lt;/h1&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;Memo&lt;/th&gt;
+                    &lt;th&gt;Saved&lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Repair car&lt;/td&gt;
+                    &lt;td&gt;12:00 2014-11-12&lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;Play cards&lt;/td&gt;
+                    &lt;td&gt;13:13 2014-11-13&lt;/td&gt;
+                &lt;/tr&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;
+            &lt;button type="submit"&gt;Reset list&lt;/button&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;div id="footer"&gt;
+        &lt;p&gt;(C) 2015 Schiesser/Schmollinger, MIT license&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><strong>Listing 2-1 </strong>HTML file index.html &#8211; Static HTML file to be served</p>
+<p>The file contains a text field for entering our memo and a HTML table which renders all saved memos with their creation timestamp. Furthermore, there are two action buttons, one for adding a new memo and a second one for resetting the list, which will delete all previously entered memos.</p>
+<p>Note that the file is a purely static HTML file with no functionality provided by any JavaScript. Currently, we just want to show how to serve a static HTML file in this chapter. Later on we will add functionality step by step .</p>
+<p>Copy the file in the path <code>src/main/webapp</code> under the name <code>index.html</code>. For this you have to create the <code>webapp</code> folder first. The folder structure is mandatory by the used build system Maven. Files that you want to be served by the web server must be located in the <code>webapp</code> folder.</p>
+<p>As you might have noted, the HTML file references the CSS file <code>screen.css</code> in the header via the <code>link </code>tag. This is our stylesheet, which we will be adding in the following section.</p>
+<h3>2.3 Adding some Style</h3>
+<p>Unfortunately for us web developers, pure HTML looks rather ugly. For this reason CSS (<a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets" target="_blank">Cascading Style Sheets</a>) exists to add styling for HTML elements. Using CSS, HTML elements are selected by so called CSS selectors. Style attributes are then defined for each of these CSS selectors. Again, we won’t go into any detail. If you don&#8217;t know any CSS, take a look at <a href="http://www.w3schools.com/css/" target="_blank">w3schools</a>. Also please don’t judge the authors for the extremely bad styling. We are fully aware of  the fact that we are not great web designers.</p>
+<p>You can find the content of the used CSS file in Listing 2-2. Save this again in the <code>src/main/webapp</code> folder under the name <code>screen.css</code>. Note that the HTML file references this name in the <code>link</code> tag (see Listing 2-1).</p>
+<pre class="lang:css decode:true">@CHARSET "UTF-8";
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #EAECEE;
+    font-family: Verdana, sans-serif;
+    font-size: 0.9em;
+}
+#container {
+    margin: 0 auto;
+    padding: 0 20px 10px 20px;
+    border: 1px solid #666666;
+    width: 865px; 
+    padding-top: 10px;
+}
+#header {
+    font-size: 1.3em;
+    border: 1px solid #666666;
+    background: #EAECEE;
+    padding: 0 15px 5px 15px;
+    margin-bottom: 50px;
+}
+#footer {
+    clear: both;
+    text-align: center;
+    color: #666666;
+    font-size: 0.85em;
+    padding: 3em 0 0 0;
+}
+h1 {
+    font-size: 1.2em;
+    margin-top: 1.5em;
+}
+table {
+    border: 1px solid black;
+}
+table th,
+table td {
+    padding: 5px;
+    text-align: left;
+}</pre>
+<p><strong>Listing 2-2 </strong>CSS file screen.css &#8211; CSS stylesheet for the application</p>
+<h3>2.4 Restarting the Web Application</h3>
+<p>Now we have everything ready to deploy to the application again and see the served HTML file in the web browser of our choice. If your server is still running, you must stop it and start it again using the respective buttons. Otherwise, if the server was shut down due to a timeout, you best use the <em>&#8216;Re-run application &#8230;&#8217;</em> button. After that, you should see the content of the rendered HTML as in Figure 2-2.</p>
+<p><a href="http://www.turngeek.press/images/javaeeinaday/chapter2/2-2.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter2/2-2.png" alt="Screen shot of the rendered HTML " width="100%" /></a><br />
+<strong>Fig. 2-2 </strong>Screenshot of the rendered HTML</p>
+<p>In the next chapter, we will add the intended functionality of the application by using the server-side Java Servlet technology.</p>
+<h3>2.5 Further Reading</h3>
+<p>In the following, you will find some textbooks that go into detail of the main aspects of this chapter. The books are mainly about HTML and CSS, but also about the application server WildFly and Docker. The latter is used internally by Codenvy for realizing arbitrary runners in a project and is an emerging technology for deploying microservices.</p>
+<p><a href="http://www.amazon.com/gp/product/1118008189/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1118008189&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=D6JRPXIFFCWSI574" target="_blank">Jon Duckett, 2011. HTML and CSS: Design and Build Websites. 1 Edition. Wiley.</a><img style="border: none !important; margin: 0px !important;" src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=1118008189" alt="" width="1" height="1" border="0" /></p>
+<p><a href="http://www.amazon.com/gp/product/1890774839/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1890774839&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=P2A3RI65WRI2M2YO" target="_blank">Anne Boehm, 2015. Murach&#8217;s HTML5 and CSS3, 3rd Edition. 3 Edition. Mike Murach &amp; Associates.</a><img style="border: none !important; margin: 0px !important;" src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=1890774839" alt="" width="1" height="1" border="0" /></p>
+<p><a href="http://www.amazon.com/gp/product/1784392413/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1784392413&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=YKAGXIQLHRUBFMUG" target="_blank">Luigi Fugaro, 2015. WildFly Cookbook. Edition. Packt Publishing &#8211; ebooks Account.</a><img style="border: none !important; margin: 0px !important;" src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=1784392413" alt="" width="1" height="1" border="0" /> (contains a chapter about docker, too)</p>
+<p><a href="http://www.amazon.com/gp/product/1783286237/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1783286237&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=BLZNEHMXDJ5FBP6M" target="_blank">Christopher Ritchie, 2014. WildFly Configuration, Deployment, and Administration. 2 Edition. Packt Publishing &#8211; ebooks Account.</a><img style="border: none !important; margin: 0px !important;" src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=1783286237" alt="" width="1" height="1" border="0" /></p>
+<p><a href="http://www.amazon.com/gp/product/B00ZGRS4XM/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=B00ZGRS4XM&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=YXCX55U3IFA2CUQI" target="_blank">Karl Matthias, 2015. Docker: Up &amp; Running. 1 Edition. O&#8217;Reilly Media.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=B00ZGRS4XM" alt="" width="1" height="1" border="0" /></p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-36-1">We're linking here to the old Java EE 6 tutorial as we think the explanation for WAR files is better there than in the newer Java EE 7 tutorial <a href="#return-footnote-36-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=2%20From%20the%20Drawing%20Board%20%E2%80%93%20A%20Static%20HTML%20Skeleton%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F2-from-the-drawing-board-a-static-html-skeleton%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

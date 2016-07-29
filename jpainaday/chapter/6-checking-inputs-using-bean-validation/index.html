@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>6 Checking Inputs Using Bean Validation | Cloud Tutorial &#8211; JPA in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
+<link rel='prev' title='5 Persisting and Displaying Remaining Entities' href='http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/' />
+<link rel='next' title='7 What We Haven’t Covered' href='http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=100' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-100" id="6checkinginputsusingbeanvalidation">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">6 Checking Inputs Using Bean Validation</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">6 Checking Inputs Using Bean Validation</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">Next</a></span>
+    </div>				<div id="post-100" class="type-1 post-100 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> for the application, we specified a range of mandatory conditions for domain class attributes. There, we listed conditions such as the following:</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Attribute name</strong></td>
+<td><strong>Condition</strong></td>
+<td><strong>User Message</strong></td>
+</tr>
+<tr>
+<td><code>name</code> &#8211; Name of the campaign</td>
+<td>Min. 4 characters and max. 30 characters</td>
+<td>The name of a campaign must be a minimum of 4 characters long and a maximum of 30.</td>
+</tr>
+</tbody>
+</table>
+<p>Up until this point, we have used JSF validators (see section about <a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/" target="_blank">JSF Validation in Cloud Tutorial JSF in a Day</a>) to ensure (to some extent<a class="footnote" title="We purposefully implemented only a few conditions using the JSF validator, since we knew that this task would later be taken over by the Bean Validation API." id="return-footnote-100-1" href="#footnote-100-1"><sup class="footnote">[1]</sup></a>) that the user of the application does not make any inputs that would breach these conditions. However, this has two disadvantages:</p>
+<ol>
+<li>The conditins can also be breached in other places in the program code – that is, outside the JSF view. This could occur as a result of a flawed business method or a third system linked via an interface.</li>
+<li>The conditions are properties of the domain classes, which means they would be better defined in the entities than in the view.</li>
+</ol>
+<p>Since Java EE 6, we have been able to remedy both of these disadvantages using Bean Validation version 1.0. In Java EE 7, the version of this API was updated to 1.1. Hibernate Validator 5.0<a class="footnote" title="http://www.hibernate.org/subprojects/validator/download" id="return-footnote-100-2" href="#footnote-100-2"><sup class="footnote">[2]</sup></a> is the reference implementation. Bean Validation is actually independent from JPA; however, since the changes affect the entity classes, we have decided to include the process in this Cloud Tutorial.</p>
+<p>The Bean Validation API provides annotations that can be used to annotate the attributes of JavaBeans directly with the desired conditions. For the condition listed above, we must annotate the name attribute of the <code>Campaign</code> class as follows:</p>
+<pre class="lang:java decode:true">@Size(min=4, max=30, message="The name of a campaign must be a minimum of 4 characters long and a maximum of 30.")
+</pre>
+<p>Both JSF <em>and</em> JPA will then check adherence to the defined conditions at runtime. However, they behave in different ways as they do so:</p>
+<ul>
+<li>If a user enters a value that violates a condition, JSF produces the message specified in the annotation during the validation phase. This validation message is then displayed.</li>
+<li>JPA generates a so-called <code>ConstraintViolationExceptionat</code> runtime if a condition of the entity to be persisted is not fulfilled. The entity will then not be persisted and an exception will be thrown instead.</li>
+</ul>
+<p>Both mechanisms occur in a fully automated manner. Rather than producing lines of code, the progammer is required simply to annotate the attribute of the entity to be checked with an annotation from the Bean Validation API.</p>
+<p>Again, we can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=3vxd8ixcbyl2tsr2" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign Persist Donations</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>6.1 Annotate Entities with Conditions</h3>
+<p>To prompt the entities to use Bean Validation, individual attributes of the entities must be annotated with annotations from the Bean Validation API. The annotations are generally located in the package <code>javax.validation.constraints</code>. In our sample application, we can transfer a definition of a condition from the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> directly into a corresponding annotation.</p>
+<p>Let’s start with the <code>targetAmount</code> attribute of type <code>Double</code> from the class <code>Campaign</code>.</p>
+<p>We’ll start here by adding a <code>@NotNull</code> annotation, which specifies that the value of the attribute can never be <code>null</code>. At runtime, JSF and JPA will then check that the condition has been adhered to.</p>
+<p>We’ll also add a <code>@DecimalMin</code> annotation, which makes sure that value of the attribute is greater than or equal to 10.</p>
+<pre class="lang:java decode:true">@NotNull(message = "{campaign.targetAmount.notNull}")
+@DecimalMin(value = "10.00", message = "{campaign.targetAmount.decimalMin}")
+private Double targetAmount;
+</pre>
+<p>In the attribute message, please ensure that you do not specify the output text directly, but rather use curly brackets to set a key that is selected via a language-specific properties file. We will define this file once we’ve finished annotating our entities.</p>
+<p>We’ll continue by annotating the attribute <code>donationMinimum</code>. Here, we follow the same procedure as with <code>targetAmount</code>; only the minimum allowed value and the corresponding error message are different:</p>
+<pre class="lang:java decode:true">@NotNull(message = "{campaign.donationMinimum.notNull}")
+@DecimalMin(value = "1.00", message = "{campaign.donationMinimum.decimalMin}")
+private Double donationMinimum;
+</pre>
+<p>Let’s now look at the annotations for the name attribute of type <code>String</code>:</p>
+<pre class="lang:java decode:true">@NotNull
+@Size(min = 4, max = 30, message = "{campaign.name.size}")
+private String name;
+</pre>
+<p>Here, we are using the <code>@Size</code> annotation to set the minimum and maximum lengths for the character string. If the value of the attribute does not fulfil this condition, the specified error message will be generated. A particular featureof this case is that we will not set an error message via the message parameter using the <code>@NotNull</code> annotation. This is because this error message would never be displayed. The reason for this is explained in the shaded box below.</p>
+<div class="textbox shaded">
+<p><strong>Zero Does Not Equal Empty</strong></p>
+<p>If the user does not enter anything within a text field in a JSF view, the validator is not supplied with a null value, but with an empty character (“”). In our code, however, this empty character is caught during the verification performed by the  @Size annotation (since an empty character does not have a length). This means that if a user does not enter a value, a message from the @Size annotation will always be displayed; this, in turn, means that the @NotNull annotation does not require a user-defined message, since it would never be displayed to the user. If we want to specify a particular message to be displayed when the user does not enter anything, we must first of all set the following parameters in the configuration file web.xml:</p>
+<pre class="lang:java decode:true">&lt;context-param&gt;
+&lt;param-name&gt;javax.faces.INTERPRET_EMPTY_STRING_SUBMITTED_VALUES_AS_NULL&lt;/param-name&gt;
+&lt;param-value&gt;true&lt;/param-value&gt;
+&lt;/context-param&gt;
+</pre>
+<p>This will cause empty user inputs to be interpreted as <code>null</code> values, which in turn means that the verification carried out by a <code>@NotNull</code> annotation will be applicable for character strings.</p>
+<p>The authors of this book take the view that this represents an inconsistent interaction between JSF and Bean Validation &#8211; one that will hopefully be corrected in a future version.</p>
+<p>It is worth mentioning that with values of type <code>Double</code> we previously mentioned, this was not an issue – for these values, the converter specified in the view passes/forwards a <code>null</code> value for empty inputs. There is therefore no reason for a user-specific message to be identified.</p>
+</div>
+<p>Annotations for the class <code>Donation</code> present no new issues and are done in exactly the same way as those for the class <code>Campaign</code>. The simplest way to complete this task is to compare them with the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">conditions</a> for the domain classes.</p>
+<pre class="lang:java decode:true">@NotNull(message = "{donation.amount.notNull}")
+@DecimalMin(value = "1.00", message = "{donation.amount.decimalMin}")
+private Double amount;
+
+@NotNull
+@Size(min = 5, max = 40, message = "{donation.donorName.size}")
+private String donorName;
+</pre>
+<p>We will also set a <code>@NotNull</code> annotation for the rest of the attributes, so that they are required to have a value in order for the entity to be persisted. While this does not serve to fulfil a condition from the definition of the domain classes, it is advantageous from a technical point of view:</p>
+<pre class="lang:java decode:true">@NotNull
+private Boolean receiptRequested;
+
+@NotNull
+private Status status;
+
+@NotNull
+@Embedded
+private Account account;
+
+@NotNull
+@ManyToOne
+private Campaign campaign;
+</pre>
+<p>We are still missing the conditions of the class <code>Account</code>, which can be derived from the conditions of the domain classes on a 1:1 basis:</p>
+<pre class="lang:java decode:true">@NotNull
+@Size(min = 5, max = 60, message = "{account.name.size}")
+private String name;
+
+@NotNull
+@Size(min = 4, max = 40, message = "{account.nameOfBank.size}")
+private String nameOfBank;
+
+@NotNull
+@Pattern(regexp = "[A-Z]{2}[0-9]{2}[A-Z0-9]{12,30}", message = "{account.iban.pattern}")
+private String iban;
+</pre>
+<p>A new addition here is the annotation <code>@Pattern</code>, which sets a validation check with a regular expression. The regular expression in question is specified in the parameter regexp. The expression ensures that only one character string can be used in the attribute iban and that this string must correspond to the format of an IBAN<a class="footnote" title="Make sure that the validator only checks the format of the IBAN – not whether the two-digit checksum has been adhered to.  For this purpose, we need to develop a special validator; however, we will not address this during the course of this workshop." id="return-footnote-100-3" href="#footnote-100-3"><sup class="footnote">[3]</sup></a>.</p>
+<p>As we have already mentioned, we still need the language-specific properties file for selecting the correct error message. Bean Validation uses its own files to do this, and they always begin with the prefix <code>ValidationMessages</code>.</p>
+<p>Listing 6-1 shows the English-language  version of the file. Store this under the name <code>ValidationMessages_en.properties</code> in the directory src/main/resources. Some parameters of the error messages will be specified in curly brackets. These parameters will be replaced at runtime with the value of the attribute of the same name from the Bean Validation annotation. This is good for us as developers, since it means that the property file does not need to be modified if an attribute is changed.</p>
+<pre class="lang:java decode:true"># resource file for bean validation
+
+# campaign model
+campaign.name.size=The name of a campaign must be between {min} and {max} characters long.
+campaign.targetAmount.notNull=Please specify a target amount.
+campaign.targetAmount.decimalMin=The target amount for the campaign must be at least {value} Euro.
+campaign.donationMinimum.notNull=Please specify a donation minimum.
+campaign.donationMinimum.decimalMin=The donation minimum must be at least {value} Euro.
+# donation model
+donation.amount.notNull=Please specify a donation amount.
+donation.amount.decimalMin=The donation amount must be at least {value} Euro.
+donation.donorName.size=The donor's name must be between {min} and {max} characters long.
+# account model
+account.name.size=The name of the account owner must be between {min} and {max} characters long.
+account.nameOfBank.size=The name of a bank must be between {min} and {max} characters long.
+account.iban.pattern=An IBAN contains of two letters, followed by two digits and between 12 and 30 alphanumeric characters.
+</pre>
+<p><strong>Listing 6-1</strong> English-language version of <em>ValidationMessages</em></p>
+<p>The German-language version of the properties file is given in Listing 6-2. Store this under the name  <code>ValidationMessages_de.properties</code> in the same directory.</p>
+<pre class="lang:java decode:true"># resource file for bean validation
+
+# campaign model
+campaign.name.size=Der Name einer Aktion muss min. {min} und darf max. {max} Zeichen lang sein.
+campaign.targetAmount.notNull=Bitte ein Spendenziel angeben.
+campaign.targetAmount.decimalMin=Das Spendenziel für die Aktion muss min. {value} Euro sein.
+campaign.donationMinimum.notNull=Bitte einen Spendenbetrag angeben.
+campaign.donationMinimum.decimalMin=Der Spendenbetrag muss min. {value} Euro sein.
+# donation model
+donation.amount.notNull=Bitte einen Spendenbetrag angeben.
+donation.amount.decimalMin=Der Spendenbetrag muss min. {value} Euro sein.
+donation.donorName.size=Der Name eines Spenders muss min. {min} und darf max. {max} Zeichen lang sein.
+# account model
+account.name.size=Der Name des Besitzers eines Kontos muss min. {min} und darf max. {max} Zeichen lang sein.
+account.nameOfBank.size=Der Name einer Bank muss min. {min} und darf max. {max} Zeichen lang sein.
+account.iban.pattern=Eine IBAN besteht aus zwei Buchstaben, gefolgt von zwei Ziffern und 12 bis 30 alphanumerischen Zeichen.
+</pre>
+<p><strong>Listing 6-2</strong> German-lanaguge version of <em>ValidationMessages</em></li>
+<p>After the properties file has been added, the application can be restarted. Try entering a couple of values that would violate the domain conditions. Concentrate on the use case <em>Donate money</em>, since this will not be validated by JSF validators in the view.</p>
+<p>You will see that the simple adding of annotations has allowed comprehensive validation of input values and that an appropriate message is displayed in the case of error. But this is not the only benefit: by checking the conditions of Bean Validation though JPA, we can prevent the entities more generally from saving any kind of invalid data.</p>
+<h3>6.2 Removing Validators From Views</h3>
+<p>To begin using Bean Validation with all views, any existing validators must be removed from these views. In <a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/" target="_blank">earlier stages of the application development</a>, for example, we created a small number of validators in the views <code>editCampaign.xhtml</code> and <code>donateMoney.xhtml</code>. These are now obsolete and must be removed without exception save for the view parameter validators. View parameters are independent from the entities and will therefore not be validated by Bean Validation.</p>
+<p>To remove these parameters, we must delete the <code>validatorMessage</code> attributes and all tags beginning with <code>f:validate</code> from the above-mentioned views. However, tags within the <code>&lt;f:viewParam&gt;</code> remain unaffected, since this is a view parameter.</p>
+<p>The following example &#8211; for the input text control <code>a_targetAmount</code> from the view <code>editCampaign.xhtml</code> &#8211; demonstrates the process:</p>
+<pre class="lang:java decode:true">&lt;p:inputText id="a_targetAmount"
+        value="#{selectedCampaign.targetAmount}"
+        validatorMessage="#{msg['editCampaign.target_amount_validation']}"&gt;
+    &lt;f:convertNumber maxFractionDigits="2" minFractionDigits="2"/&gt;
+    &lt;f:validateRequired/&gt;
+    &lt;f:validateDoubleRange minimum="10.0"/&gt;
+&lt;/p:inputText&gt;
+</pre>
+<p>turns to:</p>
+<pre class="lang:java decode:true">&lt;p:inputText id="a_targetAmount"
+        value="#{selectedCampaign.targetAmount}"&gt;
+    &lt;f:convertNumber maxFractionDigits="2" minFractionDigits="2"/&gt;
+&lt;/p:inputText&gt;
+</pre>
+<p>This example also illustrates that the properties referenced in the <code>validatorMessage</code> attributes are no longer required &#8211; thus, we can also delete these from the files <code>messages_en.properties</code> and <code>messages_de.properties</code>. Instead, error messages are now found in the <code>ValidationMessages</code> properties that were defined in the previous section.</p>
+<p>After restarting the application, Bean Validation for JSF will be used for the affected attributes. To do so, JSF accesses information stored in the Bean Validation annotations during the validation phase and uses it to carry out validation checks.</p>
+<h3>6.3 Automatically Removing Associated Donations When Deleting a Campaign</h3>
+<p>The <code>deleteCampaign</code> method of the <code>CampaignService</code>, which is be used to delete a <code>Campaign</code> object, has a small problem following the addition of the Bean Validation checks: if the method is executed for a campaign for which donations have already been received, the transaction will be rolled back by a <code>ConstraintViolationException</code>. The reason for this is that newly added <code>@NotNull</code> annotation belonging to the campaign attribute of the class <code>Donation</code> serves to ensure that a donation must always be assigned to a campaign. Here, this condition is violated by the method <code>deleteCampaign</code>, since donations cannot be assigned to a campaign that no longer exists.</p>
+<p>Given our current knowledge, we can solve the problem by modifying the method in such a way that all <code>Donation</code> objects assigned to a campaign are iterated prior to the <code>Campaign</code> object being removed.</p>
+<p>This is a little cumbersome when we consider that in our case, the necessity of deleting the <code>Donation</code> object is actually a property of the relationship between <code>Campaign</code> objects and <code>Donation</code> objects: a <code>Donation</code> object cannot exist if not assigned to a <code>Campaign</code> object. Specialist literature refers to this type of a relationship as a composition<a class="footnote" title="https://en.wikipedia.org/wiki/Class_diagram#Composition" id="return-footnote-100-4" href="#footnote-100-4"><sup class="footnote">[4]</sup></a>.</p>
+<p>For this reason, it’s preferable to define in the relationship that the <code>Campaign</code> objects assigned to a campaign should be deleted along with the campaign. Luckily for us, JPA already offers this functionality, and it’s known as cascade delete. To activate it, we need to add the attribute cascade with the value <code>CascadeType.REMOVE</code> to the definition of the relationship (annotation <code>@OneToMany</code>) in the class <code>Campaign</code>. From the definition of the attribute donations:</p>
+<pre class="lang:java decode:true">@OneToMany(mappedBy = "campaign")
+private List&lt;Donation&gt; donations;
+</pre>
+<p>becomes</p>
+<pre class="lang:java decode:true">@OneToMany(mappedBy = "campaign", cascade = CascadeType.REMOVE)
+private List&lt;Donation&gt; donations;
+</pre>
+<p>Once the application has been restarted, the transaction will be successfully executed whenever a campaign is deleted and the assigned Donation objects will also be deleted. This happens completely automatically; the developer must simply define the relationship as described above.</p>
+<p>For the sake of completeness, it should be mentioned that <em>Delete</em> is not the only operation that can be performed on assigned objects. For other operations, we must specify another value for the enumeration type <code>CascadeType</code> in the attribute <code>cascade</code>. This enumeration type can have the following values:</p>
+<ul>
+<li><code>REMOVE</code> (see example above)</li>
+<li><code>MERGE</code></li>
+<li><code>PERSIST</code></li>
+<li><code>DETACH</code></li>
+<li><code>REFRESH</code></li>
+</ul>
+<p>We have not yet mentioned Detach or Refresh operations. The former causes an instance managed by the <code>EntityManager</code> to be removed from the memory of the <code>EntityManager</code> object; thereafter, it is no longer a managed instance.</p>
+<p>The Refresh operation, meanwhile, causes the specified entity to be reloaded from the database. This operation can only be performed on already-managed entities; otherwise, an exception will be thrown.</p>
+<p>The various cascading operations can be combined as desired in the definition of the relationship. This makes it possible to set combinations such as <code>REFRESH</code> and <code>REMOVE</code>. However, if you want to cascade all possible operations at the same time, it is not necessary to list them individually. In this case, you can simply attach the attribute cascade to the value <code>CascadeType.ALL</code>.</p>
+<p>A cascading operation also works recursively: if a further entity is assigned to an assigned entity and both relationships have set the same cascading operation, the operation will be extended over two entities. If our Donation object had assigned a further object with <code>CascadeType.REMOVE</code>, this would also be removed at the same time as the higher-level <code>Campaign</code> object.</p>
+<p>If you have other problems with your project, please compare it with the project behind the following link:</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=lk5gn1vcsf19632d" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign Bean Validation</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-100-1">We purposefully implemented only a few conditions using the JSF validator, since we knew that this task would later be taken over by the Bean Validation API. <a href="#return-footnote-100-1" class="return-footnote">&crarr;</a></li><li id="footnote-100-2"><a href="http://www.hibernate.org/subprojects/validator/download" target="_blank">http://www.hibernate.org/subprojects/validator/download</a> <a href="#return-footnote-100-2" class="return-footnote">&crarr;</a></li><li id="footnote-100-3">Make sure that the validator only checks the format of the IBAN – not whether the two-digit checksum has been adhered to.  For this purpose, we need to develop a special validator; however, we will not address this during the course of this workshop. <a href="#return-footnote-100-3" class="return-footnote">&crarr;</a></li><li id="footnote-100-4"><a href="https://en.wikipedia.org/wiki/Class_diagram#Composition" target="_blank">https://en.wikipedia.org/wiki/Class_diagram#Composition</a> <a href="#return-footnote-100-4" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JPA%20in%20a%20Day&amp;body=6%20Checking%20Inputs%20Using%20Bean%20Validation%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>5 Persisting and Displaying Remaining Entities | Cloud Tutorial &#8211; JPA in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
+<link rel='prev' title='4 Storing the Data Transactionally' href='http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/' />
+<link rel='next' title='6 Checking Inputs Using Bean Validation' href='http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=91' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F5-persisting-and-displaying-donations%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F5-persisting-and-displaying-donations%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-91" id="5persistinganddisplayingremainingentities">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">5 Persisting and Displaying Remaining Entities</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">5 Persisting and Displaying Remaining Entities</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">Next</a></span>
+    </div>				<div id="post-91" class="type-1 post-91 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>Thus far, we have only created methods for persisting entities of the type <code>Campaign</code>. However, our application also requires us to be able to modify <code>Donation </code>objects. We’ll accomplish this step-by-step in the following section by applying the knowledge we have learned so far.</p>
+<p>Again, we can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=q8f0jt6p68dq2532" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign Persist Campaigns</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>5.1 Creating a Service to Handle Donations</h3>
+<p>To edit <code>Donation </code>objects, we first require a service, which we’ll name <code>DonationService </code>for the sake of consistency. This will provide two methods to our application: <code>getDonationList </code>and <code>addDonation</code>. Using the ID of a <code>Campaign</code> object, the method <code>getDonationList </code>returns a list of all the <code>Donation </code>objects that have been created for the associated campaign. Our application also contains the method <code>doDonation</code>, which allows a donation to be made to a campaign. This method requires the ID of the <code>Campaign </code>object and the the <code>Donation </code>object to be created as a parameter. The resulting service interface can be found in Listing 5-1; this should be stored in the package <code>press.turngeek.mycampaign.services</code>.</p>
+<pre class="lang:java decode:true">package press.turngeek.mycampaign.services;
+
+import press.turngeek.mycampaign.model.Donation;
+import java.util.List;
+
+public interface DonationService {
+    List&lt;Donation&gt; getDonationList(Long campaignId);
+    void addDonation(Long campaignId, Donation donation);
+}
+</pre>
+<p><strong>Listing 5-1</strong> <em>DonationService</em> interface</p>
+<p>We can now begin with the implementation of the <code>DonationServiceBean</code>. Let’s start by looking at its method, <code>getDonationList</code>:</p>
+<pre class="lang:java decode:true">public List&lt;Donation&gt; getDonationList(Long campaignId) {
+    Campaign managedCampaign = entityManager.find(Campaign.class, campaignId);
+    List&lt;Donation&gt; donations = managedCampaign.getDonations();
+    return donations;
+}
+</pre>
+<p>Here, the method find of the class <code>EntityManager </code>returns the instance of the campaign that possesses the specified identity.</p>
+<p>The method <code>getDonations </code>is then invoked on this instance. This returns the list of <code>Donation </code>objects assigned to the <code>Campaign </code>object. This list can be passed to the invoker of the service using return.</p>
+<p>Let’s now turn to the second method, <code>addDonation</code>:</p>
+<pre class="lang:java decode:true">public void addDonation(Long campaignId, Donation donation) {
+    Campaign managedCampaign = entityManager.find(Campaign.class, campaignId);
+    donation.setCampaign(managedCampaign);
+    entityManager.persist(donation);
+}
+</pre>
+<p>As above, we’ll begin by using the find method of the class <code>EntityManager </code>to create a managed instance of the <code>Campaign </code>object with the passed ID.</p>
+<p>This instance is assigned to the passed <code>Donation </code>object as a campaign using the method <code>setCampaign</code>. The persist method of the class <code>EntityManager </code>can then be used to persist the <code>Donation </code>object. When this happens, JPA takes care of the relations automatically; the foreign key of the <code>Campaign </code>object with the passed ID is therefore automatically entered in the <code>campaign </code>column of the table <code>DONATION</code>.</p>
+<p>The complete implementation of the service can be found in Listing 5-2. Please save this file in the package <code>press.turngeek.mycampaign.services</code>.</p>
+<pre class="lang:java decode:true">package press.turngeek.mycampaign.services;
+
+import press.turngeek.mycampaign.model.Campaign;
+import press.turngeek.mycampaign.model.Donation;
+
+import javax.ejb.Stateless;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import java.util.List;
+
+@Stateless
+public class DonationServiceBean implements DonationService {
+    @Inject
+    private EntityManager entityManager;
+
+    @Override
+    public List&lt;Donation&gt; getDonationList(Long campaignId) {
+        Campaign managedCampaign = entityManager.find(Campaign.class, campaignId);
+        List&lt;Donation&gt; donations = managedCampaign.getDonations();
+        return donations;
+    }
+
+    @Override
+    public void addDonation(Long campaignId, Donation donation) {
+        Campaign managedCampaign = entityManager.find(Campaign.class, campaignId);
+        donation.setCampaign(managedCampaign);
+        entityManager.persist(donation);
+    }
+}
+</pre>
+<p><strong>Listing 5-2</strong> <em>DonationServiceBean</em> class</p>
+<h3>5.2 Finalising the Use Case Donate Money</h3>
+<p>Now that the implementation of the <code>DonationService </code>has enabled us to persist Donation objects, the use case <em>Donate money </em>can be finalised. The implementation process is very simple. First, the bean <code>DonateMoneyController </code>is afforded access to the <code>DonationService </code>via the <code>@Inject</code> annotation:</p>
+<pre class="lang:java decode:true">@Inject
+private DonationService donationService;
+</pre>
+<p>Next, the following two lines must be added at the beginning of <code>doDonation </code>method of the <code>DonateMoneyController</code>:</p>
+<pre class="lang:java decode:true">getDonation().setStatus(Status.IN_PROCESS);
+donationService.addDonation(getCampaignId(), getDonation());
+</pre>
+<p>The first line changes the status of the <code>Donation </code>object to <code>IN_PROCESS</code>. This tells a yet-to be created background process that this <code>Donation </code>object still needs to be to edited. In the second line, the <code>Donation </code>object and the campaign ID are passed to the <code>DonationService </code>assigned to the donation form. The implementation of the use case <em>Donate money</em> is now complete.</p>
+<p>As mentioned earlier Codenvy has problems resolving inner types. So please add the following import statement manually to the class <code>DonateMoneyController</code>:</p>
+<pre class="lang:java decode:true">import press.turngeek.mycampaign.model.Donation.Status;
+</pre>
+<p><strong>Restart the application with the changes from this section</strong> – you should now be able to create a new <code>Donation</code> object utilizing the use case <em>Donate Money</em>. But be warned: at this stage, invoking the list of donations for a campaign will still result in an error. We’ll rectify this until section 5.4.</p>
+<h3>5.3 Calculating the Amount Donated So Far</h3>
+<p>Our requirements specification stipulates that the total amount donated to a campaign should be displayed to the organizer in the overiew of all campaigns.</p>
+<p>To enable this, we previously provided the attribute amountDonatedSoFar within the entity <code>Campaign</code>. Although this currently has no value, the amount donated to a campaign so far can be determined easily via the following JPQL query:</p>
+<pre class="lang:java decode:true">SELECT SUM(d.amount) FROM Donation d WHERE d.campaign = :campaign
+</pre>
+<p>The query generates the sum of the amount attributes for all <code>Donation </code>objects assigned to a particular campaign. This query corresponds almost exactly to its equivalent in SQL. The only difference lies in the parameter to be passed and its type.</p>
+<p>In JPQL, parameters are resolved using a preceding colon, “:”. Thus, the expression :campaign references the value of the parameter campaign. Since, in contrast to SQL, JPQL works with objects, this must store a <code>Campaign </code>object, while in SQL it would contain a primary key of the table <code>CAMPAIGN</code>.</p>
+<p>We see once again that JPQL and SQL are very similar in terms of their syntax, but work with different data types (JPQL with objects and SQL with tables).</p>
+<p>The value returned by the query must now be stored in the attribute <code>amountDonatedSoFar</code>. To achieve this, we must first store the above query as a <code>NamedQuery </code>in the class <code>Campaign</code>. As a <code>NamedQuery</code>, it looks as follows:</p>
+<pre class="lang:java decode:true">@NamedQuery(name = Campaign.getAmountDonatedSoFar, query = "SELECT SUM(d.amount) FROM Donation d WHERE d.campaign = :campaign")
+</pre>
+<p>We must now extend the <code>Campaign </code>class with this query:</p>
+<pre class="lang:java decode:true">@NamedQueries({
+    @NamedQuery(name = Campaign.findAll, query = "SELECT c FROM Campaign c ORDER BY c.name"),
+    @NamedQuery(name = Campaign.getAmountDonatedSoFar, query = "SELECT SUM(d.amount) FROM Donation d WHERE d.campaign = :campaign")
+})
+@Entity
+public class Campaign {
+    public static final String findAll = "Campaign.findAll";
+    public static final String getAmountDonatedSoFar = "Campaign.getAmountDonatedSoFar";
+…
+</pre>
+<p>To enable us to reference the <code>NamedQuery </code>in a type-safe way, we have once again created a constant. This time, the name of the attribute is <code>Campaign.getAmountDonatedSoFar</code>.</p>
+<p>By specifying this name, the <code>CampaignServiceBean </code>can use this query to calculate the amount donated so far. The following method is added to the bean to accomplish this task:</p>
+<pre class="lang:java decode:true">private Double getAmountDonatedSoFar(Campaign campaign) {
+    TypedQuery&lt;Double&gt; query = entityManager.createNamedQuery(Campaign.getAmountDonatedSoFar, Double.class);
+    query.setParameter("campaign", campaign);
+    Double result = query.getSingleResult();
+    if (result == null)
+    result = 0d;
+    return result;
+}
+</pre>
+<p>In this method, the <code>TypedQuery&lt;Double&gt;</code> object of the <code>NamedQuery </code>is created using the <code>createNamedQuery </code>method of the class <code>EntityManager</code>. The relevant <code>Campaign </code>entity (that is, the <code>Campaign </code>entity for which the amount donated so far is to be calculated) is passed on this object using the method <code>setParameter</code>. The name of the parameter is <code>campaign</code>, which means that it corresponds to the name in the <code>NamedQuery</code>.</p>
+<p>The query is executed using the method <code>getSingleResult </code>and returns the sum of the donations made so far as <code>Double</code>. If no donations have yet been made, this value is <code>null</code>. Since this is undesirable, this case is intercepted and the value <code>0d</code> returned instead.</p>
+<p>To inject the amount donated so far in a campaign object, campaign, we must use the following code:</p>
+<pre class="lang:java decode:true">campaign.setAmountDonatedSoFar(getAmountDonatedSoFar(campaign))
+</pre>
+<p>This is carried out at the appropriate point; in our case, when we use the <code>CampaignServiceBean </code>to retrieve the list of <code>Campaign </code>objects from the database. To accomplish this, we must modify the <code>getAllCampaigns </code>method of the bean in such a way that the above code is run for each campaign. Using a simple for-loop, we get the following implementation (Sorry for the loop! Currently the Codenvy&#8217;s editor uses Java 7):</p>
+<pre class="lang:java decode:true">public List&lt;Campaign&gt; getAllCampaigns() {
+    TypedQuery&lt;Campaign&gt; query = entityManager.createNamedQuery(Campaign.findAll, Campaign.class);
+    List&lt;Campaign&gt; campaigns = query.getResultList();
+    for (Campaign campaign : campaigns) {
+            campaign.setAmountDonatedSoFar(getAmountDonatedSoFar(campaign));
+    }
+    return campaigns;
+}
+</pre>
+<p>The attribute <code>amountDonatedSoFar </code>is currently persisted in the database. This, however, is not necessary, since we recalculate the attribute each time a <code>Campaign </code>object is read. JPA now offers the option <em>not</em> to persist an attribute of an entity. To take advantage of this, the relevant attribute must be annotated with <code>@Transient</code> from the package <code>javax.persistence</code>. We will do this now for the attribute <code>amountDonatedSoFar </code>in the class <code>Campaign</code>:</p>
+<pre class="lang:java decode:true">@Transient
+private Double amountDonatedSoFar;
+</pre>
+<p>This means that the attribute will no longer be persisted and that the calculation of the amount donated to a campaign so far is complete. However, one issue remains: if you test this by invoking the list of donations following a restart, an exception will appear. We’ll work on resolving this in the following section.</p>
+<h3>5.4 Displaying Donations in the Donation List</h3>
+<p>If you now try to invoke the list of donations in your application, an exception of the type <code>LazyInitializationException </code>will appear. In fact, this type of exception is encountered quite frequently when progamming with JPA. This is caused when an entity’s attribute requiring a database is accessed, but the instance of the entity is no longer managed by an <code>EntityManager </code>object. This normally becomes the case as soon as a transaction is ended.</p>
+<p>In our example, the <code>Campaign </code>object supplied by the <code>CampaignProducer </code>in the context of the bean <code>ListDonationsController </code>no longer has a database connection. In light of this, it is not possible to access the donations attribute that would contain the assigned <code>Donation </code>object based on a relation.</p>
+<p>A simple solution to this problem is to request the list of <code>Donation </code>objects from <code>DonationService </code>and use the method <code>setDonations </code>to deposit it in the <code>Campaign </code>object used by the view of the use case <em>Display list of donations</em>  (file <code>listDonations.xhtml</code>).</p>
+<p>To accomplish this, we must extend the method <code>doListDonations </code>of the bean <code>ListCampaignsController </code>to include this service access, since this is the method that forwards to the view and passes the <code>Campaign </code>object to the <code>CampaignProducer</code>.</p>
+<p>We’ll start by adding the <code>DonationService </code>to the <code>ListCampaignsController </code>using the annotation <code>@Inject</code>:</p>
+<pre class="lang:java decode:true">@Inject
+private DonationService donationService;
+</pre>
+<p>The method <code>doListDonations</code> should then be modified to add the method <code>setDonations</code>, which will assign the list of <code>Donation</code> objects to the passed <code>Campaign</code> object:</p>
+<pre class="lang:java decode:true">
+public String doListDonations(Campaign campaign) {
+    final List&lt;Donation&gt; donations = donationService.getDonationList(campaign.getId());
+    campaign.setDonations(donations);
+    campaignProducer.setSelectedCampaign(campaign);
+    return Pages.LIST_DONATIONS;
+}
+</pre>
+<p>Again, Codenvy might have problems with inner types. Please add the import statements for the types <code>press.turngeek.mycampaign.model.Donation</code>, <code>press.turngeek.mycampaign.services.DonationService</code> and <code>java.util.List</code>, manually.<br />
+Following a new build of the application (including a restart), we would expect the application to run smoothly. Instead, a further unexpected <code>LazyInitializationException </code>appears.</p>
+<p>Though a list of <code>Donation </code>objects is now contained in the <code>Campaign </code>object, this list has no database connection. This is because, like the <code>Campaign </code>object, it is a non-managed instance.</p>
+<p>The background to this situation is that even though the <code>getDonationList </code>method of the <code>DonationServiceBean </code>invokes the method <code>getDonations</code> to create a list of <code>Donation </code>objects, this method only returns the attribute donations. This, in turn, only stores a proxy, which does not contain any data in its initial state.</p>
+<p>A corresponding query is only made to the database when this attribute is accessed. However, this must occur within the current transaction – that is, within the method <code>getDonationList</code>. Accessing the attribute after the transaction leads to the <code>LazyInitializationException </code>we have already observed.</p>
+<p>A simple trick is to execute/run a method on the proxy that does not carry out any changes to the data. In the case of a list, this could be the method <code>size</code>, which returns the number of elements in the list<a class="footnote" title="Alternatively, you can the solve the issue using a self-created NamedQuery that returns all donations belonging to a campaign; however, this will not be shown here." id="return-footnote-91-1" href="#footnote-91-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>Invoking this method will lead to the list of <code>Donation </code>objects being retrieved from the database. This means that we must modify <code>getDonationList </code>in the class <code>DonationServiceBean </code>as follows:</p>
+<pre class="lang:java decode:true">public List&lt;Donation&gt; getDonationList(Long campaignId) {
+    Campaign managedCampaign = entityManager.find(Campaign.class, campaignId);
+    List&lt;Donation&gt; donations = managedCampaign.getDonations();
+    donations.size();
+    return donations;
+}
+</pre>
+<p>Following a further build of the application, including a restart, (nearly) all errors will be rectified and the list of donations will finally be correctly displayed. One thing still does not work, i.e. deleting a campaign. We will come back to this later on.</p>
+<p>If you have other problems with your project, please compare it with the project behind the following link:</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=3vxd8ixcbyl2tsr2" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign Persist Donations</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-91-1">Alternatively, you can the solve the issue using a self-created <code>NamedQuery </code>that returns all donations belonging to a campaign; however, this will not be shown here. <a href="#return-footnote-91-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JPA%20in%20a%20Day&amp;body=5%20Persisting%20and%20Displaying%20Remaining%20Entities%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F5-persisting-and-displaying-donations%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

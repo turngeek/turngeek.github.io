@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>5 Click Me If You Can – JavaServer Faces | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<link rel='prev' title='4 Turn it Inside Out – JavaServer Pages' href='http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/' />
+<link rel='next' title='6 Business Rules the World – EJB' href='http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=43' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F5-click-me-if-you-can-javaserver-faces%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F5-click-me-if-you-can-javaserver-faces%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-43" id="5clickmeifyoucan–javaserverfaces">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">5 Click Me If You Can – JavaServer Faces</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">5 Click Me If You Can – JavaServer Faces</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">Next</a></span>
+    </div>				<div id="post-43" class="type-1 post-43 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter, we get in touch with the most current web client technology of Java EE, namely <em>JavaServer Faces (JSF)</em>. Before we start, please verify again that your project is accessible in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project, and by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-43-1" href="#footnote-43-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=jqxlogf3nudcslni" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 4 (JSP MVC)" width="77" height="21" /></a>
+<p class="wp-caption-text">Project after Chapter 4 (JSP)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/factory?id=4mtgjdjq29itp119->
+
+JSF is a framework for building web applications that are realized on the following building blocks:
+
+<ul>
+	
+<li>Separation of concerns: the Model-View-Controller (MVC) pattern is an integral part of JSF. Views are defined using a view declaration language (XHTML files called Facelets). Controllers are realized by Java classes that bind to UI controls using the JSF Expression Language similar to the JSP Expression Language explained earlier. At runtime, we talk about controller beans that are managed by the application server. The model is realized by <a href="http://en.wikipedia.org/wiki/Plain_Old_Java_Object" target="_blank">POJOs (Plain Old Java Objects)</a> that reside within the controller beans at runtime. Their attributes can be bound to UI controls within the view declaration.</li>
+
+
+	
+<li>UI components: views consist of UI components that have a <a href="http://en.wikipedia.org/wiki/Markup_language" target="_blank">markup language</a> representation usable in the declaration of a view. UI components are realized by Java classes of the JSF-API. At runtime, a view is a tree of nested Java objects (components tree) built from the view declaration and rendered, on request, into HTML and JavaScript for the browser. UI components are either UI controls like buttons or text fields, UI structures like tables or grids or provide special functions like validation or conversion of input data.</li>
+
+
+	
+<li>Event handling: JSF provides an event handling system similar to well known desktop application frameworks like <a href="http://docs.oracle.com/javase/8/javase-clienttechnologies.htm" target="_blank">Java FX or Swing</a>. Therefore, it is possible to register methods of controller beans as listeners for UI components.</li>
+
+
+</ul>
+
+
+
+<h3>5.1 JSF Activation</h3>
+
+
+In general, it is necessary to activate JSF in your web application, explicitly. By that the so called <a href="http://docs.oracle.com/javaee/7/api/javax/faces/webapp/FacesServlet.html" target="_blank"><code>FacesServlet</code></a> handles Faces requests. Any easy way to activate JSF is to add the configuration file <code>faces-config.xml</code> as shown in Listing 5-1 to the <code>WEB-INF</code> folder in our <code>src/main/webapp</code> directory.
+
+<pre class="lang:default decode:true " title="faces-config.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"&gt;
+	&lt;application&gt;
+	&lt;/application&gt;
+&lt;/faces-config&gt;</pre>
+
+
+<strong>Listing 5-1 </strong>Configuration file <code>faces-config.xml</code>
+
+Of course JSF activation is not the only reason for this configuration file. In more complex projects it is needed for other reasons, like e.g. I18N or view navigation. Nevertheless, in our small application, we don't need further configurations.
+
+<h3>5.2 JSF Facelets</h3>
+
+
+Let's start with the view of our application! Facelets are XHTML files describing a view of a JSF application. First, we create a simple Facelet in order to show its general structure. Please, save the file <code>memos.xhtml</code> as depicted in Listing 5-2 in <code>src/main/webapp</code>[footnote]Codenvy does not provide a special menu item for Facelets. Please use the general menu item for file creation (New → File).[/footnote].
+
+<pre class="lang:xhtml decode:true " title="Facelet memos.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;h:head&gt;
+	&lt;title&gt;My-Memo&lt;/title&gt;
+	&lt;meta charset="utf-8" /&gt;
+        &lt;link rel="stylesheet" type="text/css" href="screen.css"/&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+	&lt;div id="container"&gt;
+		&lt;div id="header"&gt;
+			&lt;p&gt;&lt;b&gt;My-Memo&lt;/b&gt; - A Simple Web App for Managing Memos&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div id="content"&gt;
+			Hello World!
+		&lt;/div&gt;
+		&lt;div id="footer"&gt;
+			&lt;p&gt; (C) 2015 Schiesser/Schmollinger, MIT license&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;</pre>
+
+
+<strong>Listing 5-2 </strong>Facelet memos.xhtml
+
+Looking at Listing 5.2, we realize that the structure is very similar to that of our pure HTML5 file in <a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/" target="_blank">chapter 1</a>. The main difference is the HTML tag that introduces a namespace for HTML-like JSF UI components (<a href="http://xmlns.jcp.org/jsf/html">http://xmlns.jcp.org/jsf/html</a>) and the usage of two of them (<code>h:head</code> and <code>h:body</code>). All these tags are rendered to pure HTML at the end of the request processing on the server.
+
+Before we are going to test our first facelet, we realize an easy entry in our application by changing our <code>index.html</code> file currently stored in the directory <code>src/main/webapp</code> according to in Listing 5-3. This realizes a forwarding to our facelet. After the change, e. g. something like <code>http://runner20.codenvycorp.com:64433</code> is automatically forwarded to <code>http://runner20.codenvycorp.com:64433/memos.jsf</code>.
+
+<pre class="lang:default mark:3 decode:true " title="HTML file index.html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;meta http-equiv="refresh" content="0; URL=memos.jsf"&gt;
+&lt;/html&gt;</pre>
+
+
+<strong>Listing. 5-3 </strong> HTML file index.html
+
+Step by step, we clean up our project. Please delete the file <code>src/main/webapp/WEB-INF/memos.jsp</code>, we don't need it anymore. After saving or deleting the files, we can re-run our project and after a click on the provided link (e.g. <code>http://runner20.codenvycorp.com:64433</code>) we should get the content presented in Fig. 5-1.
+<a href="http://www.turngeek.press/images/javaeeinaday/chapter5/5-1.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter5/5-1.png" alt="Screenshot of the JSF-rendered Hello World view in the browser." width="100%" /></a>
+<strong>Fig. 5-1 </strong> Screenshot of the JSF-rendered "Hello World!" view in the browser.
+
+<h3>5.3 JSF Managed Bean</h3>
+
+
+Before we start extending our user interface with JSF components, we explain the way controller logic is realized in our JSF application. In <a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/" target="_blank">chapter 4</a>, our <code>MemoServlet</code> received the http request and dispatched it to one of its controller methods. JSF works in the same way, but the developer is not responsible for the dispatching anymore. The handling of a request is managed by the previously mentioned <code>FacesServlet</code>. It manages the whole lifecycle of a JSF request and also calls the respective controller methods for a certain user interaction. For the moment this is enough to know about the JSF lifecycle, but if you want to become a JSF expert, you have to learn more about it (e.g. by reading the <a href="https://jcp.org/aboutJava/communityprocess/final/jsr344/index.html" target="_blank">specification</a>). Since we won't need our <code>MemoServlet</code> anymore, we can delete it now.
+
+Controller methods are provided by classes that are instantiated and managed by the application server at runtime. Therefore, objects at runtime (and even sometime classes) are called Managed Beans. In a first approach, we create a bean class that stores our memos in a list similar to the former <code>MemoServlet</code> and provides two controller methods, one for the button to add a new memo and one for the button to reset the list of memos. JSF defines two kinds of controller methods, action and action listener methods.
+
+<div class="textbox shaded">
+
+<strong><strong><strong>Action Method or Action Listener Method?</strong></strong></strong>
+
+Action methods are generally used in situations where we want to influence navigation. To be able to do this, the return value of an action method must contain the name of the subsequent view. Action listener methods, in contrast, offer easy access to the action event and thus to the component that triggers the event. The application does not navigate to another view, but the content of the current view may be manipulated by the listener method.
+
+</div>
+
+
+In Listing 5-3, we use two action listener methods, since we have only one view in our application and, therefore, need no navigation to other views. Further, the controller class contains a getter method for accessing the list of memos and a getter and a setter method for the current memo the user works on. These access methods are necessary for the data binding with the UI controller components. Please save the class in Listing 5-4 as <code>MemoController.java</code> in the given package (<code>press.turngeek.mymemo.controller</code>) in the folder <code>src/main/java</code>.
+
+<pre class="lang:default decode:true    " title="class MemoController">package press.turngeek.mymemo.controller;
+
+import java.util.Date;
+import java.util.List;
+import java.util.LinkedList;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import javax.faces.event.ActionEvent;
+
+import press.turngeek.mymemo.model.Memo;
+
+@SessionScoped
+@ManagedBean(name = "memoController")
+public class MemoController {
+
+    private Memo memo;
+    private List&lt;Memo&gt; memos;
+
+    public MemoController() {
+	memos = new LinkedList&lt;&gt;();
+	memo = new Memo();
+    }
+
+    public Memo getMemo() {
+        return memo;
+    }
+
+    public void setMemo(Memo memo) {
+        this.memo = memo;
+    }
+
+    public void doAdd(ActionEvent event) {
+        Memo newMemo = new Memo();
+        newMemo.setDescription(memo.getDescription());
+        newMemo.setCreated(new Date());
+        memos.add(newMemo);
+        memo.setDescription("");
+    }
+
+    public void doReset(ActionEvent event) {
+        memos.clear();
+    }
+
+    public List&lt;Memo&gt; getMemos() {
+        return memos;
+    }
+}</pre>
+
+
+<strong>Listing 5-4</strong> MemoController class
+
+Looking at Listing 5-4, we realize some new concepts that come with JSF Managed Beans. First, the class is annotated with <code>@ManagedBean</code> (package <code>javax.faces.bean</code>). Doing so the application server recognizes that the class can be used as a Managed Bean. Without this explicit definition, the server would ignore the class and would not initiate beans at runtime. In addition, the annotation allows to define a name for the beans by using the annotations's attribute <code>name</code>. We used the class name beginning with a lower case letter (<code>memoController</code>), which is a convention in this context. We'll need the name later on for binding the bean's attributes and controller methods to UI components.
+
+Additionally, we used a second annotation at the class level called <code>@SessionScoped</code> (package <code>javax.faces.bean</code>). So far, we have explained that the application server manages the life-cycle of the Managed Beans. The question is, how long does the server provide the same instance, that means how long is the data stored working with the application. In the previous chapters, we stored the data in the servlets session context. The same can be achieved for the life time of Managed Beans by using <code>@SessionScoped</code>. In this case, the application server asserts that during a session a user always works with the same bean instance and, therefore, the data of the bean is available as long as the session is valid. Be aware that bean classes annotated with <code>@SessionScoped</code> also must implement <code>java.io.Serializable</code>, since sessions may live a long time and a server must be able to persist session data. This is not the only scope provided by JSF Managed Beans. At the end of this chapter, we' ll get in touch with some alternatives.
+
+The last new thing we recognize in Listing 5-3 is the use of the type <code><a href="http://docs.oracle.com/javaee/7/api/javax/faces/event/ActionEvent.html">ActionEvent</a></code> (package <code>javax.faces.event</code>) in the parameter list of the bean's action listener methods. While interacting with a JSF view, users work with UI components and by that produce events. Action listener methods, as well as action methods, can be registered to the firing components and are executed if the respective event occurs. E.g. by clicking a button, an action event is produced and automatically passed to the registered action listener method. The class <code>ActionEvent</code> provides information about the action itself, e.g. about the component that produced the event, which can be useful in implementing the method. In our case, we don't use the passed argument, since we don't need special information about the event in order to realize the method. Action events are fired by clicking on buttons or links[footnote]Other JSF components provide the functionality to contain a certain value, e.g. a textfield contains a certain text. If the value of these components changes, an event of type <a href="http://docs.oracle.com/javaee/7/api/javax/faces/event/ValueChangeEvent.html">ValueChangedEvent</a> is fired. Methods registered to such components must define this type as a formal parameter instead of an ActionEvent and are called value changed listeners.[/footnote].
+
+<h3>5.4 Improve the Facelet</h3>
+
+
+Now it is time to enrich our Facelet with the necessary UI controls and bind them to the corresponding methods of our bean using the JSF expression language (EL). <span style="line-height: 1.5;">Analogously to the expression language in JSP (<a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/" target="_blank">c</a></span><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/" target="_blank">hapter 4</a><span style="line-height: 1.5;">), the JSF expression language is the relating link between text-based Facelets and JSF Managed Beans. With the help of expressions, we can register bean methods with action components (e.g. buttons) or bean properties with value components (e.g. textfields).  The syntax is the same as for the JSP expression language with the exception that an expression starts with a hash tag (<code>#{...}</code>) instead of a dollar sign (<code>${...}</code>). Since JSP 2.1 and JSF 1.1 the formerly divided languages have been unified. The resulting language is called <a href="http://en.wikipedia.org/wiki/Unified_Expression_Language" target="_blank"><em>Unified Expression Language (UEL)</em></a>. That means, the different starting signs are just a relict of a historic development. Both variants would work well.</span>
+
+As defined in earlier chapters, we need a form with command buttons to submit the form, either for adding a memo or for resetting the list of memos. Further, we need a textfield to enter a new memo. And finally, we need a data table to present all saved memos. If currently no memo is in the list, we just want to put that message in the page instead of the empty table. The latter can be done by a component called <code>&lt;h:outputText&gt;</code>. Please update your Facelet <code>memo.xhtml</code> as described in Listing 5-5. We'll explain the new components further down.
+
+<pre class="lang:default mark:16-39 decode:true " title="Facelet memo.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"&gt;
+&lt;h:head&gt;
+	&lt;title&gt;My-Memo&lt;/title&gt;
+	&lt;meta charset="utf-8" /&gt;
+  &lt;link rel="stylesheet" type="text/css" href="screen.css"/&gt;
+&lt;/h:head&gt;
+&lt;h:body&gt;
+	&lt;div id="container"&gt;
+		&lt;div id="header"&gt;
+			&lt;p&gt;&lt;b&gt;My-Memo&lt;/b&gt; - A Simple Web App for Managing Memos&lt;/p&gt;
+		&lt;/div&gt;
+		&lt;div id="content"&gt;
+			&lt;h:form&gt;
+				&lt;h1&gt;Add Memo:&lt;/h1&gt;
+
+				&lt;h:inputText id="memo" size="30" value="#{memoController.memo.description}"/&gt;
+
+				&lt;h:commandButton value="Add"
+					actionListener="#{memoController.doAdd}" /&gt;
+
+				&lt;h1&gt;My Memos:&lt;/h1&gt;
+
+				&lt;h:dataTable value="#{memoController.memos}" rendered="#{!empty memoController.memos}" var="memo"&gt;
+					&lt;h:column&gt;
+                 &lt;f:facet name="header"&gt;Memo&lt;/f:facet&gt;
+						&lt;h:outputText value="#{memo.description}" /&gt;
+					&lt;/h:column&gt;
+					&lt;h:column&gt;
+                 &lt;f:facet name="header"&gt;Saved&lt;/f:facet&gt;
+						&lt;h:outputText value="#{memo.created}" /&gt;
+					&lt;/h:column&gt;
+				&lt;/h:dataTable&gt;
+            &lt;h:outputText value="Please add some memos." rendered="#{empty memoController.memos}"/&gt;
+				&lt;h:commandButton value="Reset list" immediate="true" rendered="#{!empty memoController.memos}"
+					actionListener="#{memoController.doReset}" /&gt;
+			&lt;/h:form&gt;
+		&lt;/div&gt;
+		&lt;div id="footer"&gt;
+			&lt;p&gt; (C) 2015 Schiesser/Schmollinger, MIT license&lt;/p&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;</pre>
+
+
+<strong>Listing 5-5</strong> Facelet memo.xhtml.
+
+<strong>Form Component</strong>
+
+To be able to enter data and submit it to the server, we will need a form. Using the <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/form.html" target="_blank">h:form</a>&gt;</code> tag in a Facelet, JSF can create an HTML form into which UI components can be embedded as desired. For our input screen, a single form beginning with <code>&lt;h:form&gt;</code> and ending with <code>&lt;/h:form&gt;</code> will suffice.
+
+<div class="textbox shaded">
+
+<strong><code>&lt;h:form&gt;</code>  in a nutshell</strong>
+
+This tag is rendered to an HTML form that submits its data via an HTTP POST. A form must contain at least one component that is capable of triggering a Faces request (e.g. <code>&lt;h:commandButton&gt;</code> or <code>&lt;h:commandLink&gt;</code>, as you will see below).
+
+Selected attributes:
+
+<code>acceptcharset</code>: gives a list of character sets accepted by the server for the input data of a form, e.g. <code>&lt;h:form acceptcharset="ISO-8859-1"&gt;</code>
+
+</div>
+
+
+<strong>Button Component</strong>
+
+The tag <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/commandButton.html" target="_blank">h:commandButton</a>&gt;</code> behaves like a button that triggers an <em>Action Event</em> when clicked by the user.
+
+<div class="textbox shaded">
+
+<strong><code>&lt;h:commandButton&gt;</code> in a nutshell</strong>
+
+In a form, these tags are rendered to a button that starts an HTTP POST request by default when clicked.
+
+Selected attributes:
+
+<code>value</code>: Labeling a link or button
+
+<code>action</code>: EL expression for binding an action method of a bean
+
+<code>actionListener</code>: EL expression for binding an <code>actionListener </code>method of a bean
+
+</div>
+
+
+<strong>Data Table Components</strong>
+
+The <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/dataTable.html" target="_blank">h:dataTable</a>&gt;</code> tag allows us to represent data in tabular form. The entire structure is rendered to HTML for the browser using the HTML tag <code>&lt;table&gt;</code>. The columns of the table are defined using the tag <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/column.html" target="_blank">h:column</a>&gt;</code>. The tag <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/f/facet.html" target="_blank">f:facet</a>&gt;</code> is used to insert headers and footers.
+
+<div class="textbox shaded">
+
+<strong><code>&lt;h:dataTable&gt;</code>, <code>&lt;h:column&gt;</code>, <code>&lt;f:facet&gt;</code> in a nutshell</strong>
+We use these components to display lists of identical objects in tabular form.
+
+<code>&lt;h:dataTable&gt;</code>
+
+The outer tag of the data table
+
+Selected attributes:
+
+<code>value</code>: Data to be displayed. This generally takes the form of an EL expression that references an attribute of a bean containing a collection of objects.
+<code>var</code>: Name of the variables that represent the data object of a row. The variable can be used in EL expressions.
+<code>rendered</code>: Contains an EL expression that evaluates to a boolean. If the result is true, the table is rendered otherwise not.
+
+<code>&lt;h:column&gt;</code>
+
+Represents a column in the data table and is therefore used within <code>&lt;h:dataTable&gt;</code>. The number of successive <code>&lt;h:column&gt;</code> tags determines the number of columns per row of the table.
+
+<code>&lt;f:facet&gt;</code>
+
+Caption for  enclosing elements. <code>&lt;f:facet&gt;</code> can be used within a <code>&lt;h:column&gt;</code> tag to specify a header or footer for the column.
+
+Selected attributes:
+
+<code>name</code>: Type of labelling (<code>header</code>/<code>footer</code>/<code>caption</code>). Determines whether the label is a header or a footer.
+
+</div>
+
+
+The number of rows is dependent on the data source, which can be passed to the <code>&lt;h:dataTable&gt;</code> tag using the attribute value. Currently, we access the <code>Memo </code>objects stored in the <code>memoController</code> bean using an EL expression. Accordingly, the table contains a list of memos. Each memo is represented as a row in the table. Access to the individual memos is achieved using a special variable. The <code>&lt;h:dataTable&gt;</code> tag uses the attribute <code>var </code>to introduce a variable named <code>memo </code>of type <code>Memo</code>. The variable corresponds to a control variable in a loop and represents the current memo when processing the list. These variables can be used to access the properties of a memo for each row.
+
+Labels for columns and tables can be inserted using the <code>&lt;f:facet&gt;</code> tag. Possible facets are header, footer and caption (for the table name). We want to create the column headers, so we use the <code>&lt;f:facet&gt;</code> tag within the <code>&lt;h:column&gt;</code> tag and set the <code>name </code>attribute’s value to <code>header</code>. Be careful, before we can use this tag, we have to include the namespace for the corrsponding JSF core library in the Facelet (<code><a href="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/index.html">http://xmlns.jcp.org/jsf/core</a></code>).
+
+<strong>Output Text Component</strong>
+
+The tag <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/outputText.html" target="_blank">h:outputText</a>&gt;</code> can be used to embed text in the page.
+
+<div class="textbox shaded">
+
+<strong><code>&lt;h:outputText&gt;</code> in a nutshell</strong>
+
+This tag adds text to the page to be created.
+
+<code>id</code>: Unique name of the text component
+
+<code>value</code>: Text or EL expression for binding a bean attribute or method to the component
+
+<code>rendered</code>: Contains an EL expression that evaluates to a boolean. If the result is true, the text is rendered otherwise not.
+
+</div>
+
+
+The use of the tag thus makes particular sense in situations where special attributes or configurations are needed. In our case, we use the attribute rendered in order to realize that the text is only embedded in the resulting html page if the list of memos is empty. If no special configuration is necessary, the text or EL expression can be added directly in the Facelet.
+
+After saving all files, we can re-run our project and by clicking on the provided link (e.g. <code>http://runner20.codenvycorp.com:64433</code>). By entering some memos, you should get a view similar to that presented in Fig. 5-2.
+<a href="http://www.turngeek.press/images/javaeeinaday/chapter5/5-2.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter5/5-2.png" alt="Screenshot of the JSF-rendered memos view in the browser." width="100%" /></a>
+<strong>Fig. 5-2 </strong> Screenshot of the JSF-rendered memos view in the browser.
+
+<h3>5.5 Further Improvements</h3>
+
+
+The functionality and design of the application is complete with some restrictions. At the moment, it is possible to enter an empty string as a valid memo. No error message appears in this case. Concerning the user interface, the inline label of the textfield is missing. Further, we want to learn more about the scopes of JSF Managed Beans in order to discuss if the session scope is adequate or not.
+
+<h4>5.5.1 Validation</h4>
+
+
+As part of the JSF core component library, JSF provides a mechanism to validate input data and to render error messages in case of invalidity. We want to sketch this feature for the textfield with the ID <code>memo</code>.
+
+<pre class="lang:default mark:1,2,3,6 decode:true" title="Validation of Textfield">&lt;h:inputText id="memo" size="30" value="#{memoController.memo.description}" validatorMessage="Please, enter a memo!"&gt;
+	&lt;f:validateRequired /&gt;
+&lt;/h:inputText&gt;
+
+&lt;h:commandButton value="Add" actionListener="#{memoController.doAdd}" /&gt;
+&lt;h:message for="memo" style="color: red;" /&gt;</pre>
+
+
+The code snippet shows that special validation tags can be embedded within the opening and closing tag of an input component, here a textfield. In this case, we use the tag <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/f/validateRequired.html" target="_blank">f:validateRequired</a>&gt;</code> that demands an input value for the textfield. If nothing is entered into the textfield and a request is started by clicking on the command button, the validation will fail. The server does not execute the action listener method but renders the view containing error messages. Customized error messages can be defined by using the attribute <code>validatorMessage</code> of the respective input component. If no individual message is given, the system uses localized default messages. Due to the <code>&lt;h:message&gt;</code> tag it is possible to place the message at an arbitrary position within the Facelet. We place it, as demanded earlier, directly behind the command button. The attribute <code>for</code> relates to the ID of the input component.
+
+After updating the Facelet <code>memos.xhtml</code> as described, we can re-run our project and after a click on the provided link (e.g. <code>http://runner20.codenvycorp.com:64433</code>), we should get the content presented in Fig. 5-3.
+<a href="http://www.turngeek.press/images/javaeeinaday/chapter5/5-3.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter5/5-3.png" alt="Screenshot of the JSF-rendered memos view  containing an error message." width="100%" /></a>
+<strong>Fig. 5-3 </strong> Screenshot of the rendered memos view containing an error message in the browser.
+
+<h4>5.5.2 HTML 5 friendly</h4>
+
+
+In HTML5, input elements have a new attribute <code>placeholder</code>. This attribute can be used to place text in the input field in gray until the field receives focus. This enables the implementation of very simple <em>inline labels</em>: labels of input fields that are not located over or before the respective field but are contained within the field itself. This is useful in that it allows us to provide informational texts for filling out an input field.
+
+Unfortunately, the attribute <code>placeholder</code> does not exist for JSF components like <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/h/inputText.html" target="_blank">h:inputText</a>&gt;</code>. But with the help of JSF's <em>pass-through mechanism</em>, it is possible to use these new HTML5 attributes anyway. The idea is to define an attribute and  its value with a special JSF tag called <code>&lt;<a href="https://docs.oracle.com/javaee/7/javaserver-faces-2-2/vdldocs-facelets/f/passThroughAttribute.html" target="_blank">f:passThroughAttribute</a>&gt;</code> within the respective JSF component. During the JSF rendering phase, attributes defined in this way are emdedded directly in the resulting HTML code. In the following, we use this mechanism to realize inline labels for our textfield as follows:
+
+<pre class="lang:default mark:2 decode:true " title="HTML 5 friendly: pass-through mechanism">&lt;h:inputText id="memo" size="30" value="#{memoController.memo.description}" validatorMessage="Please, enter a memo!"&gt;
+	&lt;f:passThroughAttribute name="placeholder" value="Enter your memo here" /&gt;
+	&lt;f:validateRequired /&gt;
+&lt;/h:inputText&gt;</pre>
+
+
+After updating the Facelet <code>memos.xhtml</code> as described, we can re-run our project and after a click on the provided link (e.g. <code>http://runner20.codenvycorp.com:64433</code>), we should get the content presented in Fig. 5-4.
+<a href="http://www.turngeek.press/images/javaeeinaday/chapter5/5-4.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter5/5-4.png" alt="Screenshot of the JSF-rendered memos view with a textfield containing an inline label." width="100%" /></a>
+<strong>Fig. 5-4 </strong> Screenshot of the JSF-rendered memos view with a textfield containing an inline label.
+
+<h4>5.5.3 More Scopes</h4>
+
+
+In Section 5.3, we described the annotation <code>@SessionScoped</code>. JSF provides further scopes for Managed Beans. In order to develop a performant web application, we should store data only as long as necessary and as short as possible on the server. Storing everything in the session without necessity can lead to serious memory loads if several thousand users work with the application at the same time. Analyzing the situation often shows that some data is only necessary as long as a user works with the same view or that data is only needed during one request. Tab. 5-1 shows the most important scopes for JSF Managed Beans.
+
+<table>
+
+<tbody>
+
+<tr>
+
+<td><strong>Scope</strong></td>
+
+
+
+<td><strong>Description</strong></td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>@<a href="http://docs.oracle.com/javaee/7/api/javax/faces/bean/ApplicationScoped.html" target="_blank">ApplicationScoped</a></td>
+
+
+
+<td> The bean is provided as long as the application is deployed to the server.</td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>@<a href="http://docs.oracle.com/javaee/7/api/javax/faces/bean/SessionScoped.html" target="_blank">SessionScoped</a></td>
+
+
+
+<td> Beans are stored in the user session and deleted if the session gets invalid.</td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>@<a href="http://docs.oracle.com/javaee/7/api/javax/faces/bean/ViewScoped.html" target="_blank">ViewScoped</a></td>
+
+
+
+<td> Beans are provided by the server as long as the user works with the same view.</td>
+
+
+</tr>
+
+
+
+<tr>
+
+<td>@<a href="http://docs.oracle.com/javaee/7/api/javax/faces/bean/RequestScoped.html" target="_blank">RequestScoped</a></td>
+
+
+
+<td> The bean and its data is created and destroyed during one http request.</td>
+
+
+</tr>
+
+
+</tbody>
+
+
+</table>
+
+
+<strong>Tab. 5-1     </strong>Scopes for JSF Managed Beans (package javax.faces.bean).
+
+Since  our JSF application only contains one view, we could decide to change the scope of the bean <code>MemoController</code> to the view scope (<code>@ViewScoped</code>). Before trying so, please open the application in two tabs of the same browser. Add some memos to the list. Since both views use the same session they both work with the same Managed Bean. The data is shared between the tabs. Now, change the scope to <code>@ViewScoped</code> and restart the application. Opening the application in two tabs of the browser again shows the different behavior. Each tab is regarded as a separate view and works on its own Managed Bean, i.e. data is not shared anymore between the tabs!
+
+While view scoped data is deleted immediately after closing the view, session scoped data is still active unless the session gets a timeout. Assuming that a lot of users work with the application in parallel, a lot more memory is necessary over time for storing the data in the session. Nevertheless, please use the session scope for the bean <code>MemoController</code> again. We will revisit this discussion in the last chapter again.
+
+In the next chapter, we will revise our software architecture and introduce another important Java EE component technology called <a href="http://www.oracle.com/technetwork/java/javaee/ejb/index.html"><em>Enterprise Java Beans (EJB)</em></a>.
+
+<h3>5.4 Further Reading</h3>
+
+
+
+If  you you want to deep dive into JSF, here you will find some current textbooks about the technology.
+
+<a target="_blank" href="http://www.amazon.com/gp/product/1782176462/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1782176462&linkCode=as2&tag=turpre-20&linkId=FWSJOMWM36EVJLNW">Anghel Leonard, 2014. Mastering JavaServer Faces 2.2. Edition. Packt Publishing - ebooks Account</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1782176462" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+<a target="_blank" href="http://www.amazon.com/gp/product/1305276183/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1305276183&linkCode=as2&tag=turpre-20&linkId=BHXPAVBPU3HAR6PC">Deepak Vohra, 2014. JavaServer Faces 2.0: Essential Guide for Developers. 1 Edition. Cengage Learning PTR.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1305276183" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+<a target="_blank" href="http://www.amazon.com/gp/product/1430250100/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1430250100&linkCode=as2&tag=turpre-20&linkId=GW7SV7C6Q43CC546">Hazem Saleh, 2013. Pro JSF and HTML5: Building Rich Internet Components (Expert's Voice in Java). 2 Edition. Apress.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1430250100" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+&nbsp;
+
+
+<h3>Discussion</h3>
+
+
+Use the message board below to give the authors your feedback or to discuss this page's topic with other readers (in English please!). Please don't expect the authors to answer directly, but they might update the content of this site according to your feedback.
+<script src="/js/disqus.js" type="text/javascript"></script>
+</p>
+<hr /><div class="footnotes"><ol><li id="footnote-43-1">Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project, and by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser. <a href="#return-footnote-43-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=5%20Click%20Me%20If%20You%20Can%20%E2%80%93%20JavaServer%20Faces%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F5-click-me-if-you-can-javaserver-faces%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

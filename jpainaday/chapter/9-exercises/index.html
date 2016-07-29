@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>9 Exercises | Cloud Tutorial &#8211; JPA in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
+<link rel='prev' title='8 New Functionalities in JPA 2.1 and Bean Validation 1.1' href='http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=115' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F9-exercises%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F9-exercises%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-115" id="9exercises">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">9 Exercises</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">9 Exercises</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">Next</a></span>
+    </div>				<div id="post-115" class="type-1 post-115 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>Below, you’ll find a few exercises to help you expand on and consolidate what you’ve learned about JPA so far.</p>
+<h3>9.1 Replace JPQL Queries with Criteria API</h3>
+<p>In our services so far, database queries have been executed with <code>NamedQueries</code>. To practice, create an alternative implementation of the <code>CampaignServiceBean</code> that uses the Criteria API instead. Proceed as follows:</p>
+<ol>
+<li>Create a copy of the class <code>CampaignServiceBean</code> and call it <code>CriteriaCampaignServiceBean</code>.</li>
+<li>Designate the existing <code>CampaignServiceBean</code> as an alternative implementation that should not be used (see <a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/" target="_blank">chapter 5 in Cloud Tutorial CDI in a Day</a>).</li>
+<li>Remove all invocations of <code>createNamedQuery</code> in the <code>CriteriaCampaignServiceBean</code> and replace them with an equivalent use of the Criteria API.</li>
+</ol>
+<p>In <a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">section 7.4</a>, we learned about the <code>EntityListener</code>. Use this functionality now to store the time of creation for all entities. Proceed as follows:</p>
+<ol>
+<li>Derive all entities from a new class, <code>DateEntity</code>. This contains an attribute, <code>createdAt</code>, for saving the date of creation.</li>
+<li>Create a corresponding <code>EntityListener</code> and use it to annotate all entities.</li>
+</ol>
+<h3>9.2 Validate the Minimum Donation Amount for a Campaign</h3>
+<p>In the <code>Campaign</code> class, we defined an attribute, <code>donationMinimum</code>, to store the minimum donation amount for a campaign. Currently, however, this is not checked when a donation is added.</p>
+<p>Add this validation to the method <code>addDonation</code> within the class <code>DonationServiceBean</code>. If the validation fails, throw a <code>RuntimeException</code>. This will lead to the transaction being aborted, which means that no donation will be stored in the database.</p>
+<h3>9.3 Inform Organizer When Donation Targets Are Met</h3>
+<p>In the <code>Campaign</code> class, we defined an attribute, <code>donationTarget</code> to store the donation target for the campaign. At the moment, however, this is not being used.</p>
+<p>A meaningful extension of the application would be to have it send the organizer an email as soon the current donation total reaches or exceeds the donation target for the campaign. Proceed as follows:</p>
+<ol>
+<li>Add the missing validation (for the donation target) to the <code>addDonation</code> method in the class <code>DonationServiceBean</code>. As a first step, only create a log message for the donation target being reached.</li>
+<li>Create a utility class for sending emails (see <a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/javamail/javamail.html" target="_blank">Java Mail API</a>).</li>
+</ol>
+<p>Finally, modify the method <code>addDonation</code> to send an email to the organizer of a campaign when the target donation is reached.</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JPA%20in%20a%20Day&amp;body=9%20Exercises%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F9-exercises%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

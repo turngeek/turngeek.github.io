@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name='application-name' content='Pressbooks'>
+<meta name='author' content='Marcus Schiesser and Martin Schmollinger'>
+<meta name='description' content='The Cloud Tutorial Series Java EE describes how to develop a sample web application using the Java EE platform using a Cloud IDE. You can jump start into development without any special installations.'>
+<meta name='publisher' content='TurnGeek'>
+<meta itemprop='alternativeHeadline' content='Java EE 7 in a Working Week' id='alternativeHeadline'>
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-18' id='datePublished'>
+<meta itemprop='description' content='The Cloud Tutorial Series Java EE describes how to develop a sample web application using the Java EE platform using a Cloud IDE. You can jump start into development without any special installations.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7inaweek/wp-content/uploads/sites/6/2015/10/javaee7inaweek.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>Cloud Tutorial Series - Java EE 7 | Simple Book Production</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7inaweek/xmlrpc.php" />
+
+
+<!-- All in One SEO Pack 2.2.7.4 by Michael Torbert of Semper Fi Web Design[2424,2495] -->
+<link rel="canonical" href="http://www.turngeek.press/javaee7inaweek/" />
+<!-- /all in one seo pack -->
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7inaweek\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-info-css'  href='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/css/book-info.css?ver=20130713' type='text/css' media='all' />
+<link rel='stylesheet' id='book-info-fonts-css'  href='http://fonts.googleapis.com/css?family=Droid+Serif%3A400%2C700%7COswald%3A300%2C400%2C700&#038;ver=4.4' type='text/css' media='all' />
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7inaweek/wp-content/uploads/sites/6/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/symbionts/jquery/jquery.columnizer.js?ver=1.6.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/columnizer-load.js?ver=20130819'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/symbionts/jquery/sharrre/jquery.sharrre-1.3.4.min.js?ver=20130712'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var PB_SharrreToken = {"urlCurl":"http:\/\/www.turngeek.press\/javaee7inaweek\/wp-content\/plugins\/pressbooks\/symbionts\/jquery\/sharrre\/sharrre.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/sharrre-load.js?ver=20130712'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7inaweek/wp-json/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7inaweek/' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7inaweek/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7inaweek%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7inaweek/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7inaweek%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="home page page-id-9 page-template-default">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	 	 
+	 	<!-- home page wrap -->
+	 	<span itemscope itemtype="http://schema.org/Book" itemref="about alternativeHeadline author copyrightHolder copyrightYear datePublished description editor 		      image inLanguage keywords publisher">
+		      
+	 		<div class="book-info-container">
+	 
+			
+
+	<section id="post-9" class="top-block clearfix home-post post-9 page type-page status-publish hentry">
+	
+			<div class="log-wrap">	<!-- Login/Logout -->
+	   	    					<a href="http://www.turngeek.press/javaee7inaweek/wp-login.php?redirect_to=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7inaweek%2F" class="">login</a>
+	   	 		    	</div>   
+	<div class="right-block">
+		<a href="http://pressbooks.com" class="pressbooks-brand"><img src="http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/pressbooks-branding-2x.png" alt="pressbooks-branding" width="186" height="123" /> <span>Make your own books on Pressbooks</span></a>
+	</div>	
+						
+			<div class="book-info">
+				<!-- Book Title -->
+				<h1><a href="http://www.turngeek.press/javaee7inaweek/" title="Cloud Tutorial Series &#8211; Java EE 7" rel="home">Cloud Tutorial Series &#8211; Java EE 7</a></h1>
+				
+					
+							     	<p class="book-author">Marcus Schiesser and Martin Schmollinger</p>
+			     	<span class="stroke"></span>
+		     					
+					
+									<p class="sub-title">Learn to Develop Web Applications with Java EE 7 in a Working Week using a Cloud IDE</p>
+					<span class="detail"></span>
+										
+				
+									<p>The Cloud Tutorial Series Java EE describes how to develop a sample web application using the Java EE platform using a Cloud IDE. You can jump start into development without any special installations.</p>
+						
+			</div> <!-- end .book-info -->
+			
+								<div class="book-cover">
+				
+						<img src="http://www.turngeek.press/javaee7inaweek/wp-content/uploads/sites/6/2015/10/javaee7inaweek.jpg" alt="book-cover" title="Cloud Tutorial Series &#8211; Java EE 7 book cover" />
+					
+				</div>	
+								
+				<div class="call-to-action-wrap">
+										<div class="call-to-action">
+						<a class="btn red" href="http://www.turngeek.press/javaee7inaweek/front-matter/introduction/"><span class="read-icon"></span>Read</a>
+						
+							
+						 
+						
+					</div> <!-- end .call-to-action -->		
+				</div><!--  end .call-to-action-wrap -->
+				
+			
+			
+			
+	</section> <!-- end .top-block -->				<section class="second-block-wrap"> 
+				<div class="second-block clearfix">
+						<div class="description-book-info">
+														<h2>Book Description</h2>
+																	<p>The Cloud Tutorial Series Java EE describes how to develop a web application using the Java EE platform. The application is developed step by step. Each step is explained in a separate Cloud Tutorial that is dedicated to a certain technology. You will learn how to work with JSF, CDI, JPA, EJB and REST services.  The application is runnable after each step and will realize all requirements after the final step.</p>
+									
+								
+									<div id="share">
+																					<div id="twitter" data-url="http://www.turngeek.press/javaee7inaweek/" data-text="Check out this great book on Pressbooks." data-title="Tweet"></div>
+											<div id="facebook" data-url="http://www.turngeek.press/javaee7inaweek/" data-text="Check out this great book on Pressbooks." data-title="Like"></div>
+											<div id="googleplus" data-url="http://www.turngeek.press/javaee7inaweek/" data-text="Check out this great book on Pressbooks." data-title="+1"></div>
+											 
+									</div>	
+						</div>
+							
+											
+		      				
+								<div class="author-book-info">
+		      				
+		      														</div>			
+					</div><!-- end .secondary-block -->
+				</section> <!-- end .secondary-block --> 				<section class="third-block-wrap">
+				<div class="third-block clearfix">
+				<h2>Table of Contents</h2>
+									<ul class="table-of-content" id="table-of-content">
+						<li>
+							<ul class="front-matter">
+																								<li class="front-matter introduction"><a href="http://www.turngeek.press/javaee7inaweek/front-matter/introduction/">Introduction</a>
+                  									</li>
+															</ul>
+						</li>
+														<li><h4>							<a href="http://www.turngeek.press/javaee7inaweek/part/main-body/">							I A Profiled Introduction							</a>							</h4></li>
+							<li>
+								<ul>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-1-java-ee-7-the-standard-for-enterprise-java/">I.1 Java EE 7 – The Standard for Enterprise Java</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-2-the-component-architecture-of-java-ee-7/">I.2 The Component Architecture of Java EE 7</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-3-the-target-architecture/">I.3 The Target Architecture</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/i-4-what-next/">I.4 What Next?</a>
+                      										</li>
+																	</ul>
+							</li>
+														<li><h4>							<a href="http://www.turngeek.press/javaee7inaweek/part/3-requirements-of-the-sample-application-my-campaign/">							II Requirements of the Sample Application “My-Campaign”							</a>							</h4></li>
+							<li>
+								<ul>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-1-introduction/">II.1 Introduction</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-2-overview-of-use-cases/">II.2 Overview of Use Cases</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/">II.3 Domain Classes</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/">II.4 Use Cases</a>
+                      										</li>
+																													<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7inaweek/chapter/what-next/">II.5 What Next?</a>
+                      										</li>
+																	</ul>
+							</li>
+														<li><h4><!-- Back-matter --></h4></li>
+							<li>
+								<ul class="back-matter">
+																	</ul>
+							</li>
+					</ul><!-- end #toc -->
+
+				</div><!-- end .third-block -->
+			</section> <!-- end .third-block -->
+
+
+		
+			
+
+	
+	</div><!-- #content -->
+
+
+
+<div class="footer">
+	<div class="inner">
+								
+			<table>
+				<tr>
+					<td>Book Name:</td>
+					<td>Cloud Tutorial Series &#8211; Java EE 7</td>
+				</tr>
+				       			 																				<tr>
+					<td>Author:</td>
+					<td>Marcus Schiesser and Martin Schmollinger</td>
+																																																																																								<tr>
+					<td>Publisher:</td>
+					<td>TurnGeek</td>
+																<tr>
+					<td>Publication Date:</td>
+					<td>October 18, 2015</td>
+												</tr>
+				<tr><td>Copyright:</td><td>2015 by dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9. </td></tr>
+
+				</table>
+							
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7inaweek/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='description' content='This Cloud Tutorial is the second of an upcoming series building a web application step by step with Java EE technology. It will see us improve the architecture and design of the sample application using CDI (Contexts and Dependency Injection).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/2015/10/cdiinaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<link rel="shortcut icon" href="http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>7  Exercises | Cloud Tutorial &#8211; CDI in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/cdiinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/cdiinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/cdiinaday/wp-json/' />
+<link rel='prev' title='6 What’s Left to Discover?' href='http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/cdiinaday/?p=29' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F7-exercises%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F7-exercises%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-29" id="7exercises">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/cdiinaday/" title="Cloud Tutorial &#8211; CDI in a Day" rel="home">Cloud Tutorial &#8211; CDI in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">7  Exercises</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">7  Exercises</h2> -->
+    </div>				<div id="post-29" class="type-1 post-29 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<h3>7.1 Differentiate Between a Domain and Technical Log</h3>
+<p>In <a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">section 3.4</a>, we used a producer method to introduce a logger. In practice, it’s not unusual for developers to create two or more different loggers. We might, for example, create one for operational messages (e.g. <em>Campaign added</em>) and one for technical messages (e.g. <em>Database not accessible</em>).</p>
+<p>To implement this for an application, proceed as follows:</p>
+<ol>
+<li>Create two qualifiers called <code>DomainLog</code> and <code>TecLog</code> in the package <code>press.turngeek.mycampaign.util</code>.</li>
+<li>Replace the producer method for the logger with one producer method annotated with <code>@DomainLog</code> and another annotated with <code>@TecLog</code>. To differentiate between the loggers, add two different prefixes to the String parameter of the <code>getLogger</code> method: once, String <code>“DomainLog:”</code> and once, <code>“TecLog:”</code>.</li>
+<li>Annotate the logger of the <code>DonateMoneyController</code> bean with <code>@DomainLog</code>.</li>
+<li>Inject a logger in the <code>CampaignServiceBean</code> and annotate it with <code>@TecLog</code>. Use this logger to issue a message in the method <code>getAllCampaigns</code>.</i>
+</ol>
+<h3>7.2 Add a Message for the Updating of a Campaign</h3>
+<p>In <a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">chapter 4</a>, we learned how to send application-wide messages. Currently, messages are sent whenever a campaign is added or deleted. We might also need a message to be sent when a campaign is updated.</p>
+<p>To help us achieve a better understanding of CDI events, we can try sending this message now as practise. Proceed as follows:</p>
+<ol>
+<li>Modify the class <code>Events</code> by adding the qualifier <code>Updated</code>.</li>
+<li>Send the message at the appropriate place in the <code>EditCampaignController</code>.</li>
+<li>Create an observer method <code>onCampaignUpdated</code> in the <code>CampaignListProducer</code>. Since this method cannot yet be fully implemented, it should be used solely to issue a message via a logger.</li>
+</ol>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20CDI%20in%20a%20Day&amp;body=7%20%20Exercises%20-%20http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F7-exercises%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/cdiinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/cdiinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/cdiinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/1-why-cdi/">1 Why CDI?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">2 Getting Started</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">3 Contexts and Dependency Injection</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">4 Application Wide Messages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">5 Services and Alternatives</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">6 What’s Left to Discover?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/7-exercises/">7  Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

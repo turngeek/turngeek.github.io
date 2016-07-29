@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>6 Our First Use Case: &#8220;Display and Edit Campaign&#8221; | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
+<link rel='prev' title='5 The Templating System' href='http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/' />
+<link rel='next' title='7 Additional JSF and Java EE Technologies' href='http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=28' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F6-our-first-use-case-display-and-edit-campaign%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F6-our-first-use-case-display-and-edit-campaign%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-28" id="6ourfirstusecase:&#8220;displayandeditcampaign&#8221;">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">6 Our First Use Case: &#8220;Display and Edit Campaign&#8221;</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">6 Our First Use Case: &#8220;Display and Edit Campaign&#8221;</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">Next</a></span>
+    </div>				<div id="post-28" class="type-1 post-28 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In the following section, we will implement the use case <em><a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/" target="_blank">Display and edit campaign</a></em>. First, we will turn our attention to the controller class and a class for supplying sample data. After that, we’ll familiarize ourselves with the JSF UI components that are required to implement the input screen for the use case. Finally, we’ll program the Facelet of the view and try it out for ourselves.</p>
+<p>For your convenience, we provide a project in the matching state in a temporary workspace. As usual you can also continue to work in your own Codenvy workspace.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=frl8tpxrwbutoih9" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign after Chapter 5 (Template &amp; RLC)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=o55uao0kx4rr1cbe--></p>
+<h3>6.1<strong> Backing Beans</strong></h3>
+<p><em>Backing beans </em>are Java classes that execute tasks behind the scenes of the view. Backing beans can be used as controllers or as a component of the model for storing session data.</p>
+<p>Our project will use CDI for the backing beans. What follows is a summary of the most important elements of this new component technology, which will be expanded upon in more detail in our <em>Cloud Tutorial CDI in a Day</em>.</p>
+<p><strong>The <code>@Named</code> Annotation</strong></p>
+<p>The annotation <code>@Named</code> (<code>javax.inject.Named</code>), which must be placed before the class declaration of a bean, enables us to reference it in a Facelet using the class name beginning with a lower case letter. The annotation also offers us the opportunity to enter a name that differs from the class name. However, we’ll refrain from exploring this particular topic in any more detail at this point.</p>
+<p><strong>The Scope <code>@SessionScoped</code></strong></p>
+<p>The <em>scope</em> – and therefore the lifecycle – of a CDI bean can be defined using annotations. The scope can also be viewed as the context of the object, which is the reason for the presence of the C in the acronym CDI. This annotation must also precede the class declaration for the bean. All annotations belong to the package <code>javax.enterprise.context</code>. We will begin by using the session-based lifecycle (<code>@SessionScoped</code>). CDI offers a wide assortment of different scopes – we’ll get to know them better in our <em>Cloud Tutorial CDI in a Day</em>, where we’ll also discuss the use of scopes for our beans in detail and look at ways to optimize them.</p>
+<div class="textbox shaded">
+<p><strong>@SessionScoped</strong></p>
+<p>The <em>session </em>is defined as the lifecycle of a CDI bean. This means that logically the same bean is used throughout a user session. All requests within a session share the status of the bean. The data stored in the bean is stored independently of the view for the duration of the session.</p>
+</div>
+<p>We can now move to the implementation. We will begin by programming the controller for our use case and then the backing bean for the sample data.</p>
+<p><strong>The ListCampaignsController Class</strong></p>
+<p>We have already established that the controller contains the session lifecycle (<code>@SessionScoped</code>). Controller classes must define the control logic for every possible interaction of the user with the view. The class therefore possesses a method for every possible user interaction. The convention is for all of these methods to begin with the prefix do. In each of these methods, we will add output to the console in order to be able to check the functionality more easily (see ‎Listing 6-1).</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="ListCampaignsController class">package press.turngeek.mycampaign.controller;
+
+import press.turngeek.mycampaign.model.Campaign;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
+
+@SessionScoped
+@Named
+public class ListCampaignsController implements Serializable {
+
+	private static final long serialVersionUID = 8693277383648025822L;
+
+	public String doAddCampaign() {
+		System.out.println("Add Campaign");
+		return Pages.EDIT_CAMPAIGN;
+	}
+	public String doEditCampaign(Campaign campaign) {
+		System.out.println("Edit Campaign "+campaign);
+		return Pages.EDIT_CAMPAIGN;
+	}
+	public String doEditDonationForm(Campaign campaign) {
+		System.out.println("Edit Donation Form of Campaign "+campaign);
+		return Pages.EDIT_DONATION_FORM;
+	}
+	public String doListDonations(Campaign campaign) {
+		System.out.println("List Donations of Campaign "+campaign);
+		return Pages.LIST_DONATIONS;
+	}
+	public void doDeleteCampaign(Campaign campaign) {
+		System.out.println("Deletion not implemented, yet!");
+	}
+}</pre>
+<p><strong>Listing 6-1</strong>     ListCampaignsController class</p>
+<p>At the end of each method is a return command that returns the name of the next view to be accessed as a <code>String</code>. This is how explicit navigation is enabled within JSF applications. We haven’t yet defined another view to navigate to; however, views will be added continuously throughout the rest of the chapter. We will prepare for that now by adding the names of the upcoming views to the class <code>Pages</code> (see ‎Listing  6-2). We must remember to stick to these names when we come to program the corresponding Facelets later. This means, for example, that the Facelet for the list of campaigns must be added to the file <code>listCampaigns.xhtml</code>.</p>
+<p>An exception here is the method <code>doDeleteCampaign</code>, which does not possess a return value. The reason for this is that – in contrast to the other methods – it is used within the Facelet as an <em>actionListener method</em>. An actionListener method performs a particular logic and generally only changes the statuses and data of the backing beans that represent the current view. In such cases, navigation to another view is not necessary.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Pages class">package press.turngeek.mycampaign.controller;
+
+public class Pages {
+	public static final String LIST_CAMPAIGNS = "listCampaigns";
+	public static final String EDIT_CAMPAIGN = "editCampaign";
+	public static final String EDIT_DONATION_FORM = "editDonationForm";
+	public static final String LIST_DONATIONS = "listDonations";
+	public static final String DONATE_MONEY = "donateMoney";
+}</pre>
+<p><strong>Listing 6-2</strong>     <em>Pages</em> class</p>
+<p><strong>The CampaignListProducer Class</strong></p>
+<p>The class <code>CampaignListProducer</code>, as shown in ‎Listing  6-3, simulates the yet-to-be-created database connection by providing a method that supplies sample data. More precisely, the method <code>getCampaigns</code> returns a list of campaigns. The class contains a further method, <code>createMockCampaigns</code>, in which campaigns and associated donations are explicitly created and are stored in a list. For the list, we will use the Java API class <code>java.util.LinkedList</code>. The method <code>getCampaigns</code> can then be used to request the campaigns as a list. The class uses the lifecycle <code>@SessionScoped</code>, since the data for the complete user session should exist.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="CampaignListProducer class">package press.turngeek.mycampaign.data;
+
+import press.turngeek.mycampaign.model.Account;
+import press.turngeek.mycampaign.model.Campaign;
+import press.turngeek.mycampaign.model.Donation;
+import press.turngeek.mycampaign.model.Donation.Status;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.util.LinkedList;
+import java.util.List;
+
+@SessionScoped
+@Named
+public class CampaignListProducer implements Serializable {
+	private static final long serialVersionUID = -182866064791747156L;
+	private List&lt;Campaign&gt; campaigns;
+
+	public CampaignListProducer() {
+		campaigns = createMockCampaigns();
+	}
+	public List&lt;Campaign&gt; getCampaigns() {
+		return campaigns;
+	}
+	public List&lt;Campaign&gt; createMockCampaigns() {
+		Donation donation1 = new Donation();
+		donation1.setDonorName("John Smith");
+		donation1.setAmount(20d);
+		donation1.setReceiptRequested(true);
+		donation1.setStatus(Status.TRANSFERRED);
+		donation1.setAccount(new Account(donation1.getDonorName(), 
+			"XXX Bank","DE44876543210000123456"));
+		Donation donation2 = new Donation();
+		donation2.setDonorName("Peter Jones");
+		donation2.setAmount(30d);
+		donation2.setReceiptRequested(false);
+		donation2.setStatus(Status.IN_PROCESS);
+		donation2.setAccount(new Account(donation2.getDonorName(), 
+			"YYY Bank","DE44864275310000654321"));
+		List&lt;Donation&gt; spenden = new LinkedList&lt;&gt;();
+		spenden.add(donation1);
+		spenden.add(donation2);
+		Campaign campaign1 = new Campaign();
+		campaign1.setName("Shirts for the U19 Team");
+		campaign1.setTargetAmount(1000d);
+		campaign1.setAmountDonatedSoFar(258d);
+		campaign1.setDonationMinimum(20d);
+		campaign1.setId(1L);
+		campaign1.setAccount(new Account("Robert Cook", "ABC Bank",
+			"DE44123456780100200300"));
+		campaign1.setDonations(spenden);
+		Campaign campaign2 = new Campaign();
+		campaign2.setName("Wheelchair for Maria");
+		campaign2.setTargetAmount(2500d);
+		campaign2.setAmountDonatedSoFar(742d);
+		campaign2.setDonationMinimum(25d);
+		campaign2.setId(2L);
+		campaign2.setAccount(campaign1.getAccount());
+		campaign2.setDonations(spenden);
+		List&lt;Campaign&gt; ret = new LinkedList&lt;&gt;();
+		ret.add(campaign1);
+		ret.add(campaign2);
+		return ret;
+	}
+}
+</pre>
+<p><b>Listing 6-3</b>     <em>CampaignListProducer</em> class</p>
+<p>At this point, we have implemented the controller logic and data delivery for the first use case. Soon, we will turn to the view declaration  for the same use case. Before implementing this, however, we will use the following section to acquaint ourselves with a few more JSF technologies.</p>
+<h3>6.2 JSF Technologies for the First Use Case</h3>
+<p>We require a little more knowledge about JSF to proceed with the implementation. Firstly, we must find out how to reference <em>backing beans</em> within a Facelet, which we can do with the help of the <em>Expression Language</em> (EL). Secondly, a small number of additional UI components are required to enable us to implement the visual characteristics and functionality of the use case according to its design.</p>
+<p><strong>Expression Language</strong></p>
+<p>Facelets are generally defined as the view declaration language of JSF pages. In the context of such a language, a connection to the logic and data of an application is of integral importance. This access should be as simple as possible. For this reason, the developers of JSF avoided using Java for this and instead defined a new language with a simpler syntax, the <em>Expression Language</em> (EL), whose syntax is based on dot notation. Each bean is referenced uniquely within the Facelet using its name. Dot notation can then be used to access the properties and methods of a bean. This is something we are already familiar with from Java, where an object variable or class name can likewise be used to access their elements. Within Facelets, EL expressions are introduced by the number sign (<code>#</code>) and should be enclosed by curly brackets: <code>#{EL-Expression}</code>.</p>
+<p>An EL expression can contain a value expression, a method expression or an arithmetical or logical expression. Combinations are also possible. In our first input screen, we require value expressions – which will be used to assign data to particular UI components &#8211; and method expressions, to reference   methods as event handlers for UI components.</p>
+<p>We often need to display the current value of a particular bean property in a UI component. Sometimes, we also need to edit it. Each bean class has a getter and a setter method hidden “behind the scenes” for when a value needs to be accessed. Convention dictates that a pair of these methods must exist for every property of a bean. The property name comes after the prefix <code>set/get</code>. Within the EL expression, we can address a property just by using this name – that is, without the prefixes <code>set</code> and <code>get</code>. In order to be able to access the properties and methods of a bean at all, the bean name must be known and must precede the EL expression. Beans can only be addressed if the annotation <code>@Named</code> is used in the bean’s class declaration. The name of a bean can be explicitly set (e.g. <code>@Named("myBean")</code>). If it is not, the bean name will match the class name given in lower case letters at the beginning.</p>
+<p>Let’s look at an example from our program so far. The bean <code>CampaignListProducer</code> encapsulates a list of campaigns (see ‎Listing  6-3) and provides a corresponding getter method for the list attribute. The bean is annotated with <code>@Named</code> and will later be embedded in the Facelet <code>listCampaigns.xhtml</code>, where its job is to supply the campaigns to be displayed. The bean’s list of campaigns can be embedded in the Facelet using the Expression Language. The list of campaigns can be bound to a UI component using the expression <code>#{campaignListProducer.campaigns}</code>. In this case, access to the UI components is read-only, since we have not implemented a setter method for the attribute. However, this is an exception. As a rule, the binding of a UI component to a bean attribute allows the value to be edited as well as read.</p>
+<p>Method expressions are similiar to value expressions in terms of their syntax. Like value expressions, they are preceded by the bean name; however, they differ in that the complete method name should come after the dot. If, for example, we want to reference the method <code>doAddCampaign</code> of the bean class <code>ListCampaignsController</code> from ‎Listing 6-1 as the handler of a UI component, the EL expression will be written as follows: <code>#{campaignsListController.doAddCampaign}</code>. Though the EL actually has much more to offer than this, the above is all we require to understand our implementation.</p>
+<p><strong>UI Components</strong></p>
+<p>We’ll now look at the UI components we need. In order to implement the input screen of our <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/" target="_blank">use case</a>, we will first require UI components such as buttons or links that access program logic via handler methods. Our aim is to be able to reach the campaign-related functions using links and to add a campaign with a button.</p>
+<p>Further to this, we need to be able to display texts (labels) for the headings and other purposes and to be able to represent data in table form. The components should be flexible enough to allow the number of columns in the table to be determined at page-creation time. Last but not least, we want to display the amounts with the correct formatting. This means that we will need to convert numerical values into the correct format for Euro amounts.</p>
+<p><strong>Form Components</strong></p>
+<p>To be able to enter data and submit it to the server, we will need a form. Using the <code>&lt;h:form&gt;</code> tag in a Facelet, JSF can create an HTML form into which UI components can be embedded as desired. For our input screen, a single form beginning with <code>&lt;h:form&gt;</code> and ending with <code>&lt;/h:form&gt;</code> will suffice.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;h:form&gt;</code>  in a nutshell</strong></p>
+<p>This tag is rendered to an HTML form that submits its data via an HTTP POST. A form must contain at least one component that is capable of triggering a Faces request (e.g. <code>&lt;h:commandButton&gt;</code> or <code>&lt;h:commandLink&gt;</code>, as you will see below).</p>
+<p>Selected attributes:</p>
+<p><code>acceptcharset</code>: gives a list of character sets accepted by the server for the input data of a form, e.g. <code>&lt;h:form acceptcharset="ISO-8859-1"&gt;</code></p>
+</div>
+<p><strong>Links and Button Components</strong></p>
+<p>The tags <code>&lt;h:commandLink&gt;</code> and <code>&lt;h:commandButton&gt;</code> behave like links or buttons that trigger <em>Action Events</em> when clicked by the user.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;h:commandButton&gt;</code> and <code>&lt;h:commandLink&gt;</code> in a nutshell</strong></p>
+<p>In a form, these tags are rendered to a button or link that starts an HTTP POST request by default when clicked.</p>
+<p>Selected attributes:</p>
+<p><code>value</code>: Labeling a link or button</p>
+<p><code>action</code>: EL expression for binding an action method of a bean</p>
+<p><code>actionListener</code>: EL expression for binding an actionListener method of a bean</p>
+</div>
+<p>Action events are objects that are created by clicking a link or button and that store information about this event. In addition, JSF recognizes other types of events that are fired at the runtime of a JSF application, with <em>value changed events</em> being one example. These are created by UI components when the value stored by the component is changed. Event handling is accomplished by using methods as event handlers. In the case of action events, there are two types of event handler methods: <em>action methods</em> and <em>actionListener methods</em>. Using EL expressions, the methods are stored as values for the <code>action</code> or <code>actionListener</code> attributes of the respective JSF components. An action method has a return value of type <code>String</code>, which controls navigation between different pages of the application. An actionListener method has no return value (<code>void</code>).</p>
+<p>The attribute <code>value</code> can be used to specify a link label or the name of a button. Each form requires at least one such component. Both action and actionListener methods can have parameters. actionListener methods can also declare a parameter of the type <code>ActionEvent</code> from the package <code>javax.faces.event</code>. This class can then be used to request information in the handler methods about the component that triggers the event. The following two examples show the binding of both an <em>action</em> and an <em>actionListener</em> method.</p>
+<p><code> </code></p>
+<pre class="lang:default decode:true">&lt;h:commandButton value="Add Campaign" action="#{campaignListController.doAddCampaign}" /&gt;
+
+&lt;h:commandLink value="x" actionListener="#{campaignListController.doDeleteCampaign(campaign)}" /&gt;</pre>
+<div class="textbox shaded">
+<p><strong>Action Method or actionListener Method?</strong></p>
+<p>Action methods are generally used in situations where we want to influence navigation. To be able to do this, the return value of an action method must contain the name of the subsequent view.</p>
+<p>actionListener methods, in contrast, offer easy access to the action event and thus to the component that triggers the event. The application does not navigate to another view, but the content of the current view may be manipulated by the listener method.</p>
+</div>
+<p><strong>Output Text Components</strong></p>
+<p>The tag <code>&lt;h:outputText&gt;</code> can be used to embed text in the page.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;h:outputText&gt;</code> in a nutshell</strong></p>
+<p>This tag adds text to the page to be created.</p>
+<p><code>id</code>: Unique name of the text component</p>
+<p><code>value</code>: Text or EL expression for binding a bean attribute or method to the component</p>
+</div>
+<p>The use of the tag thus makes particular sense in situations where converters are used or where an ID needs to be be assigned for the component. This ID can then be used to refer to the component in other places. If neither of the above is necessary, the text or EL expression can be added directly in the Facelet. In the following example, the value of the attribute <code>value</code> is embedded in the page directly as text.</p>
+<pre class="lang:default decode:true">&lt;h:outputText value="bisher gespendet " /&gt;</pre>
+<p>The tag enables the use of converters. In the following example, the number stored in the bean property <code>amountDonatedSoFar </code>should be displayed as the amount of currency.</p>
+<p>&nbsp;</p>
+<pre class="lang:default decode:true">&lt;h:outputText value="#{campaign.amountDonatedSoFar}"&gt;
+
+&lt;f:convertNumber type="currency" currencyCode="EUR"/&gt;
+
+&lt;/h:outputText&gt;</pre>
+<p><strong>Components for Formatting Numbers</strong></p>
+<p>For the most part, it is not sufficient for our application to merely show the numbers themselves. Numbers have their own semantics, and formatting conventions are often an important aspect. The formatting can be carried out using special JSF converters. In the case of numbers, <code>&lt;f:convertNumber&gt;</code> is commonly used.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;f:convertNumber&gt;</code> in a nutshell</strong></p>
+<p>These configurable components enable the user to create settings for the output of numbers, currency amounts and percentages. Selected attributes:</p>
+<p><code>type</code>: Type of formatting: number, currency or percentage amount</p>
+<p><code>currencyCode</code>: Currency code in accordance with ISO 4217</p>
+<p><code>for</code>: Refers to the component to be converted by specifying its  id</p>
+<p><code>maxFractionDigits</code>: Maximum number of places after the comma</p>
+<p><code>minFractionDigits</code>: Minimum number of place after the comma</p>
+</div>
+<p>In our case, the numbers used stand for amounts in euros, and we want to display them as such. The <code></code> tag takes care of the conversion for us. We must configure only one instance of the tag &#8211; which sets special attributes for the displaying of euros &#8211; and embed it in our output components (<code>h:outputText</code>). In the example, the value of the property <code>donatedAmountSoFar</code> belonging to the bean <code>campaign</code> is displayed as a euro amount. This means that amounts in the thousands are broken up with a dot, euros and cents are separated by a comma and the euro sign appears at the beginning.</p>
+<p>As an alternative to the nesting of the corresponding tag, the converter’s reference to a tag can be accomplished with the tag ID and the attribute <code>for</code>. The following example shows the relation <code>for/id</code>:</p>
+<p>We will discuss and familiarize ourselves with the general concept of validation and conversion later on. In this context, we will also explore more validators and converters provided by JSF.</p>
+<p><strong>Data Table Components</strong></p>
+<p>The <code>&lt;h:dataTable&gt;</code> tag allows us to represent data in tabular form. The entire structure is rendered to HTML for the browser using the HTML tag <code>&lt;table&gt;</code>. The columns of the table are defined using the tag <code>&lt;h:column&gt;</code>. The tag <code>&lt;h:facet&gt;</code> is used to insert headers and footers.</p>
+<div class="textbox shaded">
+<p><code>&lt;h:dataTable&amp;gt</code>;, <code>&lt;h:column&gt;</code>, <code>&lt;f:facet&gt;</code> in a nutshell</p>
+<p>We use these components to display lists of identical objects in tabular form.</p>
+<p><code>&lt;h:dataTable&gt;</code></p>
+<p>The outer tag of the data table</p>
+<p>Selected attributes:</p>
+<p><code>value</code>: Data to be displayed. This generally takes the form of an EL expression that references an attribute of a bean containing a collection of objects.</p>
+<p><code>var</code>: Name of the variables that represent the data object of a row. The variables can be used in EL expressions.</p>
+<p><code>&lt;h:column&gt;</code></p>
+<p>Represents a column in the data table and is therefore used within <code>&lt;h:dataTable&gt;</code>. The number of successive <code>&lt;h:column&gt;</code> tags determines the number of columns per row of the table.</p>
+<p><code>&lt;f:facet&gt;</code></p>
+<p>Caption for  enclosing elements. <code>&lt;f:facet&gt;</code> can be used within a <code>&lt;h:column&gt;</code> tag to specify a header or footer for the column.</p>
+<p>Selected attributes:</p>
+<p><code>name</code>: Type of labelling (<code>header/footer/caption</code>). Determines whether the label is a header or a footer.</p>
+</div>
+<p>The number of rows is dependent on the data source, which can be passed to the <code></code> tag using the attribute <code>value</code>. In the current iteration of our web application, we will access the campaigns of the <em>backing bean</em> <code>CampaignListProducer</code> using an EL expression. Accordingly, the table contains a list of campaigns. Each campaign is represented as a row in the table. Access to the individual campaigns is accomplished with a special variable. The <code></code> tag uses the attribute <code>var</code> to introduce a campaign variable of the type <code>Campaign</code>. The variable corresponds to a control variable in a loop and represents the current campaign when processing the list. These variables can be used to access the properties of a campaign for each row.</p>
+<p>Labels for columns and tables can be inserted using the <code></code> tag. Possible facets are <code>header</code>, <code>footer</code> and <code>caption</code> (for the table name). We want to create the column headers, so we will use the <code></code> tag within the <code></code> tag and set the name attribute’s value to <code>header</code>. The following Facelet fragment outlines how the data table might be structured. However, we can only see the definition for the first column in the example.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;h:dataTable value="#{campaignListProducer.campaigns}" var="campaign"&gt;
+	&lt;h:column&gt;
+		&lt;f:facet name="header"&gt;
+			&lt;h:outputText value="Name" /&gt;
+		&lt;/f:facet&gt;
+		&lt;h:outputText value="#{campaign.name}" /&gt;
+	&lt;/h:column&gt;
+...
+&lt;/h:dataTable&gt;
+</pre>
+<h3>6.3 Our First View!</h3>
+<p>On the basis of the template provided, we will now create the user interface for the use case <em>Display and edit campaign. </em>To do this, we need once again to think back to the appearance of the input screen as laid out in <a href="http://www.turngeek.press/javaee7/part/3-requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">the requirements of the screen.</a></p>
+<p>Our input screen should be used as the content part of the template of the current contract and in accordance with the language preferences set in the browser. The contract is set using the <code>&lt;f:view&gt;</code> tag. A reference to the template is generated via the <code>&lt;ui:composition&gt;</code> tag. We can reference the data contained in our template using the attribute <code>template</code>. We also define the necessary XML namespaces for the JSF tag libraries.</p>
+<p>Our next task is to overwrite the content area of the template within the <code>&lt;ui:composition&gt;</code> tag. The <code>&lt;ui:define&gt;</code> tag enables us to do this. We reference the content area with the attribute name, whose value we must set to content. All of the previously-mentioned UI components (<code>dataTable</code>, <code>outputText</code>, <code>commandLink</code>, <code>commandButton</code> and <code>convertNumber</code>) should now appear within this tag in the order we specify. ‎Listing  6-4 shows the complete Facelet.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Facelet listCampaigns.xhtml ">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;My Campaigns&lt;/h1&gt;
+				&lt;h:form&gt;
+					&lt;h:dataTable value="#{campaignListProducer.campaigns}"
+						var="campaign"&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="x"
+								actionListener=
+									"#{listCampaignsController
+										.doDeleteCampaign(campaign)}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;Name&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.name}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;Target Amount&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.targetAmount}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;Donated so far&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.amountDonatedSoFar}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="Edit"
+								action="#{listCampaignsController
+											.doEditCampaign(campaign)}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="List donations"
+								action="#{listCampaignsController
+										.doListDonations(campaign)}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="Form"
+								action="#{listCampaignsController
+										.doEditDonationForm(campaign)}" /&gt;
+						&lt;/h:column&gt;
+					&lt;/h:dataTable&gt;
+					&lt;h:commandButton value="Add campaign"
+						action="#{listCampaignsController.doAddCampaign}" /&gt;
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 6-4</strong>    Facelet <em>listCampaigns.xhtml</em></p>
+<p>The attentive reader will have noticed that it is necessary for some of the controller’s methods to pass a campaign object. Since the methods are referenced using an EL expression, we are faced with the challenge of how an object can be passed at this point. The answer is very simple: The <code>campaign</code> variable introduced with the <code>&lt;h:dataTable&gt;</code> tag represents one campaign per row. We can use the name of this variable directly in the EL expression for the handler methods.</p>
+<pre class="lang:default decode:true">&lt;h:commandLink value="Form" action="#{listCampaignsController.doEditDonationForm(campaign)}" /&gt;</pre>
+<p>We will save the file <code>listCampaigns.xhtml</code> and all following XHTML files in the project structure in the directory <code>srcmainwebapp</code>.</p>
+<h3>6.4 The Start &#8211; A First Milestone</h3>
+<p>Before we restart our WildFly runner, we should change the entry page of our application from index.xhtml to listCampaigns.xhtml. We can make this the case for our application by changing the HTML page <code>index.html</code> as follows.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:3 decode:true" title="HTML page index.html">&lt;html&gt;
+	&lt;head&gt;
+		&lt;meta http-equiv="Refresh" content="0; URL=listCampaigns.jsf"&gt;
+	&lt;/head&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 6-5</strong>     HTML page <em>index.html</em></p>
+<p>The first use case is now complete – and it’s the perfect time for us to try out our work live. Start the WildFly runner again and access the provided URL.  ‎Fig. 6-1 shows the browser content that should appear on your screen.</p>
+<p><a href="http://www.turngeek.press/images/jsfinaday/chapter6/6-1.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter6/6-1.png" alt="How the campaign list should appear in the browser." width="100%" /></a><br />
+<b>Fig. 6-1</b>     How the campaign list should appear in the browser</p>
+<p>The following output log from the WildFly console – which is intended to serve as an example – is created by clicking the button <em>Add campaign</em> and then clicking sequentially on the the links <em>Edit</em>, <em>List donations</em> and <em>Form</em> for the campaign <em>Shirts for the U19 Team</em>. Thus, the output corresponds exactly with what we specified in the methods of the controller bean via <code>System.out.println</code>. The <code>Campaign</code> object is serialized and output accordingly using the <code>toString()</code> method of the class <code>java.lang</code>.</p>
+<p><code>[STDOUT] [0m[0m21:37:27,687 INFO [stdout] (default task-13) Add Campaign<br />
+[STDOUT] [0m[0m21:37:29,879 INFO [stdout] (default task-14) Edit Campaign press.turngeek.mycampaign.model.Campaign@7ecfcdae<br />
+[STDOUT] [0m[0m21:37:30,708 INFO [stdout] (default task-15) List Donations of Campaign press.turngeek.mycampaign.model.Campaign@7ecfcdae<br />
+[STDOUT] [0m[0m21:37:31,644 INFO [stdout] (default task-16) Edit Donation Form of Campaign press.turngeek.mycampaign.model.Campaign@7ecfcda</code></p>
+<p><strong>Finished? Not Quite!</strong></p>
+<p>The page is now looking pretty good. However, we have yet to tackle the issue of internationalization. All of the static text on the page – and all the labels of the buttons and links – are hard-coded with English terms  in the Facelet. As described in <a title="4.3 Internationalization" href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/" target="_blank">chapter 4</a>, we can change this by introducing a keyword pair for each term in the property files of the supported Locales. In addition to this, we must replace the static text in the Facelets with EL expressions. The expressions use the key to display the text in the correct language.</p>
+<p>We will first amend the properties file <code>messages_en.properties</code> in the directory <code>srcmainresources</code> with the entries required for the <code>listCampaigns.xhtml</code> Facelet:</p>
+<pre class="lang:default decode:true"># listCampaigns.xhtml
+listCampaigns.my_campaigns=My campaigns
+listCampaigns.name=Name
+listCampaigns.target_amount=Target amount
+listCampaigns.donated_so_far=Donated so far
+listCampaigns.edit=Edit
+listCampaigns.list_donations=List donations
+listCampaigns.form=Form
+listCampaigns.add_campaign=Add campaign</pre>
+<p>Once we’ve done this, we will store the corresponding German entries in the file <code>messages_de.properties</code>:</p>
+<pre class="lang:default decode:true"># listCampaigns.xhtml
+listCampaigns.my_campaigns=Meine Aktionen
+listCampaigns.name=Name
+listCampaigns.target_amount=Spendenziel
+listCampaigns.donated_so_far=bisher gespendet
+listCampaigns.edit=Editieren
+listCampaigns.list_donations=Spendenliste
+listCampaigns.form=Formular
+listCampaigns.add_campaign=Aktion hinzufügen</pre>
+<p>Finally, we will edit the Facelet <code>listCampaigns.xhtml</code> as shown in ‎Listing 6-5: (changes highlighted in yellow):</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:2,21,27,36,44,49,54,60 decode:true" title="Facelet listCampaigns.xhtml">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{msg['listCampaigns.my_campaigns']}&lt;/h1&gt;
+				&lt;h:form&gt;
+					&lt;h:dataTable value="#{campaignListProducer.campaigns}"
+						var="campaign"&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="x"
+								actionListener=
+									"#{listCampaignsController
+										.doDeleteCampaign(campaign)}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listCampaigns.name']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.name}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listCampaigns.target_amount']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.targetAmount}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listCampaigns.donated_so_far']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.amountDonatedSoFar}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="#{msg['listCampaigns.edit']}"
+								action="#{listCampaignsController
+											.doEditCampaign(campaign)}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value=
+									"#{msg['listCampaigns.list_donations']}"
+								action="#{listCampaignsController
+										.doListDonations(campaign)}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;h:commandLink value="#{msg['listCampaigns.form']}"
+								action="#{listCampaignsController
+										.doEditDonationForm(campaign)}" /&gt;
+						&lt;/h:column&gt;
+					&lt;/h:dataTable&gt;
+					&lt;h:commandButton value=
+							"#{msg['listCampaigns.add_campaign']}"
+						action="#{listCampaignsController.doAddCampaign}" /&gt;
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 6-6</strong>     Facelet <em>listCampaigns.xhtml</em></p>
+<p>In order to try out the changes, we must redeploy the project by stopping and restarting our WildFly runner. Following redeployment, the list of campaigns will be displayed according to the language set in the browser.</p>
+<p>We have now successfully implemented the first use case and will focus in the next chapter on the implementation of the remaining cases. Unfortunately, as we will see, the JSF standard does not offer all of the UI components required to implement the input screens. For this reason, we will take a brief venture into the world of JSF extensions (in this case, PrimeFaces). In the real world, the use of additional libraries is commonplace. However, our plan is to stay with the JSF standard and to rely on it to as great an extent as possible  for the implementation of the remaining use cases. Before we do so, we will use the next section to take a look at some of the other technologies required for the rest of our implementation.</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JavaServer%20Faces%20in%20a%20Day&amp;body=6%20Our%20First%20Use%20Case%3A%20%26%238220%3BDisplay%20and%20Edit%20Campaign%26%238221%3B%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F6-our-first-use-case-display-and-edit-campaign%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

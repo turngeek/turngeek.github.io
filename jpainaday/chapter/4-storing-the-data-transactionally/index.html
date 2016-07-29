@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4 Storing the Data Transactionally | Cloud Tutorial &#8211; JPA in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
+<link rel='prev' title='3 Extending Services to Include Data Access' href='http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/' />
+<link rel='next' title='5 Persisting and Displaying Remaining Entities' href='http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=80' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F4-storing-the-data-transactionally%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F4-storing-the-data-transactionally%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-80" id="4storingthedatatransactionally">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4 Storing the Data Transactionally</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4 Storing the Data Transactionally</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">Next</a></span>
+    </div>				<div id="post-80" class="type-1 post-80 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter, we will run the iteration for the first time and store the entities transactionally in the database. To enable us to do this, we must first configure the data source. After running the iteration, we’ll then encounter a couple more “unexpected” minor issues. As with the configuration of the data source, we’ll tackle these in a step-by-step manner.</p>
+<p>We can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=6o9ca0tyjv1v6gpw" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign after embedding EntityManager in Services</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>4.1 Configuring the Data Source</h3>
+<p>JPA requires its own XML configuration file. The data source to be used and the parameters for accessing it are set in this file. The configuration file for our sample application can be found in Listing 4-1. Please save it in the folder <code>src\main\resources\META-INF</code> under the name <code>persistence.xml</code>. If the <code>META-INF</code> folder does not exist, create it (case-sensitive!).</p>
+<pre class="lang:java decode:true">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+        version="2.1"&gt;
+    &lt;persistence-unit name="primary"&gt;
+        &lt;jta-data-source&gt;java:jboss/datasources/MyCampaignDS&lt;/jta-data-source&gt;
+        &lt;properties&gt;
+            &lt;property name="hibernate.hbm2ddl.auto" value="update"/&gt;
+            &lt;property name="hibernate.show_sql" value="false"/&gt;
+        &lt;/properties&gt;
+    &lt;/persistence-unit&gt;
+&lt;/persistence&gt;
+</pre>
+<p><strong>Listing 4-1 </strong>Configuration file <em>persistence.xml</em></p>
+<p>As well as setting the usual XML header (including XML schema referencing), we’ll set the following configuration parameters within the file:</p>
+<ul>
+<li>The JNDI name of the datasource, in our case <code>java:jboss/datasources/MyCampaignDS</code></li>
+<li>Setting of the Hibernate paramater <code>show_sql</code> to <code>false </code>– this causes the SQL generated by Hibernate not to be output on the console. For debugging purposes, the parameter can be set to <code>true</code>.</li>
+<li>Setting of the Hibernate parameter <code>hbm2ddl.auto</code> to <code>update</code></li>
+</ul>
+<p>The last parameter in the list requires a more detailed explanation. The setting <code>update </code>causes the schema of our database to be updated automatically after deployment, enabling our entities to be persisted without errors. This is ideal for our test purposes, since it removes the need for SQL commands to build the database schema (e.g. <code>CREATE TABLE</code>….). It is a given that in a production environment, we will not want to execute database scripts automatically after deployment. It only makes sense to build an initial functioning database schema once the deployment of the first version is complete.</p>
+<p>In later versions, we only have to set the <code>hibernate.hbm2ddl.auto</code> parameter to <code>validate</code>. In this case, Hibernate merely validates whether the database schema is suitable for storing entities. Any change in the entities requires the manual creation of an SQL script that modifies the database schema in such a way that the entities can be processed without errors. For example, a new column must be added to the table corresponding to the entity when the entity is modified with an attribute.</p>
+<p>In contrast to the rest of the file, the Hibernate parameters defined with the <code>&lt;properties&gt;</code> tag do not belong to the JPA standard. In light of this, if we use another JPA implementation, the parameters will either not exist or will exist under a different name. Though JPA 2.1 <em>does</em> offer a parameter for generating a database schema (in the form of <code>javax.persistence.schema-generation-action</code>), it is not supported by the Hibernate version we are using, thus requiring us to use a Hibernate-specific parameter instead.</p>
+<p>We have now reference the name of the data source (<code>MyCampaignDS</code>) in the configuration file, though we still need to actually create it. To accomplish this, we will first save the file from Listing 4-2 with the name <code>mycampaign-ds.xml</code> in the folder <code>src\main\webapp\WEB-INF</code>. As we do so, we must ensure that the folder does not contain any other configuration files with the suffix <code>-ds</code>.</p>
+<pre class="lang:java decode:true">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;datasources xmlns="http://www.jboss.org/ironjacamar/schema"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.jboss.org/ironjacamar/schema
+            http://docs.jboss.org/ironjacamar/schema/datasources_1_0.xsd"&gt;
+
+    &lt;datasource jndi-name="java:jboss/datasources/MyCampaignDS"
+            pool-name="mycampaign" enabled="true"
+            use-java-context="true"&gt;
+        &lt;connection-url&gt;jdbc:h2:file:~/data/mycampaign&lt;/connection-url&gt;
+        &lt;driver&gt;h2&lt;/driver&gt;
+        &lt;security&gt;
+            &lt;user-name&gt;sa&lt;/user-name&gt;
+            &lt;password&gt;sa&lt;/password&gt;
+        &lt;/security&gt;
+    &lt;/datasource&gt;
+&lt;/datasources&gt;</pre>
+<p><strong>Listing 4-2 </strong> Configuration file <em>mycampaign-ds.xml</em></p>
+<p>This is a WildFly-specific file that does not belong to the Java EE standard and offers no opportunity to create a standardized definition for a data source; thus, the configuration of the data source will differ depending on which application server is used. As above, only a small section of the file is actually of interest. As well as noting the JNDI name of the data source, <code>java:jboss/datasources/MyCampaignDS</code>, which we set in the tag <code>&lt;datasource&gt;</code>, we should pay particular attention to the URL of our JDBC connection, which is defined in the tag <code>&lt;connection-url&gt;</code>. Let’s look a little closer at this URL: <code>jdbc:h2:file:~/data/mycampaign</code> We include the value <code>h2</code> to specify that we are using the H2 database (http://www.h2database.com). This is a small embedded database that persists its data in a single file according to the data source and is therefore particularly well-suited for development purposes. We will specify <code>~/data/mycampaign</code> as the file in our connection URL. Since H2 adds <code>.h2.db</code> as a suffix for the file name, the file will store the database in our home directory (whose synonym is the tilde, <code>~</code>) in the file <code>mycampaign.h2.db</code> in the folder data. The database driver, username and password are also specified within the file <code>mycampaign-ds.xml</code>, in the tags <code>&lt;driver&gt;</code>, <code>&lt;user-name&gt;</code> and <code>&lt;password&gt;</code> respectively. Since we are using a H2 database the corresponding driver – in this case, h2 – is configured. We will set sa as a username and password.</p>
+<h3>4.2 Expanding Services with Transactions</h3>
+<p>Now we’ve finished configuring the database, we can finally run our iteration. After starting the application and adding a campaign, however, we get a strange exception: <code>javax.persistence.TransactionRequiredException</code>. This means that no transaction is available. Make sure that it is exactly this exception you are seeing. If a different exception appears, it is probable that you have made a typo at some point during the process. Likely places for this to have occurred would be the JPQL commands or the configuration files, neither of which are checked by the compiler. The exception appears for a good reason. To implement changes to a database in Java EE, we require a transaction. In a transaction, multiple database operations are encapsulated in one logical operation. This logical operation is either executed completely, or not at all. If, during a transaction, an operation cannot be carried out – perhaps because another database user has changed the same data set – then all changes carried out within our transaction will be rolled back. On the other hand, if everything functions correctly, then changes to the database will be committed. This concept often turns out to be indispensable. In our application, for example, it is important to know whether a <code>Donation </code>object is created properly when the use case <em>Donate money </em>is invoked. Data is only committed (and a message sent to the user informing them of their successful donation) if no errors appear. If errors <em>do</em> appear, all database changes belonging to the transaction are rolled back, an exception is raised and the user is informed. There are various methods for creating a transaction, which we’ll look at in more detail in the following chapter. In our application, we’ll opt for the most simple approach: converting our CDI bean into an EJB (Enterprise JavaBean) – or, more precisely, into an SSB (Stateless Session Bean). The SSB is very similar to a CDI bean with <em>RequestScope</em> in that it does not save any data within a user session. Unlike the CDI bean, however, the methods of an SSB are configured by default such that a new transaction is invoked when they are started and ended when they are ended. The operations associated with a transaction are therefore determined by the method scope. This transactional behaviour is highly useful to us, since it results in one transaction per service operation. Previously, when we did not have detailed knowledge of the term “transaction”, this would have corresponded to our intuitive understanding of a service. Though this explanation has been somewhat lengthy, the implementation is actually very simple. The annotation <code>@RequestScoped</code> in the bean <code>CampaignServiceBean</code> must be replaced by the annotation <code>@Stateless</code> from the package <code>javax.ejb</code>:</p>
+<pre class="lang:java decode:true">@Stateless
+public class CampaignServiceBean implements CampaignService {
+…
+</pre>
+<p><strong>Rerun the application. </strong>You should now find that the issue of the missing transaction has been solved, and the application can now be used.<strong> </strong>But be aware that we have just implemented the persistence of campaigns. All use cases of the application that involve donations will still lead to errors. This will change after the next chapter.</p>
+<p>By making this small change, we have changed a few things in the background: the lifecycle of the servce beans is now no longer managed by CDI, but by the EJB container. In the upcoming <em>Cloud Tutorial EJB in a Day</em> (available in march 2016), we’ll learn about other options – aside from transactions – that are opened up for services as a result of conversion to EJBs.</p>
+<p>If you have other problems with your project, please compare it with the project behind the following link:</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=q8f0jt6p68dq2532" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign Persist Campaigns</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JPA%20in%20a%20Day&amp;body=4%20Storing%20the%20Data%20Transactionally%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F4-storing-the-data-transactionally%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

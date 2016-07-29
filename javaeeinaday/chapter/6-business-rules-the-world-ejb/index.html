@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>6 Business Rules the World – EJB | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<link rel='prev' title='5 Click Me If You Can – JavaServer Faces' href='http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/' />
+<link rel='next' title='7 One to Rule them All &#8211; CDI' href='http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=45' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F6-business-rules-the-world-ejb%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F6-business-rules-the-world-ejb%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-45" id="6businessrulestheworld–ejb">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">6 Business Rules the World – EJB</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">6 Business Rules the World – EJB</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">Next</a></span>
+    </div>				<div id="post-45" class="type-1 post-45 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter, we address two main issues of our software project. First, we improve the software architecture by introducing separate layers for controller logic, business logic and data storage. Second, we implement the business logic and the data storage of our application with Java EE&#8217;s traditional and designated bean technology, namely <em>Enterprise JavaBeans (EJB)</em>.</p>
+<p>Before we start, please verify again that your project is accessable in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceeding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project and, by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-45-1" href="#footnote-45-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=6wob9ci9hdlmn2ru" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 5 (JSF)" width="77" height="21" /></a>
+<p class="wp-caption-text">Project after Chapter 5 (JSF)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=3e3ulvenj5l9uddf--></p>
+<h3>6.1 Software Architecture&#8217;s Review</h3>
+<p>Looking at our software architecture right now, we realize that the Controller Bean (<code>MemoController.java</code>) does not only realize the controller logic of our application. Additionally, it provides  the business logic (setting the current time to a new memo) and works as a data storage (list of memos is a property of the bean) which injures the design principle <a href="http://en.wikipedia.org/wiki/Separation_of_concerns">Separation of Concerns (SoC)</a>. In order to simplify development, extendability and maintenance, it is beneficial to separate concerns, like view, controller logic, business logic or data storage. The better we follow this principle, the more probable it is that we can later improve or modify one part of code without any influence to the others.</p>
+<h4>6.1.1 Bean Classes and their Concerns</h4>
+<p>In order to realize a well-separated architecture, we introduce two additional bean classes. One for business logic (<code>MemoServiceBean.java</code>) and one for data storage (<code>MemoStore.java</code>). Tab. 6-1 gives a short summary of beans and their responsibilities.</p>
+<table>
+<tbody>
+<tr>
+<td><b>Bean Class</b></td>
+<td><strong>Concerns</strong></td>
+</tr>
+<tr>
+<td><code>MemoStore</code></td>
+<td> The bean contains the list of memos. It provides methods for adding a memo to the list and for accessing or deleting the whole list.</td>
+</tr>
+<tr>
+<td><code>MemoServiceBean</code></td>
+<td> The bean encapsulates a <code>MemoStore</code> bean. Since our application is very simple, it provides methods for accessing memos by forwarding the method call to the <code>MemoStore</code> bean. The only business logic is to add the date property of a new memo.</td>
+</tr>
+<tr>
+<td><code>MemoController</code></td>
+<td> The bean stores the current memo of a user in the user&#8217;s session. Additionally, it encapsulates a <code>MemoServiceBean</code> for getting access to the business methods. The controller bean itself provides action methods for adding a memo or deleting the list memos that are called by the view. Further, it provides a method for retrieving the current list of memos. All methods of the controller bean forward the call to the respective business method of the <code>MemoServiceBean</code> and passes the current memo object if necessary.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. 6-1     </strong>Bean classes and their concerns.</p>
+<h4>6.1.2 The Data Storage Bean</h4>
+<p>We start to implement the <code>MemoStore</code> bean class (see Listing 6-1). By that, we also introduce a new package named <code>press.turngeek.mymemo.data. </code></p>
+<pre class="lang:default decode:true" title="MemoStore class">package press.turngeek.mymemo.data;
+
+import java.util.List;
+import java.util.LinkedList;
+
+import press.turngeek.mymemo.model.Memo;
+
+public class MemoStore {
+
+    private List&lt;Memo&gt; memos;
+
+    public MemoStore() {
+        super();
+        memos = new LinkedList&lt;Memo&gt;();
+    }
+
+    public List&lt;Memo&gt; findAll() {
+        return memos;
+    }
+
+    public void persist(Memo memo) {
+        memos.add(memo);
+    }
+
+    public void removeAll() {
+        memos.clear();
+    }
+}</pre>
+<p><strong>Listing 6-1 </strong>MemoStore class</p>
+<p>As you can see in Listing 6-1, the class <code>MemoStore</code> is just a container class for the list of memos. That is the only concern of the class.</p>
+<h4>6.1.3 The Business Logic Bean</h4>
+<p>In Listing 6-2, we can see the class <code>MemoServiceBean</code> realizing business logic. Together with the class, we introduce another new package <code>press.turngeek.mymemo.service</code>.</p>
+<pre class="lang:default decode:true" title="MemoServiceBean class">package press.turngeek.mymemo.service;
+
+import java.util.Date;
+import java.util.List;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.data.MemoStore;
+
+public class MemoServiceBean {
+
+    private MemoStore memoStore;
+
+    public List&lt;Memo&gt; getAllMemos() {
+        return memoStore.findAll();
+    }
+
+    public void addMemo(Memo memo) {
+        Memo newMemo = new Memo();
+        newMemo.setDescription(memo.getDescription());
+        newMemo.setCreated(new Date());
+        memoStore.persist(newMemo);
+    }
+
+    public void resetMemos() {
+        memoStore.removeAll();
+    }
+}
+</pre>
+<p><strong>Listing 6-2 </strong>MemoServiceBean class</p>
+<p>Looking at Listing 6-2, we see that the only method <code>addMemo</code> adds (some kind of) business logic to the implementation. It creates a new <code>Memo</code> object, copies the description from the passed object and sets the current date. This new <code>Memo</code> object is passed to the <code>MemoStore</code> bean. Hence, the only concern of the <code>MemoServiceBean</code> is to encapsulate the <code>MemoStorage</code> and to add business logic if necessary. This might sound overengineered, but there is another reason why it makes sense to introduce the business layer. One further aspect of business logic is that it normally has to be executed transactionally, because several systems or databases are involved. In case of failure, business logic needs a roll-back mechanism that should be provided by the application server. We&#8217;ll come back to this point in chapter 6.2.</p>
+<h4>6.1.4 The Controller Bean</h4>
+<p>Since a lot of code moved from the last version of the class MemoController to the two introduced bean classes, the resulting controller bean is rather lean (see Listing 6-3).</p>
+<pre class="lang:default decode:true" title="MemoController class">package press.turngeek.mymemo.controller;
+
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+
+import javax.faces.event.ActionEvent;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.service.MemoServiceBean;
+
+@SessionScoped
+@ManagedBean(name = "memoController")
+public class MemoController {
+
+    private Memo memo;
+
+    private MemoServiceBean memoService;
+
+    public MemoController() {
+        memo = new Memo();
+    }
+
+    public Memo getMemo() {
+        return memo;
+    }
+
+    public void setMemo(Memo memo) {
+        this.memo = memo;
+    }
+
+    public void doAdd(ActionEvent event) {
+        memoService.addMemo(memo);
+        memo.setDescription("");
+    }
+
+    public void doReset(ActionEvent event) {
+        memoService.resetMemos();
+    }
+
+    public List&lt;Memo&gt; getMemos() {
+        return memoService.getAllMemos();
+    }
+}</pre>
+<p><strong>Listing 6-3 </strong>MemoController class</p>
+<p>The main difference to its former version is that the <code>MemoController</code> class in Listing 6-3 encapsulates and uses a bean of the class <code>MemoServiceBean </code>instead of implementing everything on its own. The only concern of the class is to provide action listener and data retrieval methods for the view, to realize navigation (since we only have one view, we don&#8217;t need any navigation) and to store data entered by the user and pass it to the business layer if demanded<a class="footnote" title="The class uses our model class Memo introduced in the previous section. At this point it might happen that Codenvy can't resolve the type MemoServiceBean. In this case, please update the dependencies of the project (menu item Build → Update Dependencies) and rebuild the project manually (menu item Build → Build). After a few seconds the error marks will disappear." id="return-footnote-45-2" href="#footnote-45-2"><sup class="footnote">[2]</sup></a>.</p>
+<h4>6.1.5 Let&#8217;s Go!</h4>
+<p>Stop! Probably, you&#8217;ve understood every step explained above and can&#8217;t wait to try out the behavior of our application. Unfortunatelly, it will not work at all. But why?</p>
+<p>As we already know, the class <code>MemoController</code> is a Managed Bean. The life cycle is managed by the application server. But who manages the life cycle of <code>MemoServiceBean</code> and <code>MemoStore</code>? The answer is: no one!</p>
+<p>We didn&#8217;t use any annotation that declares these classes as a certain kind of bean managed in a certain way by the application server. Further, we declared has-a relations between <code>MemoController</code> and <code>MemoServiceBean</code> as well as <code>MemoServiceBean</code> and <code>MemoStorage</code>. But we have never created an object of these types and initialized the respective properties. The only bean that is managed is the controller bean. It has a property of type <code>MemoServiceBean</code> that is initialized with <code>null</code> by the default constructor of the <code>MemoController</code> class. This will lead to a <code>NullPointerException</code> during the usage of the application!</p>
+<p>What can we do? Of course, we can turn both bean classes to managed beans, too. By adding the respective annotations (@ManagedBean, @SessionScoped) to the class declaration, the application server would recognize them as managed beans. But one problem remains. How can we force the application server to create new beans and to store the references in the respective bean&#8217;s properties? In general, this mechanism is called <a href="http://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection (DI)</a>.</p>
+<div class="textbox shaded"><strong>Dependency Injection (DI)<br />
+</strong>is a pattern that transfers the tasks of object creation, deployment, and management from the user of the object to the runtime environment (container). The user defines only what they wish to have at each point (type, scope, number), and the runtime environment takes care of everything else. This simplifies access, enables loose coupling between objects and ensures that type safety is preserved.</div>
+<p>JSF Managed Beans provide DI (Annotation <a href="http://docs.oracle.com/javaee/7/api/javax/faces/bean/ManagedProperty.html">@ManagedProperty</a>), but at this point we don&#8217;t want to go into deep, because JSF Managed Beans are not the appropriate bean type for implementing business logic (e.g. no transactions!). Instead, we use EJBs.</p>
+<h3>6.2 Enterprise JavaBeans</h3>
+<p>Enterprise JavaBeans (EJB) was the first and is still the most used server-side component technology of Java EE for implementing business logic in enterprise applications. EJB addresses typical issues in enterprise applications such as security and transactions. Since there is a need in every enterprise application for securing access to business logic and to implement it transactionally, EJB provides these mechanisms out-of-the-box. The developer can rely on these standard mechanisms and can concentrate on realizing the business logic itself, rather than implementing a proprietary security or transaction concept for each enterprise application. Like JSF Managed Beans, EJBs are managed, too. While JSF Managed Beans are managed by a so called <em>web container</em> within the application server, the life cycle of EJBs is managed by a <em>business container</em> or <em>EJB container</em>. EJB supports <em>Dependency Injection</em> which simplifies their usage within the application (<a href="http://docs.oracle.com/javaee/7/api/javax/ejb/EJB.html" target="_blank">Annotation <code>@EJB</code></a>). Tab. 6-2 shows the different types of EJBs.</p>
+<table>
+<tbody>
+<tr>
+<td><strong>EJB Type</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td>Stateless Session Bean (SSB)</td>
+<td> Beans using a SSB can use its functionality, but the interaction is stateless. That means, no data can be stored in the SSB between subsequent method calls. <a href="http://www.adam-bien.com/roller/abien/entry/do_we_need_stateless_session" target="_blank">The EJB container either manages a pool of SSBs and dispatches method calls to it or creates a new instance for each request</a>.</td>
+</tr>
+<tr>
+<td>Stateful Session Bean (SFSB)</td>
+<td> Beans using a SFSB get it exclusivly. The interaction is stateful which means that data can be stored over several subsequent method calls to the SFSB. Each client bean has its own SFSB.</td>
+</tr>
+<tr>
+<td>Singleton</td>
+<td> A Singleton bean exists only once in the EJB container. Beans using it work on the same instance and data stored in the singleton is shared among the beans.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. 6-2     </strong>Types of EJBs</p>
+<h4>6.2.1 Using EJB in My-Memo</h4>
+<p>Next, we want to apply EJB technology to our application. The question is which type of EJB is appropriate to the classes <code>MemoServiceBean</code> and <code>MemoStore</code>. Looking at the service bean, we realize that we do not store any data representing the state of communication. Hence, we should use a SSB, so that the application server can spare memory resources by load balancing a potential large amount of service calls, at the same time, on the SSB pool. In contrast, the class MemoStore represents a layer that simulates the access to a global database. Therefore, the use of a Singleton EJB seems to be the appropriate choice<a class="footnote" title="At this point, you might not be convinced of our choice. Anyway, please, follow us for the moment. We will discuss alternatives in section 6.2.3." id="return-footnote-45-3" href="#footnote-45-3"><sup class="footnote">[3]</sup></a>.</p>
+<p>It is very easy to turn a class into a certain type of EJB. For this reason, the API provides annotations for each type in the package <code>javax.ejb</code>. Let us start with the class <code>MemoStore</code>. In order to turn it into a Singleton EJB, we just add the annotation <code><a href="http://docs.oracle.com/javaee/7/api/javax/ejb/Singleton.html" target="_blank">javax.ejb.Singleton</a></code> at the class level. That&#8217;s all.</p>
+<pre class="lang:default mark:6,10 decode:true" title="MemoStore class (Singleton)">package press.turngeek.mymemo.data;
+
+import java.util.List;
+import java.util.LinkedList;
+
+import javax.ejb.Singleton;
+
+import press.turngeek.mymemo.model.Memo;
+
+@Singleton
+public class MemoStore {
+
+    private List&lt;Memo&gt; memos;
+
+    public MemoStore() {
+        super();
+        memos = new LinkedList&lt;Memo&gt;();
+    }
+
+    public List&lt;Memo&gt; findAll() {
+        return memos;
+    }
+
+    public void persist(Memo memo) {
+        memos.add(memo);
+    }
+
+    public void removeAll() {
+        memos.clear();
+    }
+}</pre>
+<p><strong>Listing 6-4 </strong>MemoStore class &#8211; as EJB Singleton.</p>
+<p>In order to turn our class <code>MemoServiceBean </code>into a SSB, we just add the Annotation <code><a href="http://docs.oracle.com/javaee/7/api/javax/ejb/Stateless.html" target="_blank">javax.ejb.Stateless</a></code> at the class level. As we know from Listing 6-1, <code>MemoServiceBean </code>encapsulates our Singleton <code>MemoStore</code>. We can activate DI for the corresponding attribute by annotating it with <code>javax.ejb.EJB</code>. At runtime the EJB container provides the attribute with a reference to the Singleton.</p>
+<pre class="lang:default mark:6,7,12,15 decode:true" title="MemoStore class (Singleton)">package press.turngeek.mymemo.service;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.data.MemoStore;
+
+@Stateless
+public class MemoServiceBean {
+
+    @EJB
+    private MemoStore memoStore;
+
+    public List&lt;Memo&gt; getAllMemos() {
+        List&lt;Memo&gt; memos = memoStore.findAll();
+        return memos;
+    }
+
+    public void addMemo(Memo memo) {
+        Memo newMemo = new Memo();
+        newMemo.setDescription(memo.getDescription());
+        newMemo.setCreated(new Date());
+        memoStore.persist(newMemo);
+    }
+
+    public void resetMemos() {
+        memoStore.removeAll();
+    }
+}</pre>
+<p><strong>Listing 6-5 </strong>MemoServiceBean class &#8211; as SSB.</p>
+<h4>6.2.2 Integrating EJBs in Managed Beans</h4>
+<p>In the last section, we saw how we relate two EJBs by using DI with the annotation <code>@EJB</code>. This mechanism also works for relating other bean types with EJBs. In order to complete this iteration of our application, we have to relate our controller bean with the service bean. This can be done by annotating the attribute <code>memoService </code>with <code>@EJB</code> in the class <code>MemoController</code>.</p>
+<pre class="lang:default mark:7,20 decode:true" title="MemoController class (with DI)">package press.turngeek.mymemo.controller;
+
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.ejb.EJB;
+
+import javax.faces.event.ActionEvent;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.service.MemoServiceBean;
+
+@SessionScoped
+@ManagedBean(name = "memoController")
+public class MemoController {
+
+    private Memo memo;
+
+    @EJB
+    private MemoServiceBean memoService;
+
+    public MemoController() {
+        memo = new Memo();
+    }
+
+    public Memo getMemo() {
+        return memo;
+    }
+
+    public void setMemo(Memo memo) {
+        this.memo = memo;
+    }
+
+    public void doSave(ActionEvent event) {
+        memoService.addMemo(memo);
+        memo.setDescription("");
+    }
+
+    public void doReset(ActionEvent event) {
+        memoService.resetMemos();
+    }
+
+    public List&lt;Memo&gt; getMemos() {
+        return memoService.getAllMemos();
+    }
+}</pre>
+<p><strong>Listing 6-6 </strong>MemoController class &#8211; Injection of a SSB.</p>
+<p>Now, the application is executable again. Run the application and check if everything works fine!</p>
+<h4>6.2.3 Conclusions</h4>
+<p>We started the section by explaining that EJB provides helpful properties for implementing business logic, especially mechanisms for security and transactions. But if we look at our code we can not see any use of such concepts. Concerning security, the reason is that we don&#8217;t realize a secure application. We neither use authentication nor authorization and, therefore, it is obvious that there is nothing visible in the code. Although, we do not see any usage of transaction management in the code and we do not really need transactions for our methods since we do not access external systems like databases, our EJBs execute each method in a new transaction. That is the default behavior of EJBs! Of course, there are possibilities of configuring a different transactional behavior if required. For our purpose, the default behavior is (more than) sufficient and so we don&#8217;t need any changes in the code. In general, this follows one of the design paradigms of Java EE, namely <a href="http://en.wikipedia.org/wiki/Convention_over_configuration" target="_blank">Convention over Configuration (CoC)</a>. That means that only unconventional behavior has to be configured or coded which keeps the code and configuration simple as long as the default behavior is sufficient.</p>
+<p>Finally, we want to revisit our discussion about the choice of the EJB type for our classes <code>MemoServiceBean</code> and <code>MemoStore</code> from section 6.2.1. You might have already realized that the behavior of our current implementation differs slightly from that of the previous section. Since we store our memos in a Singleton, all memos are global which means that the data is independent of the session. You can easily reproduce this behaviour by accessing the application with different browsers at the same time (some browsers also support the creation of multiple sessions for one application). Although the behaviour is not equivilent to that of the previous chapter, we claim that this is the right decision for this iteration.</p>
+<ul>
+<li>The main problem is that EJB knows nothing about the web context in which they are called, e.g. the scope of a request, since they were designed to work in web applications as well as in application client scenarios. They are like a service layer in a Java architecture providing business logic. A conversation between a client and an EJB can be stateless or stateful, but the client is just another Java object. Hence the life cycle of the EJB depends on the life cycle of this Java object and not on that of a web scope.</li>
+<li>The only alternative to reach the same behaviour  as in the previous chapters, is to connect the EJB indirectly with the web scope. The controller bean belongs to the session scope of the web application. If we inject the <code>MemoServiceBean</code> as a SFSB, we bind the life time of the service bean to that of the controller bean. Further, we could also inject the MemoStore bean as a SFSB in the <code>MemoServiceBean</code> with the same result. Now, the application would behave as in the chapters before, since the EJBs are bound statefully to the session scoped controller. If the session terminates, the controller and its EJBs are destroyed as well. You can try this by replacing the various annotations (<code>@Stateless</code> and <code>@Singleton</code>) by <code>@Stateful</code><a class="footnote" title="In this case, both EJB classes must implement java.io.Serializable." id="return-footnote-45-4" href="#footnote-45-4"><sup class="footnote">[4]</sup></a>. Nevertheless, we don&#8217;t like this approach since it is a misusage of the concept and too artificial since it would not be used in a real-world application.
+<ol>
+<li>The decision to use a SSB or a SFSB should be only dependent on the requirement for storing state information during the work with the respective EJB. In our application, a method call on the EJB terminates the work with it immediatelly. A subsequent method call needs no information about previous calls to perform its work. Hence, the SSB is the correct choice!</li>
+<li>Our sample application simplifies the data management due to didactic reasons. In a real-world application, we must implement some kind of user administration and a database would be essential too.  It is quite obvious that memos of a certain user should survive sessions and should be even accessible if the server had to be restarted. Since we do not have user administration, the session has the role of a user login. The <code>MemoStore</code> Singleton acts as the global data base. Consequently, instead of using SFSBs, we should improve the data management by storing the memos for the corresponding session id in the <code>MemoStore</code> bean. We surrender to implement that because we&#8217;ll find a better solution in the next chapter.<a class="footnote" title="In a real-world application the MemoStore bean would encapsulate the access to the data base and would realize the O/R mapping. Such a bean is called Data Access Object (DAO). For this reason it would be realized as a SSB too." id="return-footnote-45-5" href="#footnote-45-5"><sup class="footnote">[5]</sup></a></li>
+</ol>
+</li>
+</ul>
+<p>In the following section, we introduce a new component technology called <em>Contexts and Dependency Injection (CDI)</em> that comprises more functionality of JSF Managed Beans and EJB and seems to be the future of Java EE development.</p>
+<h3>6.3 Further Reading</h3>
+<p>At the end of the chapter some references to textbooks that give a more complete introduction to EJBs and might help to deepen your understanding.</p>
+<p><a target="_blank" href="http://www.amazon.com/gp/product/1430246928/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1430246928&linkCode=as2&tag=turpre-20&linkId=76UZ7JM36Y4WNYV6">Jonathan Wetherbee, 2013. Beginning EJB 3, Java EE, 7th Edition. 2nd Edition. Apress.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1430246928" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<p><a target="_blank" href="http://www.amazon.com/gp/product/1935182994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1935182994&linkCode=as2&tag=turpre-20&linkId=BCCO55GDMYSFWBJB">Debu Panda, 2014. EJB 3 in Action. Second Edition Edition. Manning Publications.<br />
+</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1935182994" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /><br />
+&nbsp;</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-45-1">Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project and, by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser. <a href="#return-footnote-45-1" class="return-footnote">&crarr;</a></li><li id="footnote-45-2">The class uses our model class Memo introduced in the previous section. At this point it might happen that Codenvy can't resolve the type <code>MemoServiceBean</code>. In this case, please update the dependencies of the project (menu item <code>Build → Update Dependencies</code>) and rebuild the project manually (menu item <code>Build → Build</code>). After a few seconds the error marks will disappear. <a href="#return-footnote-45-2" class="return-footnote">&crarr;</a></li><li id="footnote-45-3">At this point, you might not be convinced of our choice. Anyway, please, follow us for the moment. We will discuss alternatives in section 6.2.3.  <a href="#return-footnote-45-3" class="return-footnote">&crarr;</a></li><li id="footnote-45-4">In this case, both EJB classes must implement <code>java.io.Serializable</code>. <a href="#return-footnote-45-4" class="return-footnote">&crarr;</a></li><li id="footnote-45-5">In a real-world application the <code>MemoStore</code> bean would encapsulate the access to the data base and would realize the O/R mapping. Such a bean is called <a href="http://en.wikipedia.org/wiki/Data_access_object" target="_blank">Data Access Object (DAO)</a>. For this reason it would be realized as a SSB too. <a href="#return-footnote-45-5" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=6%20Business%20Rules%20the%20World%20%E2%80%93%20EJB%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F6-business-rules-the-world-ejb%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

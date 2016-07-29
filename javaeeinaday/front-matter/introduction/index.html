@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>Introduction | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=4' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Ffront-matter%2Fintroduction%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Ffront-matter%2Fintroduction%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-front-matter postid-4" id="introduction">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">Introduction</h2>
+					<div class="nav">
+  <!-- 	<h2 class="entry-title">Introduction</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">Next</a></span>
+    </div>				<div id="post-4" class="introduction post-4 front-matter type-front-matter status-publish hentry front-matter-type-introduction">
+					
+					<div class="entry-content">
+					  				    									
+					<h3>Who is this book for?</h3>
+<p>The <a href="https://en.wikipedia.org/wiki/Java_Platform,_Enterprise_Edition" target="_blank">Java Enterprise Edition (Java EE)</a> is a complicated platform for developing enterprise applications that takes years to master.<br />
+Not everyone is as lucky as the authors to learn Java at university at a time when just the <a href="http://www.oracle.com/technetwork/java/javaee/docs-142435.html#" target="_blank">first version of Java EE</a> was introduced, back in 1999, still called J2EE.<br />
+Step by step, we could learn the differences of each version and learn from our own errors.<br />
+It&#8217;s impossible to transfer this knowledge in barely a day but if you know Java the programming language just well enough and you have a basic understanding of XML and HTML, we&#8217;re confident to teach you the following:</p>
+<ul>
+<li>Get familiar with the Java EE programming environment in the cloud.</li>
+<li>Understand the main differences between the technologies (e.g. JSF, CDI, EJB) Java EE consists of.</li>
+<li>Be able to read existing Java EE code and make simple modifications.</li>
+</ul>
+<p>After finishing this introduction, you can continue with our second book, the Java EE 7 TurnGeek tutorial, where we cover the different technologies of Java EE 7 in more detail.</p>
+<h3>Our concept</h3>
+<p>From our experience, while getting used to a new topic, learners spend a lot of time with setup and configuration. Before writing a single line of code, SDKs, IDEs, application servers and other tools must be installed and configured and, in most cases, a project skeleton must be written.<br />
+All these are no fun tasks&#8230; Although necessary in the real-world, they don&#8217;t transfer any real knowledge about the subject.</p>
+<p>Therefore we are using the cloud IDE <a href="https://codenvy.com/" target="_blank">Codenvy</a> to provide a ready-to-run preconfigured development environment whenever necessary.</p>
+<p>At the beginning of each section you just have to click on the provided Codenvy link and a fully configured IDE will be started in a new browser tab, with the right changes already made and containing the programming code needed for the following task.</p>
+<p>Learning a new technology never has been easier!</p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=Introduction%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Ffront-matter%2Fintroduction%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

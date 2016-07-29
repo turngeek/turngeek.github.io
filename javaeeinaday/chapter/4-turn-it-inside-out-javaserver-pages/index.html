@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4 Turn it Inside Out – JavaServer Pages | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<link rel='prev' title='3 The Rise of Server-Side Java – Java Servlets' href='http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/' />
+<link rel='next' title='5 Click Me If You Can – JavaServer Faces' href='http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=40' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F4-turn-it-inside-out-javaserver-pages%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F4-turn-it-inside-out-javaserver-pages%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-40" id="4turnitinsideout–javaserverpages">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4 Turn it Inside Out – JavaServer Pages</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4 Turn it Inside Out – JavaServer Pages</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">Next</a></span>
+    </div>				<div id="post-40" class="type-1 post-40 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter you will be learning how to use designer friendly HTML (extended with some markup directives) to replace the <code>MemoViewRenderer </code>from the previous chapter. We&#8217;re doing so using JavaServer Pages as a template language.</p>
+<p>Before we start, please verify again that your project is accessible in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project, and by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-40-1" href="#footnote-40-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=r44vewk80yab07lb" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after chapter 3 (Servlet)" width="77" height="21" /></a>
+<p class="wp-caption-text">Project after chapter 3 (Servlet)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=1867j9rxnttesbfs--></p>
+<h3>4.1 Using JSP as the View Renderer</h3>
+<p>In the previous chapter, we introduced the class <code>MemoViewRenderer</code> for rendering the HTML view. The problem with this implementation is that it consists mostly of inline strings containing HTML code. Maintaining this HTML code is nearly impossible: every little change is already a burden for us developers &#8211; just imagine how web designers feel, who in a regular development process should actually be able to create and maintain such views.</p>
+<p>This raises the question if it wouldn&#8217;t be better to embed the little logic we have in this view (for displaying the value objects) directly in a regular HTML file, instead of adding inline strings in a class barely handling any logic, as we&#8217;re doing right now.</p>
+<p>For this purposes the so called <a href="https://en.wikipedia.org/wiki/JavaServer_Pages" target="_blank">JavaServer Pages</a> (JSP) were introduced. Basically this technology allows us to use a regular HTML file as our view and add logic parts written in Java if needed so. Listing 4-1 shows our view implemented as JSP. Please create the folder <code>src/main/webapp/WEB-INF</code> and add the JSP file<a class="footnote" title="Codenvy does not provide a special menu item for JSP files. Please use the general menu item for file creation (New → File)." id="return-footnote-40-2" href="#footnote-40-2"><sup class="footnote">[2]</sup></a> under the name <code>memos.jsp</code>. The folder <a href="http://stackoverflow.com/questions/19786142/what-is-web-inf-used-for-in-a-java-web-application" target="_blank"><code>WEB-INF</code></a> is a special folder who&#8217;s content can only be used by server side code such as JSPs and Servlets &#8211; files inside the folder can not be directly accessed by web clients.</p>
+<pre class="lang:default decode:true">&lt;!DOCTYPE html&gt;
+&lt;%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %&gt;
+&lt;%@ page import="java.util.List" %&gt;
+&lt;%@ page import="press.turngeek.mymemo.model.Memo" %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;My-Memo&lt;/title&gt;
+    &lt;link rel="stylesheet" type="text/css" href="screen.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="container"&gt;
+    &lt;div id="header"&gt;
+        &lt;p&gt;
+            &lt;b&gt;My-Memo&lt;/b&gt; – A Simple Web App for Managing Memos
+        &lt;/p&gt;
+    &lt;/div&gt;
+    &lt;div id="content"&gt;
+        &lt;h1&gt;Add Memo:&lt;/h1&gt;
+
+        &lt;form method="POST" action="memos"&gt;
+            &lt;input type="text" name="memo" size="30" placeholder="Enter your memo here"/&gt;
+            &lt;button type="submit" name="button" value="save"&gt;Add&lt;/button&gt;
+            &lt;% if (request.getAttribute("err") != null) { %&gt;
+            &lt;span style="color: red"&gt;&lt;%= request.getAttribute("err") %&gt;&lt;/span&gt;
+            &lt;% } %&gt;
+            &lt;h1&gt;My Memos:&lt;/h1&gt;
+            &lt;% if (session.getAttribute("memos") == null || ((List&lt;Memo&gt;) session.getAttribute("memos")).size() == 0) { %&gt;
+            &lt;p&gt;Please add some memos.&lt;/p&gt;
+            &lt;% } else { %&gt;
+            &lt;table&gt;
+                &lt;tr&gt;
+                    &lt;th&gt;
+                        Memo
+                    &lt;/th&gt;
+                    &lt;th&gt;
+                        Saved
+                    &lt;/th&gt;
+                &lt;/tr&gt;
+                &lt;% for (Memo memo : (List&lt;Memo&gt;) session.getAttribute("memos")) { %&gt;
+                &lt;tr&gt;
+                    &lt;td&gt;
+                        &lt;%= memo.getDescription() %&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        &lt;%= memo.getCreated() %&gt;
+                    &lt;/td&gt;
+                &lt;/tr&gt;
+                &lt;% } %&gt;
+            &lt;/table&gt;
+            &lt;br/&gt;
+            &lt;button type="submit" name="button" value="reset"&gt;Reset list&lt;/button&gt;
+            &lt;% } %&gt;
+        &lt;/form&gt;
+    &lt;/div&gt;
+    &lt;div id="footer"&gt;
+        &lt;p&gt;(C) 2015 Schiesser/Schmollinger, MIT license&lt;/p&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><strong>Listing 4-1 </strong>JSP file memos.jsp &#8211; Our view as JavaServer Page</p>
+<p>As we can see, the file is a regular HTML file. The parts containing Java logic are embedded using the <code>&lt;% %&gt;</code> tag. If you have written PHP before, this is very similar to using the <code>&lt;?php ?&gt;</code> tag for including PHP code in a HTML file.</p>
+<p>Note that we also add some special directives in the header of the HTML file using the <code>@page</code> tag.</p>
+<p>Firstly, we are setting the encoding of the page to be UTF-8, which is as always highly recommended:</p>
+<pre class="lang:default decode:true">&lt;%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %&gt;
+</pre>
+<p>Secondly, we are importing the Java classes we are about to use in our inline Java code:</p>
+<pre class="lang:default decode:true">&lt;%@ page import="java.util.List" %&gt;
+&lt;%@ page import="press.turngeek.mymemo.model.Memo" %&gt;</pre>
+<p>Later, we are using Java <code>if</code> clauses to conditionally render HTML code. The first one is checking if the expression <code>request.getAttribute("err")</code> is not <code>null</code>, meaning an error message is set in the HTTP request<a class="footnote" title="In JSP the actual HttpServletRequest object as available as request and the actual HttpSession object as session." id="return-footnote-40-3" href="#footnote-40-3"><sup class="footnote">[3]</sup></a>. If so, we are displaying that error:</p>
+<pre class="lang:xhtml decode:true">&lt;% if (request.getAttribute("err") != null) { %&gt;
+&lt;span style="color: red"&gt;&lt;%= request.getAttribute("err") %&gt;&lt;/span&gt;
+&lt;% } %&gt;
+</pre>
+<p>Note that we use the <code>&lt;% %&gt;</code> tag to embed the Java code for the if clause. A special version of this tag also exists: if you add a equal sign (<code>=</code>), you can calculate the result of a Java expression and directly render it to the HTML output. We are using this method to render the error by calling <code>&lt;%= request.getAttribute("err") %&gt;</code>.</p>
+<p>You can find other if clauses later in the code. All using the previous method.</p>
+<p>We&#8217;re using the very same approach for the for loop. It allows us to generate the same HTML snippet for each iteration. In our example, we are iterating over a list of <code>Memo</code> objects.</p>
+<p>The HTML code inside of the for-loop is generated for each memo in the list. Besides HTML code, we also have two Java expressions included inside of the loop. Same as in regular Java these expressions are calculated for each iteration. In our case they are returning the description of the actual <code>Memo </code> object (<code>memo.getDescription()</code>) and the create date (<code>memo.getCreated()</code>).</p>
+<p>As the <code>Memo </code>object changes for each iteration, the for loop code is rendering these two expressions for each <code>Memo </code>object in the list. The result is the desired HTML table of memos.</p>
+<h3>4.2 Enabling the JSP</h3>
+<p>In the last section we have written a JSP that is capable of replacing the functionality of the <code>MemoViewRenderer</code> we created before. Nevertheless, so far we are still not using the JSP to render the view.</p>
+<p>To do so, we have to replace the <code>sendResponse</code> method in the <code>MemoServlet</code> with the following code:</p>
+<pre class="lang:java decode:true">private void sendResponse(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    config.getServletContext().getRequestDispatcher("/WEB-INF/memos.jsp").forward(request, response);
+}</pre>
+<p>The method is firstly retrieving a so called <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html" target="_blank"><code>RequestDispatcher</code></a> for the JSP page by calling the expression <code>config.getServletContext().getRequestDispatcher("/WEB-INF/memos.jsp")</code>.</p>
+<p>A <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/RequestDispatcher.html" target="_blank"><code>RequestDispatcher</code></a> acts as a wrapper for servlet resources (servlets or JSP pages). You can use it to forward requests from one resource to another. By calling the <code>forward</code> method on it, we&#8217;re therefore forwarding the servlet&#8217;s request to our previously designed JSP page &#8211; exactly as we intended to do.</p>
+<p>After restarting our project, the JSP is used for rendering the view instead of the <code>MemoViewRenderer</code>. You can therefore remove this class now.</p>
+<h3>4.3 Optional: Clean it up using JSTL</h3>
+<p>So far so good, but there is still a minor problem with our JSP page: as mentioned before the target group for the editing of JSP pages are web designers. Apart from that they most likely have a hard time reading the inline Java code, the tools they are usually using also don&#8217;t know how to handle it.<br />
+Therefore, we should get rid of this inline code and this is where the JSTL (<em><a href="https://en.wikipedia.org/wiki/JavaServer_Pages_Standard_Tag_Library" target="_blank">JSP Standard Tag Library</a></em>) comes into play.</p>
+<p>To better understand JSTL, we firstly have to understand what is meant by a tag in the context of a JSP:<br />
+tags in HTML are the elements of the markup language that define how some text is to be rendered. For example, we have the tag <code>&lt;b&gt;</code>, which tells the browser that the enclosed text should have a bold typeface. A <a href="http://www.tutorialspoint.com/jsp/jsp_custom_tags.htm" target="_blank">tag in JSP</a> has a similar purpose: the difference is that JSP tags can be defined by the developers themselves and they are generating HTML. We as developers can therefore extend the behavior of HTML and thereby help the web designers.</p>
+<p>For example, we might create a JSP tag that renders the enclosing text in bold and italic typeface. The code would generate an <code>&lt;i&gt;</code> tag for italic and a <code>&lt;b&gt;</code> for bold typeface. JSTL provides a standardized set of such custom tags in a library, therefore the name <em>Standard Tag Library</em>.</p>
+<p>The JSTL covers a lot of different tags, too many to have a look at in this section &#8211; for our purposes we are just using a subset of the core tags. We include them by adding the following line to the header of our JSP:</p>
+<pre class="lang:xhtml decode:true">&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;</pre>
+<p>After that, we can use the core tags which are all prefixed by the XHTML namespace <code>c</code>. For our example we are just using the <code>c:if</code> tag for conditional rendering, the <code>c:out</code> tag for generating output and the <code>c:forEach</code> tag for iterating over the items of a collection. Take a look at how we are using them in Listing 4-2. As usually save the file in your workspace &#8211; this time replacing the existing content of <code>memos.jsp</code>.</p>
+<pre class="lang:xhtml mark:3,22-24,26,28,29,39,42,45,48 decode:true">&lt;!DOCTYPE html&gt;
+&lt;%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8"%&gt;
+&lt;%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;My-Memo&lt;/title&gt;
+  &lt;link rel="stylesheet" type="text/css" href="screen.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="container"&gt;
+  &lt;div id="header"&gt;
+    &lt;p&gt;
+      &lt;b&gt;My-Memo&lt;/b&gt; – A Simple Web App for Managing Memos
+    &lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div id="content"&gt;
+    &lt;h1&gt;Add Memo:&lt;/h1&gt;
+    &lt;form method="POST" action="memos"&gt;
+      &lt;input type="text" name="memo" size="30" placeholder="Enter your memo here" /&gt;
+      &lt;button type="submit" name="button" value="save"&gt;Add&lt;/button&gt;
+      &lt;c:if test="${!empty requestScope.err}"&gt;
+        &lt;span style="color: red"&gt;&lt;c:out value="${requestScope.err}"/&gt;&lt;/span&gt;
+      &lt;/c:if&gt;
+      &lt;h1&gt;My Memos:&lt;/h1&gt;
+      &lt;c:if test="${sessionScope.memos == null || sessionScope.memos.size() == 0}"&gt;
+        &lt;p&gt;Please add some memos.&lt;/p&gt;
+      &lt;/c:if&gt;
+      &lt;c:if test="${sessionScope.memos.size() &gt; 0}"&gt;
+        &lt;table&gt;
+          &lt;tr&gt;
+            &lt;th&gt;
+              Memo
+            &lt;/th&gt;
+            &lt;th&gt;
+              Saved
+            &lt;/th&gt;
+          &lt;/tr&gt;
+          &lt;c:forEach items="${sessionScope.memos}" var="memo"&gt;
+            &lt;tr&gt;
+              &lt;td&gt;
+                &lt;c:out value="${memo.description}"/&gt;
+              &lt;/td&gt;
+              &lt;td&gt;
+                &lt;c:out value="${memo.created}"/&gt;
+              &lt;/td&gt;
+            &lt;/tr&gt;
+          &lt;/c:forEach&gt;
+        &lt;/table&gt;
+        &lt;br/&gt;
+        &lt;button type="submit" name="button" value="reset"&gt;Reset list&lt;/button&gt;
+      &lt;/c:if&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+  &lt;div id="footer"&gt;
+    &lt;p&gt;(C) 2015 Schiesser/Schmollinger, MIT license&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p><strong>Listing 4-2 </strong>JSP file memos.jsp &#8211; Our updated JSP view using JSTL</p>
+<p>The <code>c:if</code> tag is rather self-explaining: the attribute <code>test </code>defines an expression &#8211; if the expression evaluates to <code>true </code>the enclosed text is rendered, if not it is not rendered.<br />
+More interesting is what kind of expressions can be used. They must be defined in the so called <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnahq.html" target="_blank">EL (expression language)</a>. It is a simple language to evaluate expressions on <a href="https://en.wikipedia.org/wiki/JavaBeans" target="_blank"><em>JavaBeans</em></a>. The syntax is similar to Java, but easier to read, e.g. we have an operator <code>empty </code>to check for an empty string.</p>
+<p>The used expression <code>!empty requestScope.err</code> is therefore <code>true</code>, if the <code>err </code>attribute of the <em>JavaBean </em><code>requestScope </code>is not empty. As <code>requestScope </code>is the EL&#8217;s name of our <code>request </code>object, we&#8217;re thereby checking if an error was generated by the controller class <code>MemoServlet</code>.</p>
+<p>The <code>c:out</code> tag is even simpler, it evaluates the EL given in the <code>value </code>property and directly renders its result as HTML output.</p>
+<p>Now it is also easier to understand the <code>c:forEach</code> tag. In the <code>items </code>attribute we are defining the collection we want to iterate over. In our case <code>sessionScope.memos</code>, which are the <code>Memo </code>objects stored in the user session.</p>
+<p>The <code>var </code> attribute stores the name of the variable to reference the instance of the actual iteration. Therefore this variable is used in enclosing EL expressions. For example in the <code>memo.description</code> expression used by the <code>c:out</code> tag. It evaluates to the <code>description </code>attribute of the <code>Memo </code>object of the actual iteration. Therefore the description of the memo is rendered in this place.</p>
+<p>With the help of JSTL we generated a view description which can be easier understood by web designers than JSP pages containing inline Java code.</p>
+<h3>4.4 Further Reading</h3>
+<p>As you can see, Java Servlets and JSPs work hand in hand in the MVC pattern. More details about JSP, Java Servlets and friends can be found in the following textbooks:</p>
+<p><a target="_blank" href="http://www.amazon.com/gp/product/1890774782/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1890774782&linkCode=as2&tag=turpre-20&linkId=LMZ4R2LA2ERFITUU">Joel Murach, 2014. Murach&#8217;s Java Servlets and JSP, 3rd Edition (Murach: Training &#038; Reference). 3rd Edition. Mike Murach &#038; Associates.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1890774782" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<p><a target="_blank" href="http://www.amazon.com/gp/product/B00K7BMJJ2/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B00K7BMJJ2&linkCode=as2&tag=turpre-20&linkId=NYVZNPQBQ6QBDFZ7">Mahesh P. Matha, 2013. JSP and SERVLETS: A Comprehensive Study. Edition. PHI.<br />
+</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=B00K7BMJJ2" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<p>&nbsp;</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-40-1">Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project, and by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser. <a href="#return-footnote-40-1" class="return-footnote">&crarr;</a></li><li id="footnote-40-2">Codenvy does not provide a special menu item for JSP files. Please use the general menu item for file creation (<code>New → File</code>). <a href="#return-footnote-40-2" class="return-footnote">&crarr;</a></li><li id="footnote-40-3">In JSP the actual <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html" target="_blank"><code>HttpServletRequest</code></a> object as available as <code>request </code>and the actual <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html" target="_blank"><code>HttpSession</code></a> object as <code>session</code>. <a href="#return-footnote-40-3" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=4%20Turn%20it%20Inside%20Out%20%E2%80%93%20JavaServer%20Pages%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F4-turn-it-inside-out-javaserver-pages%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

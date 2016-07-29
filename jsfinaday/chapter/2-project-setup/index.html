@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>2 Project Setup | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
+<link rel='prev' title='1 Outlook' href='http://www.turngeek.press/jsfinaday/chapter/1-outlook/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=73' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F2-project-setup%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F2-project-setup%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-73" id="2projectsetup">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">2 Project Setup</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">2 Project Setup</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">Next</a></span>
+    </div>				<div id="post-73" class="type-1 post-73 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>We promised to protect you from cumbersome configuration and installation work. Therefore, you can find below a link to an initial project prepared with the cloud IDE Codenvy for you.</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=dxx4mhv7vq8cnuk8" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=j88vp07rkv3cy3f8--></p>
+<p>As you might have guessed, all the changes you are doing in the cloud IDE are volatile and will be lost after closing the browser. If you want, you can <a href="https://codenvy.com/site/create-account" target="_blank">sign up to Codenvy</a> which allows you to persist the project in your own dedicated workspace. If you don&#8217;t want to sign up, don&#8217;t worry: throughout the book we provide links that allow you to start an IDE in the needed state.</p>
+<p>Though you can use this project as a black box, we want to provide some informations about the project setup to deepen your understanding.</p>
+<h3>2.1 Project Infrastructure</h3>
+<p>First, we used Maven to create and configure the project. <a href="http://maven.apache.org/" target="_blank">Maven</a> is a technology that supports the creation and deployment of Java EE applications on various application servers and allows them to be integrated in virtually any IDE. Maven is a general configuration management tool for all Java-based projects and for Java EE projects in particular. The motivation for creating Maven arose from the observation that every Java project to date had been accompanied by a large number of custom build scripts and that the intelligibility of each project therefore had to be addressed separately. A lack of transparency and standardization rendered the intelligibility of project structure minimal. Maven standardized the way in which Java projects were created and executed. In addition to providing a system by which the components of the project could be defined, it simplified the publication of project information and enabled the uncomplicated sharing of JAR files between multiple projects.</p>
+<p>The Maven system offers users the opportunity to define templates for particular types of Java projects. The generation of a template for a company project, for example, enables a higher degree of project standardization. These templates are known in Maven as <em>archetypes</em>. Corresponding archetypes also exist for Java EE 7 applications. A pared down, “bare essentials” <em>archetype </em>for Java EE 7 projects has been developed by Adam Bien, whose credentials include membership of the Java Community Processes expert panel that worked on the Java EE 7 specification<a class="footnote" title="see http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7 and https://github.com/AdamBien/javaee7-essentials-archetype" id="return-footnote-73-1" href="#footnote-73-1"><sup class="footnote">[1]</sup></a>. We used his template to generate an initial Maven project configuration and structure for our application and made some minor changes to it.</p>
+<p>Second, we configured the project in the way that WildFly 8.2.0 is used as our application server. In general, it is possible to configure arbitrary execution environments in Codenvy since Docker is used internally. We decided to use WildFly because of its high practical relevance.</p>
+<h3>2.2 Project Structure</h3>
+<p>If you browse the project with the project explorer you can see a lean directory structure (see Tab. 2-1).</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Directoy</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td>src\main\java</td>
+<td>Contains the package structure and the corresponding Java classes.</td>
+</tr>
+<tr>
+<td>src\main\webapp</td>
+<td>Contains all views and stylesheets concerning the web layer of the application.</td>
+</tr>
+<tr>
+<td>src\main\webapp\WEB-INF</td>
+<td>Contains configuration files.</td>
+</tr>
+<tr>
+<td>src\main\test</td>
+<td>Contains the package structure and the corresponding Java classes for test cases.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. 2-1</strong> Directory structure of the initial Maven project.</p>
+<p>Currently, there are four files stored in the project that will be explained below.</p>
+<p>First, the configuration of the Maven project can be found in the root directory of the project and is stored in the file <code>pom.xml</code><a class="footnote" title="Do not rename this file – Maven will search for a configuration file with this name each time the program is started." id="return-footnote-73-2" href="#footnote-73-2"><sup class="footnote">[2]</sup></a>. All information that has been entered thus far in interactive mode will be stored there, as will a number of values provided by the archetype. The file is nevertheless very compact (see Listing 2-1).</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Initial Maven project configuration file pom.xml.">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;press.turngeek&lt;/groupId&gt;
+    &lt;artifactId&gt;my-campaign&lt;/artifactId&gt;
+    &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax&lt;/groupId&gt;
+            &lt;artifactId&gt;javaee-api&lt;/artifactId&gt;
+            &lt;version&gt;7.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;finalName&gt;${project.artifactId}&lt;/finalName&gt;
+    &lt;/build&gt;
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.7&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.7&lt;/maven.compiler.target&gt;
+        &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;/properties&gt;
+&lt;/project&gt;</pre>
+<p><strong>Listing 2-1</strong>     Initial Maven project configuration file <code>pom.xml</code>.</p>
+<p>Essentially, our <code>pom.xml</code> file states that a web archive is to be created from the project (tag <code>&lt;packaging&gt;</code>), that the name of the web archive (and therefore also the web application) is <em>my-campaign</em> (tag <code>&lt;finalName&gt;</code>), that our project is dependent on the Java EE 7 API (tag <code>&lt;dependency&gt;</code>) and that Java 7 should be used (tag <code>&lt;maven.compiler.source&gt;</code> or <code>&lt;maven.compiler.target&gt;</code>)<a class="footnote" title="Currently, the Codenvy editor does not support Java 8." id="return-footnote-73-3" href="#footnote-73-3"><sup class="footnote">[3]</sup></a>.  Over the course of this Cloud Tutrorial, we will continue to add to the file <code>pom.xml</code> and to integrate additional dependencies to libraries into the project.</p>
+<p>Second, we provided a first JSF view <code>index.xhtml</code> in the directory <code>srcmainwebapp</code> as shown in Listing 2-2. As you can see, Facelets describe views of a web application similar to HTML. Tags of the view declaration that belong to a JSF namespace are rendered on the server-side into HTML<a class="footnote" title="Be careful in the future, Codenvy does not provide a special menu item for xhtml files. So please use the generic New -&gt; File item and enter the complete filename including the suffix .xhtml." id="return-footnote-73-4" href="#footnote-73-4"><sup class="footnote">[4]</sup></a>.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false tab-convert:true lang:xhtml decode:true" title="Facelet index.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" 
+        xmlns:h="http://xmlns.jcp.org/jsf/html"&gt; 
+    &lt;h:head&gt; 
+        &lt;title&gt;Tutorial Java EE 7&lt;/title&gt; 
+    &lt;/h:head&gt; 
+    &lt;h:body&gt; 
+        &lt;h1&gt;Java EE 7: Welcome to our Cloud Tutorial!&lt;/h1&gt; 
+    &lt;/h:body&gt; 
+&lt;/html&gt;</pre>
+<p><strong>Listing 2-2</strong>     Facelet <code>index.xhtml</code></p>
+<p>Third, in order for the application server to recognize that it is dealing with a JSF application, we must add the configuration file <code>faces-config.xml</code> (as shown in Listing 2-3) to the directory <code>srcmainwebappWEB-INF</code>.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Configuration file faces-config.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;faces-config version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+        http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"&gt;
+&lt;/faces-config&gt;</pre>
+<p><strong>Listing 2-3</strong> Configuration file <code>faces-config.xml</code></p>
+<p>This is not the only way to enable JSF for the application in the application server. For the moment, however, it is the easiest, since this file will also be required to internationalize our application in the following chapters.</p>
+<p>Finally, we added an index.html file to the directory <code>srcmainwebapp</code> as shown in Listing 2-4. This is the entry page for our web application and realizes a forward to our Facelet.</p>
+<pre class="lang:default decode:true" title=" HTML page index.html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta http-equiv="Refresh" content="0; URL=index.jsf"&gt;
+&lt;/head&gt;
+&lt;/html&gt;</pre>
+<p><strong>Listing 2-4</strong> HTML page <code>index.html</code></p>
+<h3>2.3 Running the Project</h3>
+<p>To start the application server, we&#8217;ll click on the &#8216;<em>Run</em>&#8216; submenu you’ll find under the main menu ‘<em>Run</em>’. In the console log in the bottom part of the screen you will see the log entries of the server. After starting up our server the cloud IDE will deploy our application, which consists of an empty <a href="http://docs.oracle.com/javaee/6/tutorial/doc/bnaby.html" target="_blank">WAR file</a><a class="footnote" title="We're linking here to the old Java EE 6 tutorial as we think the explanation for WAR files is better there than in the newer Java EE 7 tutorial" id="return-footnote-73-5" href="#footnote-73-5"><sup class="footnote">[5]</sup></a> (short for web archive) for the time being.</p>
+<p>After the deployment in the console log, you will find a blue colored link labeled with “<em>Application:</em>” as shown in Figure 2-1. Press this link to start the deployed application<a class="footnote" title="Be careful, sometimes the link appears before the application is deployed to the server." id="return-footnote-73-6" href="#footnote-73-6"><sup class="footnote">[6]</sup></a>. Please memorize this procedure as you&#8217;ll repeat it a lot of times throughout this book.</p>
+<p><a href="http://www.turngeek.press/images/javaeeinaday/chapter2/2-1.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter2/2-1.png" alt="Screen shot of the application starting link" width="100%" /></a><br />
+<strong>Fig. 2-1 </strong>Screenshot of the application starting link.</p>
+<p>After clicking on the link the browser should prompt the message <strong>Java EE 7: Welcome to our Cloud Tutorial!</strong>.<br />
+As you can see, currently JSF generates a static HTML page containing a welcome text. Now that we can handle with the infrastructure, we can develop the target application step by step in the following chapters.</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-73-1">see <span style="color: #0000ff;"><a style="color: #0000ff;" href="http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7" target="_blank">http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7</a></span> and <a href="https://github.com/AdamBien/javaee7-essentials-archetype" target="_blank">https://github.com/AdamBien/javaee7-essentials-archetype</a> <a href="#return-footnote-73-1" class="return-footnote">&crarr;</a></li><li id="footnote-73-2">Do not rename this file – Maven will search for a configuration file with this name each time the program is started. <a href="#return-footnote-73-2" class="return-footnote">&crarr;</a></li><li id="footnote-73-3">Currently, the Codenvy editor does not support Java 8. <a href="#return-footnote-73-3" class="return-footnote">&crarr;</a></li><li id="footnote-73-4">Be careful in the future, Codenvy does not provide a special menu item for xhtml files. So please use the generic <em>New -&gt; File</em> item and enter the complete filename including the suffix .xhtml. <a href="#return-footnote-73-4" class="return-footnote">&crarr;</a></li><li id="footnote-73-5">We're linking here to the old Java EE 6 tutorial as we think the explanation for WAR files is better there than in the newer Java EE 7 tutorial <a href="#return-footnote-73-5" class="return-footnote">&crarr;</a></li><li id="footnote-73-6">Be careful, sometimes the link appears before the application is deployed to the server. <a href="#return-footnote-73-6" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JavaServer%20Faces%20in%20a%20Day&amp;body=2%20Project%20Setup%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F2-project-setup%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

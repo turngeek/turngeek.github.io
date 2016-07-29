@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>5 The Templating System | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
+<link rel='prev' title='4 Internationalization' href='http://www.turngeek.press/jsfinaday/chapter/4-internationalization/' />
+<link rel='next' title='6 Our First Use Case: &#8220;Display and Edit Campaign&#8221;' href='http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=26' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-26" id="5thetemplatingsystem">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">5 The Templating System</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">5 The Templating System</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">Next</a></span>
+    </div>				<div id="post-26" class="type-1 post-26 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>One of the most important functionalities offered by JSF is the <em>templating system</em>. Professional web applications require a uniform appearance, and <em>templates</em> are useful in helping us achieve this, since they allow us to define an application&#8217;s basic look and layout. Once this is done, the content areas of different pages can be created on a page-by-page basis.</p>
+<p>In light of the above, it&#8217;s important you have a clear picture of the templates to be used <em>before</em> you begin designing the actual content. For this reason, we will now spend some time taking a detailed look at JSF’s template technology. We&#8217;ll then design templates for (almost) all the pages of our application that are still to be created.</p>
+<p>You can continue with the project in your own Codenvy workspace, or you can use the following temporary workspace.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=ltpqk7rgnzifdcnr" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign after Chapter 4 (I18N)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=rij3gl0dx07emuqa--></p>
+<h3>5.1 Templating with Facelets</h3>
+<p>The basic principle is easily explained. A template is an XHTML document that declares areas with special tags and furnishes them with unique names or place holders. The areas can have default content. Other XHTML documents (<em>template clients</em>) can refer to the template and populate the areas with their own content. Areas are identified by the names specified in the template. The templating system introduces special tags for definining and using templates. The tags belong to the namespace <code>xmlns:ui="http://xmlns.jcp.org/jsf/facelets"</code>. The most important tags are listed in the following table, ‎Tab. 5-1.</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Facelet Tag</strong></td>
+<td><strong>Explanation</strong></td>
+</tr>
+<tr>
+<td><code>&lt;ui:insert&gt;</code></td>
+<td>This tag can be used in a template to define a placeholder with default content. The tag contains a unique name (attribute <code>name</code>) to enable a template client to refer to it. Example: <code>&lt;ui:insert name="title"&gt;</code>   <code>Default Title</code><code>&lt;/ui:insert&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;ui:composition&gt;</code></td>
+<td>This tag enables a template to be referenced within a JSF page (template client). The attribute <code>template</code> takes the name of the template file as a value. Everything inside the tags is governed by the templating mechanism.Example:<code>&lt;ui:composition template=</code><code>"</code><code>template.xhtml</code><code>"</code><code>&gt;</code><code>…</code><code>&lt;ui:composition/&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;ui:define&gt;</code></td>
+<td>This tag is used within a <em>composition</em> (<code>&lt;ui:composition&gt;</code>) and establishes a reference to a particular content area (<code>&lt;ui:insert&gt;</code>) in the template. The reference is made using the name of the content area. <code>&lt;ui:define&gt;</code> in the composition and <code>&lt;ui:insert&gt;</code> in the template must match in the attribute <code>name</code>. Example:<code>&lt;ui:define name=</code><code>"</code><code>title</code><code>"</code><code>&gt;</code>   <code>My Concrete Title</code><code>&lt;/ui:define&gt;</code></td>
+</tr>
+<tr>
+<td><code>&lt;ui:include&gt;</code></td>
+<td>The tag enables JSF pages to be re-used. The attribute <code>src</code> allows the user to specify the files that should be used by the server in place of the tags. Example:<code>&lt;ui:include src=</code><code>"</code><code>other.xhtml</code><code>"</code><code>/&gt;</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. 5-1</strong>     A very brief overview of the most important tags in the JSF template system</p>
+<h3>5.2 A Template for My-Campaign</h3>
+<p>We are going to build a simple template for the web application <em>My-Campaign</em>. The template is a complete XHTML page that establishes a content area (<code>content</code>) inside the HTML body. A template client can then replace the content area at runtime. Alongside the XHTML template, we will also define a CSS (<em>Cascading Style Sheet</em>) to improve the way the page is displayed.</p>
+<p><strong>XHTML Template</strong></p>
+<p>‎Listing  5-1  shows the template for our web application. It is a complete XTHML page containing both XHTML tags and special JSF tags.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Facelet template.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"&gt;
+	&lt;h:head&gt;
+		&lt;title&gt;My-Campaign&lt;/title&gt;
+		&lt;meta charset="utf-8" /&gt;
+		&lt;h:outputStylesheet name="/screen.css" /&gt;
+	&lt;/h:head&gt;
+	&lt;h:body&gt;
+		&lt;div id="container"&gt;
+			&lt;div id="header"&gt;
+				&lt;p&gt;Sample Application &lt;b&gt;My-Campaign&lt;/b&gt; – Tutorial Java EE 7&lt;/p&gt;
+			&lt;/div&gt;
+			&lt;div id="content"&gt;
+				&lt;ui:insert name="content"&gt;
+					[Template content will be inserted here]
+				&lt;/ui:insert&gt;
+			&lt;/div&gt;
+			&lt;div id="footer"&gt;
+				&lt;p&gt; (C) 2015-2016 Schiesser/Schmollinger, MIT License&lt;/p&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/h:body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 5-1</strong>     Facelet <em>template.xhtml</em></p>
+<p>Along with the above-mentioned JSF Facelet template tags, we will also be using JSF HTML tags (namespace <a href="http://xmlns.jcp.org/jsf/html" target="_blank"><code>http://xmlns.jcp.org/jsf/html</code></a>). Most of ones we use at this stage will be self-explanatory, (<code>&lt;h:head&gt;</code>, <code>&lt;h:body&gt;</code>) since they have direct equivalents in HTML. The integration of the CSS file will occur via the tag <code>&lt;h:outputStylesheet&gt;</code>, which requests the file name (relative to the project) via the attribute <code>name</code>. We will store our template within the structure of the web project in the directory <code>srcmainwebappWEB-INF</code>.</p>
+<p><strong>Cascading Style Sheet (CSS)</strong></p>
+<p>In ‎Listing 5-1, the HTML tag <code>&lt;div&gt;</code> is used to define the areas that can be individually formatted using the CSS. We have established the areas <code>container</code>, <code>header</code>, <code>content</code> and <code>footer</code>. The CSS contains format specifications for the HTML standard elements <code>&lt;body&gt;</code> and <code>&lt;h2&gt;</code> as well as for the <code>container</code>, <code>header</code> and <code>footer</code> areas that we introduced ourselves. We can use the CSS to determine which fonts, colours, frames and margins should be used for different areas.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="CSS file screen.css">body {
+	margin: 0;
+	padding: 0;
+	background-color: #EAECEE;
+	font-family: Verdana, sans-serif;
+	font-size: 0.9em;
+}
+#container {
+	margin: 0 auto;
+	padding: 0 20px 10px 20px;
+	border: 1px solid #666666;
+	width: 865px; 
+	padding-top: 10px;
+}
+#header {
+	font-size: 1.3em;
+	border: 1px solid #666666;
+	background: #EAECEE;
+	padding: 0 15px 5px 15px;
+	margin-bottom: 50px;
+}
+#footer {
+	clear: both;
+	text-align: center;
+	color: #666666;
+	font-size: 0.85em;
+	padding: 3em 0 0 0;
+}
+h2 {
+	font-size: 1.2em;
+}
+</pre>
+<p><strong>Listing 5-2</strong>     CSS file <em>screen.css</em></p>
+<p>We will create the directory <code>srcmainwebappresources</code> within the project structure. We will store our CSS file in this directory under the name <code>screen.css (srcmainwebappresourcesscreen.css)</code>.</p>
+<p><strong>The Template in Use</strong></p>
+<p>To put the template into action, we need make further adjustments to our welcome page <code>index.xhtml</code> from as shown in ‎Listing 5-3. Until now, the Facelet has contained the description for a complete page. We use the <code>&lt;ui:composition&gt;</code> tag to reference our template and the <code>&lt;ui:define&gt;</code> tag to set our welcome text as content. The ability to change the title is not provided for within the template, so it is omitted from the welcome page without being replaced.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:5 decode:true" title="Facelet index.xhtml ">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" 	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"&gt;
+	&lt;body&gt;
+		&lt;ui:composition template="WEB-INF/template.xhtml"&gt;
+		&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{msg['welcome.text']}&lt;/h1&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong> Listing 5-3</strong>     Facelet <em>index.xhtml </em></p>
+<p>We can test the page out by rerunning the WildFly runner and opening the browser by clicking on the provided link. The browser should display the page as it appears in Figure 5-1.</p>
+<p><a href="http://www.turngeek.press/images/jsfinaday/chapter5/5-1.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter5/5-1.png" alt="The template in use." width="100%" /></a><br />
+<strong>Fig. 5-1</strong>     The template in use</p>
+<div class="textbox shaded">
+<p><strong>Mapping a URL to a Facelet</strong></p>
+<p>JSF requests are processed on the server using the <em>Faces servlet.</em> We saw that the servlet is activated when the URL ending &#8230;<code>/index.jsf</code> is accessed and the JSF processing for the Facelet <code>index.xhtml</code> has begun. The URL endings &#8230;<code>/index.faces</code> and &#8230;<code>/faces/index.xhtml</code> can also be used as options for activating the servlet.</p>
+<p>The first two cases involve <em>extension mapping</em>, while the last one involves <em>prefix mapping</em>. All three variants will work as long as as you have not explicitly set the mapping to the <code>Faces-Servlet</code> via the corresponding configuration in the file <code>src/main/webapp/WEB-INF/web.xml</code>.</p>
+</div>
+<h3>5.3 Resource Library Contracts</h3>
+<p>Attentive readers will no doubt be wondering why we have not localized the template in ‎Listing 5-1. Without doubt, this localization could have been carried out using the method described in the <a href="http://www.turngeek.press/javaee7/chapter/4-3-internationalization/" target="_blank">previous chapter</a> without any further adjustments being made. Since JSF 2, it is even possible to localize resources like CSS and graphics files, giving the application the ability to change its appearance depending on the <em>locale</em>. This approach is sufficient in most cases. If, however, you wish to enable the dynamic substitution of one application-specific template and its related resources for another in a whole then a different JSF concept should be used.</p>
+<p>A mechanism called <em>Resource Library Contracts</em> (RLC), which was made available for the first time in JSF 2.2, provides a method by which Facelet templates and its related resources (e.g. graphics, CSS or JavaScript files) can be applied to the entire JSF application in the same way as a library and hence can be exchanged easily. The specification refers to the resource collections as <em>contracts</em> for short. The templates and resources are gathered in a directory named <code>contracts</code>. The directory can be directly incorporated into the <code>contracts</code> directory in the root of the WAR file or be inserted in the form of a JAR file in the <code>WEB-INFlib</code> directory of your JSF application.</p>
+<p>To enable the Facelets to be able to refer to a <em>contract</em>, the templates contained therein and their insertion points (<code>&lt;ui:insert&gt;</code>) must be known. Supplementary resources may also be known, but are optional. Informally, these three elements form the<em> resource library contract</em> between the user and the <em>contract</em> provider. So long as the contract remains unchanged, alternative contracts can be used without adjusting the Facelets by switching either the contract directory or the JAR file.</p>
+<p>Several such <em>contracts</em> can be deposited in each JSF application. By entering URL patterns in the configuration file <code>faces-config.xml</code>, you are able to define which area or view of the application should work with which template. The choice of usable templates can also be controlled dynamically at runtime. This makes it possible for the appearance of a JSF application to be changed in accordance with user input or other environmental data.</p>
+<p><strong>Language determines layout and design</strong></p>
+<p>The idea is to use RLCs to make the look of an application dependent on the locale of the user. When managing the language dependency of a locale, another set of templates and resources are used. These allow the developer to dynamically adjust the layout and design of the application depending on the language and cultural area in which it is being used and so perhaps to gain a higher level of acceptance among users. In the following section, we will use the locales <code>en</code> and <code>de</code> to show how this can be done.</p>
+<p>First, we will create the directory <code>srcmainwebappcontracts</code>. Here, we can store the directories containing the <em>contracts</em> of the application. In our case, we will name the directories after the locales, meaning the names of the directories to be created are <code>srcmainwebappcontractsen</code> and <code>srcmainwebappcontractsde</code>. We will move the file <code>template.xhtml</code> from the folder <code>srcmainwebappWEB-INF</code> and the file <code>screen.css</code> from the folder <code>srcmainresources</code> and deposit them in <code>srcmainwebappcontractsen</code><a class="footnote" title="Hint: Use the Copy&amp;Paste functinality of the context menu in the Codenvy IDE." id="return-footnote-26-1" href="#footnote-26-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>It would undoubtedly be possible to find interesting ideas for developing entirely different user interfaces for the English- and German-speaking regions, but that is not the focus of this chapter. For this reason, we’ll keep things simple and deposit a second copy of both these files in the folder <code>srcmainwebappcontractsde</code>. To enable us to tell the difference when using them, however, we’ll need at least to translate the texts in the German template (see‎ Listing 5-4).</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:13,17 decode:true" title="German template template.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"&gt;
+	&lt;h:head&gt;
+		&lt;title&gt;My-Campaign&lt;/title&gt;
+		&lt;meta charset="utf-8" /&gt;
+		&lt;h:outputStylesheet name="/screen.css" /&gt;
+	&lt;/h:head&gt;
+	&lt;h:body&gt;
+		&lt;div id="container"&gt;
+			&lt;div id="header"&gt;
+			&lt;p&gt;Beispielanwendung &lt;b&gt;My-Campaign&lt;/b&gt; – Tutorial Java EE 7&lt;/p&gt;
+			&lt;/div&gt;
+			&lt;div id="content"&gt;
+				&lt;ui:insert name="content"&gt;
+					[Inhalt wird hier eingefügt]
+				&lt;/ui:insert&gt;
+			&lt;/div&gt;
+			&lt;div id="footer"&gt;
+				&lt;p&gt; (C) 2015  Schiesser/Schmollinger, MIT license&lt;/p&gt;
+			&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;</pre>
+<p><strong>Listing 5-4</strong>     German template <em>template.xhtml</em></p>
+<p>Finally, we need to tell the <code>index.xhtml</code> Facelet which contract it should be working with. The <code>&lt;f:view&gt;</code> tag can be used as a container for all the JSF tags in a single page. This allows us to use global settings for the view – the locale to be used, for example, or the desired contract. The <code>&lt;f:view&gt;</code> tag possesses the attribute <code>contracts</code>, which can be assigned the name of the <em>contract</em> to be used. The value here should be set dynamically as the language of the user, which we can define using an EL expression. Within the EL expression, we have different predefined variables available to us. The variable view provides us with information about the current view, including the <em>locale</em> that is being used and its language. Modify the <code>index.xhtml</code> file as shown in ‎Listing 5-5.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:3,6,7,12 decode:true" title="Facelet index.xhtml ">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core" 	
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"&gt;
+	&lt;body&gt;
+		&lt;f:view contracts="#{view.locale.language}"&gt;
+			&lt;ui:composition template="/template.xhtml"&gt;
+				&lt;ui:define name="content"&gt;
+					&lt;h1&gt;#{msg['welcome.text']}&lt;/h1&gt;
+				&lt;/ui:define&gt;
+			&lt;/ui:composition&gt;
+		&lt;/f:view&gt;
+	&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 5-5</strong>     Facelet <em>index.xhtml</em></p>
+<p>We can try the page out by restarting the runner and opening the provided link in a browser. Depending on your <em>locale</em>, you will receive either an English or a German greeting.</p>
+<p>We have now completed all the necessary preliminary tasks and can begin working on our first use case!</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-26-1">Hint: Use the Copy&amp;Paste functinality of the context menu in the Codenvy IDE. <a href="#return-footnote-26-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JavaServer%20Faces%20in%20a%20Day&amp;body=5%20The%20Templating%20System%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

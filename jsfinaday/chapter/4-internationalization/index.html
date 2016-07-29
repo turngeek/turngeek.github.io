@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4 Internationalization | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
+<link rel='prev' title='3 Domain Classes as JavaBeans' href='http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/' />
+<link rel='next' title='5 The Templating System' href='http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=22' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F4-internationalization%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F4-internationalization%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-22" id="4internationalization">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4 Internationalization</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4 Internationalization</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">Next</a></span>
+    </div>				<div id="post-22" class="type-1 post-22 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>Web applications are frequently distributed and used on an international scale. For this reason, it’s essential that views are able to adjust dynamically to different languages and countries without having to be changed at the code level. Languages, countries and even narrower categories such as regions  can be represented by the Java type <code>java.util.Locale</code>.</p>
+<p>The <code>String</code> representation of a <em>locale</em> is a well-known identifier that encodes the language and country using their standard two-character abbreviations in lower and upper case letters respectively. For example, <code>de</code> stands for German and <code>DE</code> for Germany, which means that <code>de_DE</code> stands for German/Germany and <code>de_AT</code> for German/Austria.</p>
+<p>The string representation can be further refined by appending additional variants for regions (for example, <code>de_DE-BW</code> stands for German/Germany/Baden-Württemberg, a region in the southwest of Germany). In light of this, we often refer to applications, websites or individual areas of a website as being <em>localized</em> – that is, displayed according to the particulars of the current <em>locale</em>.</p>
+<p>A number of tags can be localized in JSF by specifying a <code>Locale</code> object or its <code>String</code> representation (e.g. the displaying of dates).  If a tag does not possess explicit information about a <em>locale</em>, the <em>locale</em> of the enclosing tag will be used. If this tag also does not possess any information, the <em>locale</em> can be read from a browser request. The <code>Accept-Language</code> header on the request contains a list of accepted <em>locales</em>, which can be managed in the browser settings.</p>
+<p>In addition to “localizable” tags, the automatic adjustment of texts is another important requirement. In each view, there are titles or captions that must be furnished with different content (e.g. English or German terms) depending on the respective <em>locale</em>. The translations are managed in the form of key-word pairs. The class <code>java.util.ResourceBundle</code> represents and implements this form of management. JSF applications allow us to deposit the <em>ResourceBundle</em> data in properties files. When the view is rendered, the text will then be read from the relevant properties file via the key and in accordance with the current <em>locale</em>.</p>
+<p>The configuration file <code>faces-config.xml</code>, which we have already come across, can be used to determine which <em>locales</em> are supported by our JSF application and which <em>ResourceBundles</em> are available globally. Our My-Campaign application will support English and German. When the client does not explicitly supply a supported language in its HTTP request, English will be used as the default language. To implement internationalization, we will therefore introduce a <em>ResourceBundle</em> called <code>messages</code> for localizing text messages. This involves assigning a variable name <code>msg</code> that can be used in the Facelets’ EL expressions to acces the localized text. We can modify the file <code>faces-config.xml</code> according to Listing 4-1:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:7-17 decode:true" title="Configuration file faces.config.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;faces-config version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+	http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"&gt;
+	&lt;application&gt;
+		&lt;locale-config&gt;
+			&lt;default-locale&gt;en&lt;/default-locale&gt;
+			&lt;supported-locale&gt;en&lt;/supported-locale&gt;
+			&lt;supported-locale&gt;de&lt;/supported-locale&gt;
+		&lt;/locale-config&gt;
+		&lt;resource-bundle&gt;
+			&lt;base-name&gt;messages&lt;/base-name&gt;
+			&lt;var&gt;msg&lt;/var&gt;
+		&lt;/resource-bundle&gt;
+	&lt;/application&gt;
+&lt;/faces-config&gt;
+</pre>
+<p><strong>Listing 4-1     </strong>Configuration file <em>faces.config.xml</em></p>
+<p>As a datastore for our <em>ResourceBundle</em> <code>message</code>, we will now create a properties file for each <em>locale</em> in the directory <code>src\main\resources</code>. The file names consist of the base name <code>messages</code> &#8211; as specified in Listing 4-1 &#8211; plus the string representation of the respective <em>locale</em> and the suffix <code>.properties</code>.</p>
+<p>In order to be able to try out the concept, we want to localize the title and welcome form of the welcome page <code>index.xhtml</code>. To do this, we will create the properties files <code>messages_en.properties</code> and <code>messages_de.properties</code> in accordance with ‎Listing 4-2 and ‎Listing 4-3. Lines that begin with <code>#</code> are comments. We will use the English terms as keys.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Properties file messages_en.properties"># index.xhtml
+welcome.title=Workshop Java EE 7
+welcome.text=Java EE 7: Welcome to our Cloud Tutorial!
+</pre>
+<p><strong>Listing 4-2     </strong>Properties file <em>messages_en.properties</em></p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Properties file messages_de.properties"># index.xhtml
+welcome.title= Workshop Java EE 7
+welcome.text=Java EE 7: Willkommen zu unserem Cloud Tutorial!</pre>
+<p><strong>Listing 4-3     </strong>Properties file <em>messages_de.properties</em></p>
+<div class="textbox shaded">
+<p><strong>Hierarchical Searches in Properties Files</strong></p>
+<p>Often, a <em>locale</em>-independent properties file containing all the default texts of the application is defined. For our ResourceBundle, this would be the file with the name <code>messages.properties</code>. It represents the root of a search tree that will ideally store the properties files for the languages on the second level, the countries on the third level and the regionson the fourth level. The search begins in the most specialized file (i.e. the leaf of the tree) and, if unsuccessful, moves towards the root with the hopes of yielding results. For the <em>locale</em> <code>de_DE</code>, the search would begin in <code>messages_de_DE.properties</code> before moving to <code>messages_de.properties</code> and finally to messages.properties.</p>
+</div>
+<p>All that’s left to do now is to access the <em>ResourceBundle</em> in the Facelet <code>index.xhtml</code>; then, we’ll be ready attempt localization. To do this, we will replace the hard-coded texts with EL expression using the corresponding keys in the properties files. We will adjust the Facelet as shown in ‎Listing 4-4:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:5,8 decode:true" title="Facelet index.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" 	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+	&lt;h:head&gt;
+		&lt;title&gt;#{msg['welcome.title']}&lt;/title&gt;
+	&lt;/h:head&gt;
+	&lt;h:body&gt;
+		&lt;h1&gt;#{msg['welcome.text']}&lt;/h1&gt;
+	&lt;/h:body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 4-4     </strong>Facelet <em>index.xhtml</em></p>
+<p>Now we restart our runner (WildFly) again to force a redeployment. After that, we can trial our whole implementation by running our browser with multiple <em>locales.</em> Current browsers provide extentions or add-ons that allow to switch the <em>locale</em>, immediately (e.g. <a href="https://chrome.google.com/webstore/detail/quick-language-switcher/pmjbhfmaphnpbehdanbjphdcniaelfie" target="_blank">Quick Language Switcher for Chrome</a>). The result that appears in the browser  should vary depending on which <em>locale</em> has been set. Try it out and see for yourself! If you have problems so far, you can compare your current project with that provided by us at the beginning of the following chapter.</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JavaServer%20Faces%20in%20a%20Day&amp;body=4%20Internationalization%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F4-internationalization%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

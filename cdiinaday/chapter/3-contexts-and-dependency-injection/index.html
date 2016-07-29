@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='description' content='This Cloud Tutorial is the second of an upcoming series building a web application step by step with Java EE technology. It will see us improve the architecture and design of the sample application using CDI (Contexts and Dependency Injection).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/2015/10/cdiinaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<link rel="shortcut icon" href="http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>3 Contexts and Dependency Injection | Cloud Tutorial &#8211; CDI in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/cdiinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/cdiinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/cdiinaday/wp-json/' />
+<link rel='prev' title='2 Getting Started' href='http://www.turngeek.press/cdiinaday/chapter/2-getting-started/' />
+<link rel='next' title='4 Application Wide Messages' href='http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/cdiinaday/?p=21' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F3-contexts-and-dependency-injection%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F3-contexts-and-dependency-injection%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-21" id="3contextsanddependencyinjection">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/cdiinaday/" title="Cloud Tutorial &#8211; CDI in a Day" rel="home">Cloud Tutorial &#8211; CDI in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">3 Contexts and Dependency Injection</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">3 Contexts and Dependency Injection</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">Next</a></span>
+    </div>				<div id="post-21" class="type-1 post-21 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In a normal Java application, it is the sole responsibility of the programmer to ensure that classes are instantiated. With CDI, however, the process is somewhat different, since its main component is a so-called “container” that creates instances of classes independently and removes them from memory as needed. The object diagram below shows the relationship between a container and the instances it manages. An object diagram is used in preference to a class diagram, since on this occasion, it is instances &#8211; not classes – that we wish to look at.</p>
+<p><a href="http://www.turngeek.press/images/cdiinaday/chapter3/3-1.png" target="_blank"><img src="http://www.turngeek.press/images/cdiinaday/chapter3/3-1.png" alt="Object diagram of a container and the instances it manages" width="100%" /></a><br />
+<strong>Fig. 3-1</strong>     Object diagram of a container and the instances it manages</p>
+<p>With a small number of exceptions, the CDI container can manage instances of any concrete class and is used particularly to manage JavaBeans and <a href="https://en.wikipedia.org/wiki/Enterprise_JavaBeans#Session_beans" target="_blank">EJB session beans</a>. Classes managed by CDI are generally referenced as beans. A simple annotation is all that is required to ensure that CDI manages these classes as beans<a class="footnote" title="Before CDI 1.1, it was necessary for an additional empty file called WEB-INFbeans.xml to be contained in the application archive in order for activation to occur." id="return-footnote-21-1" href="#footnote-21-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>Incidentally, instances of beans do not possess a reference to the container; rather, the container possesses a reference to them. In the literature, this concept is also referred to as <a href="https://en.wikipedia.org/wiki/Inversion_of_control" target="_blank"><em>Inversion of Control</em></a> (IoC).</p>
+<p>Dealing with a container poses a number of questions, primarily questions regarding when the instances are created and deleted and how these instances are referenced. These and other questions will be answered in the following sections.</p>
+<h3>3.1 The Scope of a Bean</h3>
+<p>The point in time at which a bean is created and deleted depends on the <em>scope</em> of the bean. CDI also makes it possible to create our own scopes. However, the only ones of importance for us currently are the <em>RequestScope</em>, the <em>SessionScope</em>, the <em>ViewScope</em> and the <em>DependentScope</em>.</p>
+<h4>3.1.1 RequestScope</h4>
+<p>A bean with <em>RequestScope</em> is newly created for every incoming <em>request</em>. If the request is ended, the bean is deleted again (or, strictly speaking, is marked by the container for deletion; the actual deletion is then carried out at a later point by the Garbage Collector).</p>
+<p>If multiple requests are received by the server simultaneously, a new bean is created for each. Data stored in the bean is lost when the request ends. Since a request usually has a very short lifespan (shorter than a second), beans with <em>RequestScope </em>are also very short-lived. For this reason, they’re not suited to saving data that’s required for a longer time, such as user data. However, these beans are more economical, since they do not bind to resources long-term.</p>
+<p>It goes without saying that the container instantiates a bean with <em>RequestScope </em>only when the bean is referenced in the request; otherwise, resources would be used unnecessarily.</p>
+<p>To specify that a bean has <em>RequestScope</em>, we must add the annotation <code>@RequestScoped</code> (from the package <code>javax.enterprise.context</code>) to the bean class.</p>
+<h4>3.1.2 SessionScope</h4>
+<p>A bean with <em>SessionScope</em> is created anew for each user session. The bean is only deleted when the user session is ended or when a timeout occurs due to a long period of inactivity.</p>
+<p>This means that each user owns their own instance of this bean and thus that beans with <em>SessionScope</em> are ideally suited for storing user data. A good example in our application is the <code>CampaignListProducer</code>, which contains the list of all of the user’s <code>Campaign</code> objects.</p>
+<p>Since a user session can last for a very long time (several hours), the server must sometimes cache an inactive user session to save on resources. In light of this, beans with <em>SessionScope</em> must be serializable &#8211; that is, they must implement the interface <code>Serializable</code> from the <code>java.io</code> package. The server can serialize such a bean, save it to the hard disk and de-serialize it again as needed. Beans with <em>SessionScope</em> therefore require more resources than beans with <em>RequestScope</em> and as such, beans should only obtain a <em>SessionScope</em> when absolutely necessary.</p>
+<p>To specify that a bean has <em>SessionScope</em>, we must add the annotation <code>@SessionScoped</code> (from the package <code>javax.enterprise.context</code>) to the bean class.</p>
+<h4>3.1.3 ViewScope</h4>
+<p>One other scope for CDI beans, ViewScope<a class="footnote" title="The ViewScope actually existed in JSF before version 2.2; however, it could only be used for JSF managed beans, not for CDI beans." id="return-footnote-21-2" href="#footnote-21-2"><sup class="footnote">[2]</sup></a>, was introduced in Java EE 7 to facilitate better use of resources. This scope is exclusively of interest for applications that use JavaServer Faces<a class="footnote" title="SessionScope and RequestScope, in contrast, do not require JSF – they function with any application that is built solely on servlets." id="return-footnote-21-3" href="#footnote-21-3"><sup class="footnote">[3]</sup></a>. Note, therefore, that although this scope is a CDI scope, it is provided by JSF since Verison 2.2, not CDI.</p>
+<p>With this scope, the lifespan of the beans depends on the current view components. If a bean is referenced anew in a JSF view, a new instance of the bean is created. If the view components are deleted, the CDI container in turn removes the beans that were initialised within the view and that have the <em>ViewScope</em>. A JSF view usually exists across the span of multiple requests. For this reason, a bean with <em>ViewScope</em> has a longer lifespan than one with <em>RequestScope</em>.</p>
+<p>This is of particular interest for beans that store data to be validated, since they must survive longer than a request. In the case of these beans, however, it would be a waste of resources to save them in the user session via <em>SessionScope.</em></p>
+<p>To specify that a bean has <em>ViewScope</em>, we must add the annotation <code>@ViewScoped</code> (from the <code>javax.faces.view</code> package) to the bean class. The differing package name makes it evident that the scope does not belong to CDI.</p>
+<h4>3.1.4 DependentScope</h4>
+<p>This scope simply means that the lifespan of the bean is dependent on another bean and therefore cannot exist independently of this other bean. A bean with <em>DependentScope</em> is created and deleted at the same time as the bean on which it is dependent.</p>
+<p>The <em>DependentScope</em> is defined by the annotation <code>@Dependent</code> from the package <code>javax.enterprise.context</code>.</p>
+<h4>3.1.5 Setting the Scopes for Our Application</h4>
+<p>After all the theoretic background it is now time for the first code changes on the given sample application. Please click the link below and start the application as explained in <a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/" target="_blank">Chapter 2</a>:</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=3vd3voxnsovb61ib" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE</p>
+</div>
+<p>[/sociallocker]</p>
+<p>If you check the sample applications code, you see that <em>SessionScope</em> is used for all our beans. This means that our application functions as desired, but that its use of resources is not as good as it could be.</p>
+<p>To improve our use of resources, we can take advantage of the structure built up for the sample application:</p>
+<p>Data that must survive longer than the lifespan of a JSF view have been stored in the <code>CampaignListProducer</code> and <code>CampaignProducer</code> classes. These data must continue to use <em>SessionScope.</em></p>
+<p>The controller beans &#8211; whose actual task is to manage the control flow – will be used, in a few cases, to save data that must be preserved beyond the lifespan of a view. Examples of such data are the <code>Campaign</code> object for deletion in the <code>ListCampaignsController</code> class and the donations that are created in <code>DonateMoneyController</code>.</p>
+<p>Since these data must be preserved over multiple requests, the <em>RequestScope</em> is not suitable to be used. The <em>ViewScope</em>, on the other hand, is ideal, since it deals exclusively with data that are required locally in the current view.</p>
+<p>This is a conscious design decision: the controller beans are permitted solely to cache data that is local for the view.</p>
+<p>Attentive readers will have noticed that not every controller bean would require a <em>ViewScope</em>. The <code>ListDonationsController</code>, for example, could be managed solely using a <em>RequestScope</em>, since it does not store any data.</p>
+<p>This said, we must remember that the decision to permit data to be saved is a design one. As such, this condition could potentially be changed for any bean at a later date. We will therefore now set the scope of all controller beans to the <em>ViewScope</em>, including the <code>ListDonationsController</code>. While this admittedly results in less-than-optimal resource use, it does mean that all controller beans are now uniform in terms of their scope.</p>
+<p>The authors take the view that this results in a clear design whilst also avoiding potentially confusing future discussions about why one controller bean is <em>ViewScoped</em> and another is <em>RequestScoped</em>.</p>
+<p>For your convenience find below a link to our sample application with all the necessary scope changes done:<br />
+[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=o34ly2anlngle2xm" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE (Scopes changed)</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>3.2 Referencing Beans Via Dependency Injection</h3>
+<p>So far, we have explained how a container instantiates and deletes a bean. What we’ve yet to discover is how a bean is referenced. This is done using the annotation <code>@Inject</code> from the package <code>javax.inject</code>. Consider the following snippet from the <code>EditCampaignController</code>:</p>
+<pre class="lang:java decode:true" >@Inject
+private CampaignListProducer campaignListProducer;
+</pre>
+<p>This indicates that the attribute <code>campaignListProducer</code> is to store an instance of the bean <code>CampaignListProducer</code>. Without the annotation <code>@Inject</code>, the attribute would have an undefined value. For the container, however, this annotation serves as an indication that an instance of the type (in this case <code>EditCampaignController</code>) should be referenced in the annotated attribute following the instantiation of the bean (in this case <code>EditCampaignController</code>).</p>
+<p>Thus, this annotation is used to make the reference of a bean available in another bean. This process is known as <a href="https://en.wikipedia.org/wiki/Dependency_injection" target="_blank"><em>dependency injection</em></a>. The relationships between the classes in our example are shown in the class diagram Fig. 3-2.</p>
+<p><a href="http://www.turngeek.press/images/cdiinaday/chapter3/3-2.png" target="_blank"><img src="http://www.turngeek.press/images/cdiinaday/chapter3/3-2.png" alt="Relationships between the container and the beans EditCampaignController and CampaignListProducer" width="100%" /></a><br />
+<strong>Fig. 3-2</strong>     Relationships between the container and the beans <em>EditCampaignController</em> and <em>CampaignListProducer</em></p>
+<p>At this point, we are still unsure as to which instance of <code>CampaignListProducer</code> is taken at runtime. However, this is actually clearly defined, since the bean <code>EditCampaignController</code> is bound to the current JSF view through the <em>ViewScope</em>. This, in turn, is assigned to a specific session – that of the current user. Furthermore, since the <code>CampaignListProducer</code> bean is located in <em>SessionScope</em>, exactly one instance of this bean exists per user session. It is precisely this instance that is referenced in our example.</p>
+<p>This said, what if the type of instance variable is a superclass or interface that is implemented by more than one bean? According to what we currently know, the container cannot unambiguously resolve the bean. This problem can be tackled using so-called <em>qualifiers</em> and is looked at in <a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/" target="_blank">Chapter 4</a>.</p>
+<p>Incidentally, the annotation <code>@Inject</code> can be used not only with attributes, but also with constructors or methods. This functionality is not required in our sample application. However, for the sake of completeness, we will show briefly how it would look below.</p>
+<p>If the constructor is annotated with <code>@Inject</code>, the other beans can be passed as parameters. In this case, the container passes the other beans at the time the bean is instantiated. In our example, this would look as follows:</p>
+<pre class="lang:java decode:true" >private CampaignListProducer campaignListProducer;
+
+@Inject
+public EditCampaignController(CampaignListProducer campaignListProducer) {
+    this.campaignListProducer = campaignListProducer;
+}</pre>
+<p>It is also possible to annotate methods with <code>@Inject</code>. After the instantiation of the bean, the container invokes these methods and passes the beans that are specified in the method parameters. Here is the code for our example:</p>
+<pre class="lang:java decode:true" >private CampaignListProducer campaignListProducer;
+
+@Inject
+public void setCampaignListProducer(CampaignListProducer campaignListProducer) {
+    this.campaignListProducer = campaignListProducer;
+}</pre>
+<h3>3.3 The Lifecycle</h3>
+<p>As we’ve already mentioned, beans are instantiated and deleted by the container. The programmer can specify methods to be invoked by the container at certain points within a bean’s lifecycle. In the following section, we will introduce the two lifecycle methods used by CDI. These are marked using the annotations <code>@PostConstruct</code> and <code>@PreDestroy</code>.</p>
+<h4>3.3.1 The <em>PostConstruct</em> Lifecycle Method</h4>
+<p>If the programmer annotates a method of the bean with the annotation <code>@PostConstruct</code> from the package <code>javax.annotation</code>, this method will be invoked immediately after the instantiation of the bean by the container.</p>
+<p>Unlike the bean constructor, all dependencies to other beans are resolved at the time the method with the <code>@PostConstruct</code> annotation is invoked. This means that the attributes annotated with <code>@Inject</code> already contain the references to the beans and the methods annotated with <code>@Inject</code> have already been invoked.</p>
+<p>As an example, we will now take the beans <code>DonateMoneyController</code> and <code>CampaignListProducer</code> and replace the constructor with an initialization method <code>init</code> that is annotated with <code>@PostConstruct</code>.</p>
+<p>For the <code>DonateMoneyController</code>, this means that</p>
+<pre class="lang:java decode:true" >public DonateMoneyController() {
+    this.donation = new Donation();
+}</pre>
+<p>is replaced by</p>
+<pre class="lang:java decode:true" >@PostConstruct
+public void init() {
+    this.donation = new Donation();
+}
+</pre>
+<p>This has the tangible advantage that the method <code>init</code> – unlike the constructor &#8211; can be invoked afresh, causing the bean to be reinitialized. This means that in the method <code>doDonation</code>, the line</p>
+<pre class="lang:java decode:true" >this.donation = new Donation();</pre>
+<p>can be replaced by</p>
+<pre class="lang:java decode:true" >init();</pre>
+<p>Following the same logic, we will now replace the constructor for the <code>CampaignListProducer</code>. In this case,</p>
+<pre class="lang:java decode:true" >public CampaignListProducer() {
+    campaigns = createMockCampaigns();
+}</pre>
+<p>is replaced by</p>
+<pre class="lang:java decode:true" >@PostConstruct
+public void init() {
+    campaigns = createMockCampaigns();
+}</pre>
+<p>At this stage, this does not offer us any extra advantage; in a later stage, however, we might use the method <code>init</code> to reset the <code>CampaignListProducer</code>, to provide the initial data after injecting the bean. By carrying out this step now, we are making preparations for future steps in the development of our application.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=0npd8g0qy862re58" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE (Lifecycle)</p>
+</div>
+<p>[/sociallocker]</p>
+<h4>3.3.2 The <em>PreDestroy</em> Lifecycle Method</h4>
+<p>Methods of a bean annotated with <code>@PreDestroy</code> – from the package <code>javax.annotation</code> – are invoked by the container before the bean is deleted from storage. This enables the developer to free up resources that the bean has created – by deleting temporary files, for example.</p>
+<p>Since this functionality is not required in our sample application, we will not make any changes of this nature here.</p>
+<h3>3.4 Use Any Class as a Bean with the Producer Method</h3>
+<p>Until now, the only classes we have been able to use as beans are those with either a parameterless constructor or a constructor annotated with <code>@Inject</code>. Thanks to this convention, the container can produce instances of these beans independently. According to what we have learned so far, however, this is not possible for classes with other kinds of constructor.</p>
+<p>CDI provides special methods to enable us to use a class of our choosing as a bean. These methods have the annotation <code>@Produces</code> from the package <code>javax.enterprise.inject</code>. Such <em>producer methods</em> create instances of user-selected classes, rendering them available as beans within the container and enabling them to be combined with the annotation <code>@Inject</code> as discussed in section 3.2.</p>
+<p>We will now use this functionality in the class <code>Resources</code>, which contains a range of producer methods for making resources available to the application as beans. Listing 3-1 contains the source text of the class, which must be saved in the package <code>press.turngeek.mycampaign.util</code>.</p>
+<pre class="lang:java decode:true" >package press.turngeek.mycampaign.util;
+
+import javax.enterprise.context.Dependent;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
+import javax.enterprise.inject.spi.InjectionPoint;
+import javax.faces.context.FacesContext;
+import java.util.logging.Logger;
+
+@Dependent
+public class Resources {
+  
+  @Produces
+  public Logger produceLog() {
+    return Logger.getLogger("MyLogger", "messages");
+  }
+
+  @Produces
+  @RequestScoped
+  public FacesContext produceFacesContext() {
+    return FacesContext.getCurrentInstance();
+  }
+
+}</pre>
+<p><strong>Listing 3-1</strong>     <em>Resources</em> class</p>
+<p>The <code>Resources</code> class provides a logger with the name <em>MyLogger</em> and the current <code>FacesContext</code>. Both resources can be used in other beans by means of the annotation <code>@Inject</code>.</p>
+<p>A logger is a utility class that records outputs in a log file. The logger uses the <a href="http://docs.oracle.com/javase/8/docs/api/java/util/ResourceBundle.html" target="_blank">resource bundle</a> <code>messages</code> for the internationalization of the log outputs. This means that messages issued by the logger must be defined in the files <code>messages_en.properties</code> (for English) and <code>messages_de.properties</code> (for German). We’ll talk more about this in just a moment.</p>
+<p>The bean <code>DonateMoneyController</code> makes direct use of the logger and the <code>FacesContext</code>. Therefore, we will begin by injecting these into the bean as attributes:</p>
+<pre class="lang:java decode:true" >@Inject
+private FacesContext facesContext;
+
+@Inject
+private Logger logger;</pre>
+<p>These resources can then be used in the method <code>doDonation</code>. First, the line</p>
+<pre class="lang:java decode:true" >final FacesContext facesContext = FacesContext.getCurrentInstance();</pre>
+<p>must be deleted, which will cause the injected instance variable <code>facesContext</code> to be referenced in the method instead.</p>
+<p>At this point, it also makes sense to issue a log message about the successful donation. This is where the logger comes into play. Through the changes we have made, the method <code>doDonation</code> now appears as follows:</p>
+<pre class="lang:java mark:2 decode:true" >public String doDonation() {
+    logger.log(Level.INFO, "log.donateMoney.thank_you", new Object[]{getDonation().getDonorName(), getDonation().getAmount()});
+    final ResourceBundle resourceBundle = facesContext.getApplication().getResourceBundle(facesContext, "msg");
+    final String msg = resourceBundle.getString("donateMoney.thank_you");
+    facesContext.addMessage(
+        null,
+        new FacesMessage(FacesMessage.SEVERITY_INFO, msg, null));
+    init();
+    return Pages.DONATE_MONEY;
+}</pre>
+<p>The log message to be issued is selected by the key <code>log.donateMoney.thank_you</code> belonging to the resource bundle <code>messages</code>. We must now modify the resource bundle with the output text in our two target languages, English and German.</p>
+<p>For English, insert the following line at the end of the file <code>messages_en.properties</code>:</p>
+<pre class="lang:default decode:true" >log.donateMoney.thank_you={0} has donated {1} Euro.</pre>
+<p>For German, add the equivalent line to the file <code>messages_de.properties</code>:</p>
+<pre class="lang:default decode:true" >log.donateMoney.thank_you={0} hat {1} Euro gespendet.</pre>
+<p>One drawback is the naming of the logger as <em>MyLogger</em>, which goes against the usual convention of naming the logger after the class that accesses it.</p>
+<p>In order to assign the logger the name of its accessing class, we can share runtime information about the associated bean class with the producer method. To do this, the method <code>produceLog</code> from the class <code>Resources</code> is passed a parameter of the type <code>InjectionPoint</code> from the package <code>javax.enterprise.inject.spi</code>.</p>
+<pre class="lang:java decode:true" >@Produces
+public Logger produceLog(InjectionPoint injectionPoint) {
+    return Logger.getLogger(injectionPoint.getMember().getDeclaringClass().getName(), "messages");
+}</pre>
+<p>The expression <code>injectionPoint.getMember().getDeclaringClass()</code> returns the <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Class.html" target="_blank"><code>Class</code></a> object of the accessing class, which integrates the logger using the annotation <code>@Inject</code>. If the logger is now used in the bean <code>DonateMoneyController</code>, it will have the name <em>DonateMoneyController</em> – or in general terms, the name of the accessing bean.</p>
+<p>Since instances created by the producer methods are CDI beans, these also have a scope. By default, this will be scope of producer method&#8217;s class, so in our case it is the <em>DependentScope</em> (see section 3.1.4). This can be changed if so desired by annotating the producer method with the desired scope.</p>
+<p>In our case, the logger stays on <em>DependentScope</em> in order to ensure that a fresh instance of the logger is created for each accessing bean. However, the producer method for the <code>FacesContext</code> will be set to <em>RequestScope</em>, since this object does not change within a request.</p>
+<p>Furthermore, Java EE internally provides a producer method for the <code>HttpServletRequest</code>. We will use this now by replacing the method <code>getAppUrl</code> in the <code>EditDonationFormController</code> with the following snippet of code:</p>
+<pre class="lang:java decode:true" >@Inject
+private HttpServletRequest req;
+
+private String getAppUrl() {
+    String scheme = req.getScheme();
+    String serverName = req.getServerName();
+    int serverPort = req.getServerPort();
+    String contextPath = req.getContextPath();
+    return scheme+"://"+serverName+":"+serverPort+contextPath;
+}</pre>
+<p>As a result of this change, the current request’s <code>HttpServletRequest</code> will be injected in the controller and used directly in the method <code>getAppUrl</code>. Previously, it was necessary to retrieve this via the <code>FacesContext</code> every time the method was accessed.</p>
+<h3>3.5 Producing domain objects</h3>
+<p>So far we have used producer methods for creating technically related objects like <code>Logger</code> and <code>HttpServletRequest</code>. In this section we will see they are also very helpful for providing domain related data objects. There are two domain related components in our application that could benefit from producer methods, namely the beans <code>CampaignProducer</code> and <code>CampaignListProducer</code>. </p>
+<p>The task of the <code>CampaignListProducer</code> is to provide a list of <code>Campaign</code> objects. A class wishing to use this list does not actually require a dependency to the <code>CampaignListProducer</code>, but rather solely to this list. To make this possible, we must annotate the <code>getCampaigns</code> method of the <code>CampaignListProducer</code> with <code>@Produces</code>. Since no other bean in the application provides a list of <code>Campaign</code> objects, this list can now be injected in other beans as shown below:</p>
+<pre class="lang:java decode:true" >@Inject
+private List&lt;Campaign&gt; campaigns;</pre>
+<p>This being said, we actually want to refrain from making any changes of this nature, since the following section will introduce another method for avoiding dependencies to the <code>CampaignListProducer</code>: application-wide messages.</p>
+<p>Nonetheless, we still want to use the new producer method <code>getCampaigns</code> so that we can reference it in Facelets. To do this, we will additionally add the <code>@Named</code> annotation to this method and remove the same annotation at the class level.</p>
+<p>This enables the JSF <em>DataTable</em> component of the file <code>listCampaigns.xhtml</code> to access the list of <code>Campaign</code> objects directly using the name <code>campaigns</code> and removes the need for it to detour via the <code>CampaignListProducer</code>. To implement this change, modify the following lines of the file <code>listCampaigns.xhtml</code>:</p>
+<pre class="lang:xhtml decode:true" >&lt;p:dataTable value="#{campaignListProducer.campaigns}" var="campaign"&gt;</pre>
+<p>to the following expression:</p>
+<pre class="lang:xhtml decode:true" >&lt;p:dataTable value="#{campaigns}" var="campaign"&gt;</pre>
+<p>As a result of this, the class <code>CampaignListProducer</code> will now contain a producer method that provides a list of <code>Campaign</code> objects and thus does what it says on the tin! You see now that the naming with the suffix <code>Producer</code> wasn&#8217;t a coincidence. </p>
+<p>Following the same principle, we now want to introduce similar producer methods for the bean <code>CampaignProducer</code>. To do this, we will remove the <code>@Named</code> bean annotation at the class level and add the annotations <code>@Named</code> and <code>@Produces</code> to the getter methods <code>getSelectedCampaign</code> and <code>isAddMode</code>.</p>
+<p>For the latter, this results in the following definitions:</p>
+<pre class="lang:java decode:true" >@Produces
+@Named
+public Campaign getSelectedCampaign() {
+    return campaign;
+}</pre>
+<p>and</p>
+<pre class="lang:java decode:true" >@Produces
+@Named
+public boolean isAddMode() {
+    return mode == Mode.ADD;
+}</pre>
+<p>Following this change, we can use the producer methods directly in the Facelets. To do this, we must replace all references to the getter in the files <code>editCampaign.xhtml</code> and <code>listDonations.xhtml</code>. As we do this, we need only to take the EL expressions – that is, everything inside <code>#{</code> and <code>}</code> – into account.</p>
+<p>In specific terms, this means that we must access the Facelets and replace the expressions <code>campaignProducer.selectedCampaign</code> and <code>campaignProducer.addMode</code> with <code>selectedCampaign</code> and <code>addMode</code> respectively. Since we are dealing with a few different references, our best option is to use the <em>Search and Replace</em> function in our editor. Lastly, it’s important to be careful while we work and to test any changes in order to avoid problems at a later stage. Worst case we have you covered with the following Cloud IDE link:</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=xqv36u01sr43xwt0" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE (End Contexts &#038; DI)</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-21-1">Before CDI 1.1, it was necessary for an additional empty file called WEB-INFbeans.xml to be contained in the application archive in order for activation to occur. <a href="#return-footnote-21-1" class="return-footnote">&crarr;</a></li><li id="footnote-21-2">The ViewScope actually existed in JSF before version 2.2; however, it could only be used for JSF managed beans, not for CDI beans.  <a href="#return-footnote-21-2" class="return-footnote">&crarr;</a></li><li id="footnote-21-3">SessionScope and RequestScope, in contrast, do not require JSF – they function with any application that is built solely on servlets.  <a href="#return-footnote-21-3" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20CDI%20in%20a%20Day&amp;body=3%20Contexts%20and%20Dependency%20Injection%20-%20http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F3-contexts-and-dependency-injection%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/cdiinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/cdiinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/cdiinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/1-why-cdi/">1 Why CDI?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">2 Getting Started</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">3 Contexts and Dependency Injection</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">4 Application Wide Messages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">5 Services and Alternatives</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">6 What’s Left to Discover?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/7-exercises/">7  Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

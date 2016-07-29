@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>7 What We Haven’t Covered | Cloud Tutorial &#8211; JPA in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
+<link rel='prev' title='6 Checking Inputs Using Bean Validation' href='http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/' />
+<link rel='next' title='8 New Functionalities in JPA 2.1 and Bean Validation 1.1' href='http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=111' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F7-what-we-havent-covered%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F7-what-we-havent-covered%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-111" id="7whatwehaven’tcovered">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">7 What We Haven’t Covered</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">7 What We Haven’t Covered</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">Next</a></span>
+    </div>				<div id="post-111" class="type-1 post-111 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>JPA 2 offers other functionalities in addition to the ones we’ve learned so far. Even if we don’t need them for our sample application, it’s advisable to get acquainted with the most important concepts to enable us to implement the corresponding functions in our own development projects later.</p>
+<h3>7.1 CriteriaQueryas an Alternative to NamedQuery</h3>
+<p>In the previous sections, we used the concept of <code>NamedQueries</code> to carry out database queries via JPQL. To do this, we defined (as an example) the following <code>NamedQuery</code> in the entity Campaign with the name <code>findAll</code>:</p>
+<pre class="lang:java decode:true">SELECT * FROM Campaign c ORDER BY c.name
+</pre>
+<p>Next, the method <code>createNamedQuery</code> of the <code>EntityManager</code> object was used to create a <code>TypedQuery</code> object on which the actual query could later be executed:</p>
+<pre class="lang:java decode:true">TypedQuery&lt;Campaign&gt; query = entityManager.createNamedQuery(Campaign.findAll, Campaign.class);
+</pre>
+<p>This approach has the twin disadvantages that the <code>NamedQuery</code> cannot be changed at runtime and that JPQL commands cannot be debugged.  For these reasons, an alternative to <code>NamedQueries</code>, called <code>CriteriaQueries</code>, is available. These have the advantage that they are created in Java at runtime and can therefore also be changed. However, they are also more complex to create and and harder to read than the JPQL query language developed specifically for this purpose.</p>
+<p>To enable us to gain a better understanding of things, we will create the same query as in the <code>NamedQuery</code> once more as a <code>CriteriaQuery</code>. As the first step in this process, we require an instance of the <code>CriteriaBuilder</code>. This we can obtain from the <code>EntityManager</code>:</p>
+<pre class="lang:java decode:true">CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+</pre>
+<p>A <code>CriteriaQuery</code> object can be created on the <code>CriteriaBuilder</code> by invoking the method <code>createQuery</code> and specifying the type of return value. Since we want a <code>Campaign</code> object as the return value, the expression will look as follows:</p>
+<pre class="lang:java decode:true">CriteriaQuery&lt;Campaign&gt; criteria = cb.createQuery(Campaign.class);
+</pre>
+<p>Further to this, we will create a <code>Root</code> object that corresponds to the <code>FROM</code> clause in JPQL:</p>
+<pre class="lang:java decode:true">Root&lt;Campaign&gt; campaign = criteria.from(Campaign.class);
+</pre>
+<p>The query can then be fully configured. In our example, we will select all <code>Campaign</code> objects that should be sorted by the attribute <code>name</code>.</p>
+<pre class="lang:java decode:true">criteria.select(campaign).orderBy(cb.asc(campaign.get("name")));
+</pre>
+<p>The <code>CriteriaQuery</code> object is now fully defined and corresponds to the previously used <code>NamedQuery</code> in terms of its content. We can now use the same method to create a <code>TypedQuery</code> object using the <code>EntityManager</code>. This time, however, we will invoke the method <code>createQuery</code>:</p>
+<pre class="lang:java decode:true">TypedQuery&lt;Campaign&gt; query = entityManager.createQuery(criteria);
+</pre>
+<p>If we now invoke the method <code>getResultList</code> on this <code>TypedQuery</code> object, the query will be executed on the database. Thus, this step is the same as with a <code>NamedQuery</code>.</p>
+<h3>7.2 Avoid a LazyInitialisationException Using FetchType</h3>
+<p>In section 5.4, we suffered a fair amount of frustration over the <code>LazyInitialisationException</code>. The cause of this was that JPA could only load the <code>Donation</code> objects assigned to a campaign from the database by accessing the attribute donations. In JPA, this behaviour is known as a lazy fetch. Alongside the lazy fetch, there also exists the possibility of an eager fetch. In this case, the assigned objects are loaded from the database at the time the higher-level entity is loaded. If we access the assigning attribute later, database access will no longer be required, since the assigned objects will already have been loaded.</p>
+<p>For each relationship in JPA, we can determine which strategy should be used for the loading of data. To do this, we must assign a value of the enumeration type <code>FetchType</code> to the fetch attribute of the relevant relationship. This can have two values: <code>EAGER</code> (for eager fetch) and <code>LAZY</code> (for lazy fetch). If no value is specified, JPA uses lazy fetch by default, which causes our <code>LazyInitialisationException</code> to appear. To set this to eager fetch, we must adjust the annotation of the attribute donations in the class <code>Campaign</code>. From the code:</p>
+<pre class="lang:java decode:true">@OneToMany(mappedBy = "campaign")
+private List&lt;Donation&gt; donations;
+</pre>
+<p>now becomes:</p>
+<pre class="lang:java decode:true">@OneToMany(mappedBy = "campaign", fetch = FetchType.EAGER)
+private List&lt;Donation&gt; donations;
+</pre>
+<p>At this point, you’re bound to be wondering why we didn’t do this straight away. The reason is that it can be very risky to activate eager fetch for a relationship. Ultimately, it results in many more objects being loaded from the database – including objects that may not be needed for the current use case. If we begin recklessly setting every relationship to eager fetch, it can occur that in extreme cases, accessing the database once can cause all data to be loaded. With a high-performance web application of the type we want to develop, this is obviously not a viable situation.</p>
+<p>If we activate the eager fetch in a relationship, it will be used globally for all of the use cases that process entities involved in the relationship.</p>
+<p>As a rule of thumb, it’s therefore advisable to activate the eager fetch only when it is required by all affected use cases. In our sample application, this is not the case, since the use case <em>Display and edit campaigns</em> (<a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/" target="_blank">Cloud Tutorial Java EE 7 in a Week chapter II.4.2</a>) does not require the list of <code>Donation</code> objects. For this reason, it would be a waste of resources to load the list here, and we should set the definition of the relationship back to lazy fetch.</p>
+<h3>7.3 Object Locking</h3>
+<p>In many applications, it can occur that multiple users are working on the same object at the same time. To avoid inconsistenies, the object must therefore be locked for access by a particular user. JPA offers <em>optimistic locking</em> and <em>pessimistic locking</em>, for this ourpose, and we’ll deal with both in this section.</p>
+<p>As it happens, in our sample application, locking is not required, since a user with the role of <em>organizer</em> is the only permitted to edit their own objects and the user with the role of <em>donor</em> is permitted only to create new objects, not to edit them.</p>
+<h4>7.3.1 Optimistic Locking</h4>
+<p>Optimism is always a good thing. An optimist works on the premise that nothing will go wrong, and solves any problems after they arise. A similar principle applies with optimistic locking: we simply assume that concurrent access virtually never occurs, and when it does, it is treated as a special case.</p>
+<p>This means that in optimistic locking does not actually result in any objects being locked. But what happens in the special cases where concurrent access <em>does</em> occur?</p>
+<p>To deal with these cases, each entity contains a special attribute in which the version of the object is stored. This attribute is annotated with the <code>@Version</code> annotation from the packaage <code>javax.persistence</code>.</p>
+<p>In each transaction, this attribute is incremented automatically by JPA; it is also compared with the current status in the database before the transaction begins. If the version of the object in the database is more current than the one in the transaction taking place, another transaction must update the object in advance. Because of this, the transaction will fail and an <code>OptimisticLockException</code> will be thrown.</p>
+<p>This has the result that the transaction, which first performs a commit, makes the change in the database. This is carried out on a “first come, first served” basis. Later transactions are simply unlucky. These transactions fail, and the application must load the current status of database in order to re-process it.</p>
+<p>In the simplest scenario, the application can leave it to the user to incorporate the changes into the new version of the object. A more user-friendly application might provide its users with a Merge operation to support the modification process.</p>
+<p>Incidentally, this is the same behaviour we are familiar with from our source code version control programs (e.g. SVN or GIT): The first user to incorporate the changes of the source code is lucky, and their changes will be accepted in the repository. The next user, however, must use the Merge operation of the version control program and incorporate their intended changes into the current code manually.</p>
+<h4>7.3.2 Pessimistic Locking</h4>
+<p>With pessimistic locking, we work on the assumption that concurrent access is highly probable; thus, the affected object is locked for the entire duration in advance. If another transaction tries to access a locked object, it will fail to do so.</p>
+<p>The <code>EntityManager</code> offers the method lock for pessimistic locking. This contains the object to be locked as the first parameter and the lock mode as the second. JPA supports two different lock modes:</p>
+<ul>
+<li><code>PESSIMISTIC_READ</code> for a read lock</li>
+<li><code>PESSIMISTIC_WRITE</code> for a write lock</li>
+</ul>
+<p>The following statement, for example, performs a write lock for the object campaign in the current transaction:</p>
+<pre class="lang:java decode:true">entityManager.lock(campaign, LockModeType.PESSIMISTIC_WRITE);
+</pre>
+<p>A write lock is an exclusive lock for the current transaction. Since the transaction receives exclusive access to the object, it can also perform changes (in this case, write operations) on this object. If another transaction tries to change or reserve the same object using a write or read lock during the runtime of the locking transaction, the second transaction will be aborted by an exception.</p>
+<p>When we use a read lock, we do not wish to change the locked object &#8211; we merely want to ensure that the object does not change during the runtime of the transaction. While the values of the object should not be changed, it can be read as many times as required. Thus, we can apply a read lock to multiple transactions by specifying the lock mode <code>PESSIMISTIC_READ</code>. A read lock request only fails when a write lock has already been placed on another transaction. Naturally, write operations also fail when performed on an object that contains a read lock, since the value of the object being read would be subject to change.</p>
+<h3>7.4 Lifecycle Methods During State Changes</h3>
+<p>As we have already learned, we can use the <code>EntityManager</code> to change the state of entities. This can be accomplished via either CRUD operations or JPQL statements. In general, changes made to an entity can be classified as one of four operations:</p>
+<ul>
+<li>Persisting an entity</li>
+<li>Loading an entity from the database</li>
+<li>Updating an entity</li>
+<li>Removing an entity</li>
+</ul>
+<p>A developer can define special methods to be invoked by JPA before or after operations. In both cases, the methods are triggered by a change of state that initiates a new phase in the lifecycle of the entity. Because of this, we call them “lifecycle methods”.</p>
+<p>If so required, these lifecycle methods can be defined in the class of an entity. In this situation, the method must be a parameterless method with no return value. It will be invoked at different times depending on the annotation added to the method As is always the case for JPA, the annotations are located in the package <code>javax.persistence</code>.</p>
+<p>Tab. 7-1 shows the list of annotations for lifecycle methods and the associated event that determines when the annotated method is invoked.</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Annotation</strong></td>
+<td><strong>Event</strong></td>
+</tr>
+<tr>
+<td><code>@PrePersist</code></td>
+<td>When the <code>EntityManager</code> determines that a new entity must be created</td>
+</tr>
+<tr>
+<td><code>@PostPersist</code></td>
+<td>After the new entity has been persisted in the database</td>
+</tr>
+<tr>
+<td><code>@PostLoad</code></td>
+<td>After an entity has been loaded from the database, e.g. with <code>EntityManager.find</code></td>
+</tr>
+<tr>
+<td><code>@PreUpdate</code></td>
+<td>When the <code>EntityManager</code> determines that an entity must be updated</td>
+</tr>
+<tr>
+<td><code>@PostUpdate</code></td>
+<td>After an entity has been updated in the database</td>
+</tr>
+<tr>
+<td><code>@PreRemove</code></td>
+<td>When the EntityManager determines that an entity must be removed</td>
+</tr>
+<tr>
+<td><code>@PostRemove</code></td>
+<td>After an entity has been removed from the database</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tab. 7-1</strong> Annotations for lifecycle methods in JPA</p>
+<p>These lifecycle methods are well suited to outputting log messages that record a state change in the entity.</p>
+<p>Lifecycle methods whose annotations begin with the prefix @Pre can also be used to store the time stamp of the event in the database. The following method records the date when the change in the entity occurred:</p>
+<pre class="lang:java decode:true">@PreUpdate
+void onPreUpdate() {
+    changedDate = Calendar.getInstance().getTime();
+}
+</pre>
+<p>Of course, this requires the entity to possess a <code>changedDate</code> attribute in which the date of change can be stored.</p>
+<p>Further to this, the user may desire that the date of change is recorded for more than one entity. In this case, implementing the same lifecycle method in all entities would be redundant. Lifecycle methods can thus be compiled in their own class, a so-called <code>EntityListener</code>. To enable the lifecycle methods to know which entity is currently being changed, each function receives the entity as a parameter. Since the type of the entity is not known at compile time, the superclass Objekt is used. As an example, we will specify the above lifecycle method as a reusable <code>EntityListener</code>:</p>
+<pre class="lang:java decode:true">public class DateUpdateEntityListener {
+    @PreUpdate
+    void onPreUpdate(Object entity) {
+        DateEntity dateEntity = (DateEntity) entity;
+        dateEntity.changedDate = Calendar.getInstance().getTime();
+    }
+}
+</pre>
+<p>As you can see, this <code>EntityListener</code> requires that the entity using it is inherited from the type <code>DateEntity</code>, which defines the attribute <code>changedDate<a class="footnote" title="To keep the example as simple as possible, we will not check the type casting in this case." id="return-footnote-111-1" href="#footnote-111-1"><sup class="footnote">[1]</sup></a></code>.</p>
+<p>To use the <code>EntityListener</code>, we must annotate the entity with <code>@EntityListeners</code> from the package <code>javax.persistence</code>. The annotation contains the class of the <code>EntityListener</code> as a parameter. In our case:</p>
+<pre class="lang:java decode:true">@Entity
+@EntityListeners(DateUpdateEntityListener.class)
+public class Something extends DateEntity{...
+</pre>
+<p>This annotation causes the <code>changedDate</code> instance variable of the fictitious entity Something to be updated with every change.</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-111-1">To keep the example as simple as possible, we will not check the type casting in this case. <a href="#return-footnote-111-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JPA%20in%20a%20Day&amp;body=7%20What%20We%20Haven%E2%80%99t%20Covered%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F7-what-we-havent-covered%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

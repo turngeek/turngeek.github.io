@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='description' content='This Cloud Tutorial is the second of an upcoming series building a web application step by step with Java EE technology. It will see us improve the architecture and design of the sample application using CDI (Contexts and Dependency Injection).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/2015/10/cdiinaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<link rel="shortcut icon" href="http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4 Application Wide Messages | Cloud Tutorial &#8211; CDI in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/cdiinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/cdiinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/cdiinaday/wp-json/' />
+<link rel='prev' title='3 Contexts and Dependency Injection' href='http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/' />
+<link rel='next' title='5 Services and Alternatives' href='http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/cdiinaday/?p=23' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F4-application-wide-messages%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F4-application-wide-messages%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-23" id="4applicationwidemessages">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/cdiinaday/" title="Cloud Tutorial &#8211; CDI in a Day" rel="home">Cloud Tutorial &#8211; CDI in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4 Application Wide Messages</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4 Application Wide Messages</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">Next</a></span>
+    </div>				<div id="post-23" class="type-1 post-23 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=xqv36u01sr43xwt0" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE (Start Events)</p>
+</div>
+<p>[/sociallocker]</p>
+<p>Up until now, we have learned that beans managed by a container can be linked with each other using CDI. However, beans are not the only thing for which this applies: the principle of loose coupling of components with CDI goes one step further, as during runtime, components can send and receive any message the user wishes. The components no longer have dependencies to each other, but rather solely to the class that contains the message. This kind of loose coupling enables additional receiving components to be added without the sending component having to be modified. This improves the extensibility and maintainability of the application.</p>
+<h3>4.1 Sending and Receiving Events</h3>
+<p>As detailed in <a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">section 2.3</a>, a troublesome dependency exists from the <code>EditCampaignController</code> to the <code>CampaignListProducer</code> bean. By having the <code>EditCampaignController</code> send a message whenever a campaign is added, CDI offers a simple way to remove this dependency. The <code>CampaignListProducer</code> can then respond to this message and, since it manages the list of all <code>Campaign</code> objects, can add the new <code>Campaign</code> object to this list.</p>
+<p>We will begin by changing the <code>EditCampaignController</code> such that when a campaign is added, a corresponding message is sent. The crucial element here is the message we will send: since we want a <code>Campaign</code> object to be added, it is sufficient &#8211; for the time being &#8211; to simply send this as the message. The message to be sent is therefore of the type <code>Campaign</code>. Since CDI sends messages via the generic class <code>Event</code> from the package <code>javax.enterprise.event</code>, <code>Campaign</code> must be set as the type parameter for this class. To achieve this, we must inject an attribute of the type <code>Event&lt;Campaign&gt;</code> into the bean by adding the following lines of code:</p>
+<pre class="lang:java decode:true" >@Inject
+private Event&lt;Campaign&gt; campaignAddEvent;</pre>
+<p>The corresponding message must now be sent in the method <code>doSave</code> instead of the bean <code>CampaignListProducer</code> being directly accessed. To do this, the following line:</p>
+<pre class="lang:java decode:true" >campaignListProducer.getCampaigns().add(campaignProducer.getSelectedCampaign());</pre>
+<p>must be replaced by</p>
+<pre class="lang:java decode:true" >campaignAddEvent.fire(campaignProducer.getSelectedCampaign());</pre>
+<p>Using the <code>fire</code> method of the <code>Event</code> object, the actual message of the type <code>Campaign</code> will now be sent.</p>
+<p>Since the dependency to the <code>CampaignListProducer</code> is no longer required – which is a good thing for our application – the following lines can now be deleted:</p>
+<pre class="lang:java decode:true" >
+@Inject
+private CampaignListProducer campaignListProducer;</pre>
+<p>Now, the bean <code>EditCampaignController</code> will send the new <code>Campaign</code> object as a message whenever a new campaign is added. Other beans can now receive this message as desired. To enable this to happen, the receiving bean must implement a method that has a <code>Campaign</code> object as its only parameter. The parameter must have the annotation <code>@Observes</code> from the package <code>javax.enterprise.event</code>.</p>
+<p>Currently, the message is only of interest for the <code>CampaignListProducer</code>. In accordance with the above, this bean must therefore implement the following method:</p>
+<pre class="lang:java decode:true" >public void onCampaignAdded(@Observes Campaign campaign) {
+    getCampaigns().add(campaign);
+}</pre>
+<p>This method is now invoked synchronously by the container as soon as the <code>EditCampaignController</code> sends the message regarding the adding of a <code>Campaign</code> object. The container passes the <code>Campaign</code> object to be added as a parameter. In the example, this is added to the list of <code>Campaign</code> objects using the method <code>add</code>.</p>
+<h3>4.2 Differentiate Between Messages of the Same Type Using Qualifiers</h3>
+<p>Following the same principle as with the message for a new campaign, we can now send a message about the deletion of a campaign. To do this, we must modify the bean <code>ListCampaignsController</code> with an <code>Event</code> object that sends a message of the type <code>Campaign</code>:</p>
+<pre class="lang:java decode:true" >
+@Inject
+private Event&lt;Campaign&gt; campaignDeleteEvent;</pre>
+<p>To ensure that the message is sent, the fire method of the <code>Event</code> object must be passed as a parameter with the campaign to be deleted. To achieve this, the method <code>commitDeleteCampaign</code> must be replaced with the following:</p>
+<pre class="lang:java decode:true" >public void commitDeleteCampaign() {
+    campaignDeleteEvent.fire(campaignToDelete);
+}</pre>
+<p>If we start the program now, we are faced with the problem that CDI cannot differentiate between the messages for the adding and deletion of a campaign. CDI differentiates between messages on the basis of their type; in this example, the type is the same for both events. The result is that the <code>CampaignListProducer</code> adds a <code>Campaign</code> object in both cases: when a campaign is actually being added (as we want it to), but also when a campaign is being deleted. This means that when a user deletes an object, it ends up being added to the list once more instead. Please have a try yourself.</p>
+<p>To differentiate between the two messages, we require a further central concept of CDI: a so-called <em>qualifier</em>.</p>
+<p>A <em>qualifier</em> is a user-defined annotation that serves to resolve ambiguities. In this specific case, we need two qualifiers to differentiate between our two different messages. These are specified using the names <code>Added</code> and <code>Deleted</code> in the class <code>Events</code> belonging to the package <code>press.turngeek.mycampaign.util</code> (see Listing 4-1).</p>
+<pre class="lang:java decode:true" >
+package press.turngeek.mycampaign.util;
+
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
+import javax.inject.Qualifier;
+
+public class Events {
+
+    @Qualifier
+    @Target({ FIELD, PARAMETER })
+    @Retention(RUNTIME)
+    public @interface Added {
+    }
+
+    @Qualifier
+    @Target({ FIELD, PARAMETER })
+    @Retention(RUNTIME)
+    public @interface Deleted {
+    }
+
+}
+</pre>
+<p><strong>Listing 4-1     </strong><em>Events</em> class</p>
+<p>Both annotations have been given the annotation <code>@Qualifier</code> from the package <code>javax.inject</code>; likewise, both are valid for attributes and parameters, a fact that is indicated by the annotation <code>@Target</code>.</p>
+<p>To enable CDI to differentiate between the two messages, the <code>Event</code> object <code>campaignAddEvent</code> in <code>EditCampaignController</code> must now be given the annotation <code>@Added</code>:</p>
+<pre class="lang:java mark:2 decode:true" >@Inject 
+@Added
+private Event&lt;Campaign&gt; campaignAddEvent;</pre>
+<p>Similarly, the <code>Event</code> object <code>campaignDeleteEvent</code> in <code>ListCampaignsController</code> must be given the annotation <code>@Deleted</code>:</p>
+<pre class="lang:java mark:2 decode:true" >@Inject 
+@Deleted
+private Event&lt;Campaign&gt; campaignDeleteEvent;</pre>
+<p>As a result of this change, CDI can now differentiate between the messages in spite of them being of the same type.</p>
+<p>To enable the application to react based on the message, the <code>CampaignListProducer</code> must be modified. This is done in two steps: firstly, the existing method with the annotation <code>@Observes</code> is modified with the qualifier <code>@Added</code>:</p>
+<pre class="lang:java mark:1 decode:true" >
+public void onCampaignAdded(@Observes @Added Campaign campaign) {
+    getCampaigns().add(campaign);
+}</pre>
+<p>…and then a similar method is added in the same bean to respond to the message with the qualifier <code>@Deleted</code>:</p>
+<pre class="lang:java decode:true" >
+public void onCampaignDeleted(@Observes @Deleted Campaign campaign) {
+    getCampaigns().remove(campaign);
+}</pre>
+<p>This method simply removes the passed <code>Campaign</code> object from the list of <code>Campaign</code> objects by invoking the method <code>remove</code>. Incidentally, this represents an extension of the application’s functionality; now, when the user presses the button to confirm the deletion of a campaign, it will be removed from the list of campaigns.</p>
+<p>Fig. 4-1 shows the relationships between the beans and the qualifier.</p>
+<p><a target="_blank" href="http://www.turngeek.press/images/cdiinaday/chapter4/4-1.png"><img src="http://www.turngeek.press/images/cdiinaday/chapter4/4-1.png" alt="Relationships between the classes involved in the sending and receiving of messages" width="100%" /></a><br />
+<strong>Fig. 4-1     </strong>Relationships between the classes involved in the sending and receiving of messages</p>
+<p>Before continuing, you may know compare your workspace with the provided link:</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=q12qn14zf8hywll5" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">Start Cloud IDE (End Events)</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20CDI%20in%20a%20Day&amp;body=4%20Application%20Wide%20Messages%20-%20http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F4-application-wide-messages%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/cdiinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/cdiinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/cdiinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/1-why-cdi/">1 Why CDI?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">2 Getting Started</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">3 Contexts and Dependency Injection</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">4 Application Wide Messages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">5 Services and Alternatives</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">6 What’s Left to Discover?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/7-exercises/">7  Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

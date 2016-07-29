@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>3 The Rise of Server-Side Java – Java Servlets | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+<link rel="alternate" type="application/rss+xml" title="Cloud Tutorial - Java EE in a Day &raquo; 3 The Rise of Server-Side Java – Java Servlets Comments Feed" href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<link rel='prev' title='2 From the Drawing Board – A Static HTML Skeleton' href='http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/' />
+<link rel='next' title='4 Turn it Inside Out – JavaServer Pages' href='http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=38' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F3-the-rise-of-server-side-java-java-servlets%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F3-the-rise-of-server-side-java-java-servlets%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-38" id="3theriseofserver-sidejava–javaservlets">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">3 The Rise of Server-Side Java – Java Servlets</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">3 The Rise of Server-Side Java – Java Servlets</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">Next</a></span>
+    </div>				<div id="post-38" class="type-1 post-38 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter you will learn how Java classes process HTTP requests and create responses for the browser using Servlet technology.</p>
+<p>Before we start, please verify again that your project is accessible in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project, and by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-38-1" href="#footnote-38-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=7h41x65xjj3cx3g3" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after chapter 2 (Static HTML)" width="77" height="21" /></a>
+<p class="wp-caption-text">Project after chapter 2 (Static HTML)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=2s478urppjij6f1w--></p>
+<h3>3.1 Our first Servlet</h3>
+<p>It&#8217;s time to add some functionality to our still boring static HTML file. We&#8217;ll be doing so by using so called <a href="https://en.wikipedia.org/wiki/Java_servlet" target="_blank">Java Servlets</a>. Servlets were introduced 1997 and are a very low-level technology similar to plain PHP. Using Servlets, we write methods to directly handle HTTP requests. For each type of request (e.g. <a href="http://www.w3schools.com/tags/ref_httpmethods.asp" target="_blank">GET or POST</a>) there will be a dedicated method to handle the request.</p>
+<p>Let&#8217;s take a look at the signature of such a method for handling a GET request (consequently it will be called <code>doGet</code>):</p>
+<p><code>protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException</code></p>
+<p>This method is called by the Servlet framework &#8211; you&#8217;ll never call it explicitly in your code. The framework provides two objects for us: <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletRequest.html" target="_blank"><code>HttpServletRequest</code></a> and <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpServletResponse.html" target="_blank"><code>HttpServletResponse</code></a>. As you might have guessed, the former one is a representation of the HTTP request whereas the later one represents the response.</p>
+<p>Let&#8217;s try that out. Before starting we&#8217;re creating the package <code>press.turngeek.mymemo.controller</code> inside our <code>src/main/java</code> folder.</p>
+<p>In that newly created package, we&#8217;re adding the class <code>MemoServlet</code> as shown in Listing 3-1.</p>
+<pre class="lang:java decode:true">package press.turngeek.mymemo.controller;
+
+import java.io.IOException;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet({"/MemoServlet", "/memos"})
+public class MemoServlet extends HttpServlet {
+
+    private static final long serialVersionUID = -7843898075264520941L;
+    private ServletConfig config;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        this.config = config;
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        sendResponse(request, response);
+    }
+
+    private void sendResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        response.getOutputStream().print("Hello World.");
+    }
+
+}
+</pre>
+<p><strong>Listing 3-1 </strong>MemoServlet class &#8211; Our first Hello world servlet</p>
+<p>As you can see, we are delegating the two objects to a similar method named <code>sendResponse</code>. The simple reason is that we are later going to use this method for POST requests in the yet to be written method <code>doPost</code>, too.</p>
+<p>In the method <code>sendResponse</code>, we&#8217;re just modifying the HTTP response object &#8211; so far we&#8217;re not touching the request object. That&#8217;s sufficient for our test, as we just want to generate some output &#8211; no matter what request was sent by the client.</p>
+<p>In the method we&#8217;re setting the content type to be HTML and define that our output will be encoded using UTF-8 (highly recommended). Lastly, we&#8217;re using the <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/ServletOutputStream.html" target="_blank">ServletOutputStream</a> provided by the response object, to print out the infamous <em>Hello World</em> string.</p>
+<p>If we now restart our project, we&#8217;re still seeing the old static HTML file. The reason is that our Servlet only listens to the URLs <code>/memos </code>or <code>/MemoServlet</code>. Therefore, we have to add this suffix to the runner&#8217;s URL (e.g. <code>http://runner22.codenvycorp.com:59635/memos</code>).<br />
+Doing so, your web browser should display our greeting message. We&#8217;ll simplify this later. For now, we continue with adding a model for storing the memo data.</p>
+<h3>3.2 Adding the Model</h3>
+<p>In web applications the so called MVC (<a href="https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller" target="_blank">Model-View-Controller</a>) pattern is very popular. As you might know, it is generally a common practice to <a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank">separate concerns</a> in software development, where this pattern is a good example of.</p>
+<p>Basically, we divide the application code into three parts called <em>model</em>, <em>view </em>and <em>controller</em>. The <em>model </em>is the part that takes care of storing the data. Step by step, we will also come to the other parts. Let&#8217;s focus on the <em>model </em>for the time being.</p>
+<p>As the data of our application consists of memos, we therefore need an abstraction to store the data of a memo. The class <code>Memo</code> you can find in Listing 3-2 fulfills this job. It&#8217;s a simple <a href="https://en.wikipedia.org/wiki/JavaBeans" target="_blank">JavaBean</a> that contains two properties: <code>description</code> for storing the memo&#8217;s text and <code>created</code> to save the creation timestamp of a memo.</p>
+<p>Please create now the new package <code>press.turngeek.mymemo.model</code> and save this class under the name <code>Memo </code>in it.</p>
+<pre class="lang:java decode:true">package press.turngeek.mymemo.model;
+
+import java.util.Date;
+import java.io.Serializable;
+
+public class Memo implements Serializable {
+
+    private static final long serialVersionUID = -57892374598329L;
+
+    private String description;
+    private Date created;
+
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public void setCreated(Date created) {
+        this.created = created;
+    }
+
+}
+</pre>
+<p><strong>Listing 3-2 </strong>Memo class &#8211; The model class of our application</p>
+<p>Note that our model class is implementing the <a href="http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html" target="_blank"><code>Serializable </code></a>interface and therefore, as a matter of good practice, also provides a <a href="http://stackoverflow.com/questions/285793/what-is-a-serialversionuid-and-why-should-i-use-it" target="_blank">serialVersionUID </a>constant. Objects using this interface can be serialized in a stream of bytes and therefore be saved on the file system. This is necessary as we later want to store the model in the user&#8217;s session. As there can be thousands of user sessions, the application server can not keep every one in memory. Data that we want to store in the user&#8217;s session must therefore be serializable.</p>
+<p>Introducing the model class, didn&#8217;t bring any new functionality so far to our application, that&#8217;s why we&#8217;re about to add the <em>view </em>in the next step.</p>
+<h3>3.3 Adding the View</h3>
+<p>Right now our servlet is just outputting a rather boring <em>&#8216;Hello World&#8217;</em> text. In this step, we&#8217;re about to change that: we&#8217;ll add a class that dynamically renders HTML code similar to our existing <code>index.html</code> file.<br />
+Listing 3-3 shows the implementation of that class that we call <code>MemoViewRenderer </code>as its purpose is to render the <em>view</em>. Please save that class in a newly to be created package called <code>press.turngeek.mymemo.view</code>. The class uses our model class Memo introduced in the previous section.</p>
+<div class="textbox shaded"><strong>Codenvy Hint</strong> At this point it might happen that Codenvy can&#8217;t resolve the type <code>Memo</code>, immediately. In this case, please rebuild the project manually (menu item <code>Build → Build</code>) and update the dependencies of the project (menu item <code>Build → Update Dependencies</code>). After a short while the red error messages will disappear. This workaround will help in similar situations throughout the book.</div>
+<pre class="lang:java decode:true">package press.turngeek.mymemo.view;
+
+import java.util.List;
+import press.turngeek.mymemo.model.Memo;
+
+public class MemoViewRenderer {
+    public static String renderResponse(List&lt;Memo&gt; memos, String err) {
+
+        String part1 =
+                       "&lt;!DOCTYPE html&gt;" + "&lt;html&gt;" + "&lt;head&gt;" + "&lt;meta charset=\"UTF-8\"&gt;" + "&lt;title&gt;My-Memo&lt;/title&gt;"
+                           + "&lt;link rel=\"stylesheet\" type=\"text/css\" href=\"screen.css\"&gt;" + "&lt;/head&gt;" + "&lt;body&gt;"
+                           + "&lt;div id=\"container\"&gt;" + "&lt;div id=\"header\"&gt;"
+                           + "&lt;p&gt;&lt;b&gt;My-Memo&lt;/b&gt; - A Simple Web App for Managing Memos&lt;/p&gt;" + "&lt;/div&gt;" + "&lt;div id=\"content\"&gt;"
+                           + "&lt;h1&gt;Add Memo:&lt;/h1&gt;" + "&lt;form  method=\"POST\" action=\"\"&gt;"
+                           + "&lt;input type=\"text\" name=\"memo\"  size=\"30\" placeholder=\"Enter your memo here\" /&gt;"
+                           + "&lt;button type=\"submit\" name=\"button\" value=\"save\"&gt;Add&lt;/button&gt;";
+
+        StringBuilder output = new StringBuilder(part1);
+        if (err != null) {
+            System.out.println("err=" + err);
+            output.append("&lt;span style=\"color:red\"&gt;" + err + "&lt;/span&gt;");
+        }
+
+        String part2 = "&lt;h1&gt;My Memos:&lt;/h1&gt;";
+        output.append(part2).append(renderTable(memos));
+        String part3 =
+                       "&lt;/form&gt;" + "&lt;/div&gt;" + "&lt;div id=\"footer\"&gt;" + "&lt;p&gt;(C) 2015 Schiesser/Schmollinger, MIT Licence&lt;/p&gt;" + "&lt;/div&gt;"
+                           + "&lt;/body&gt;" + "&lt;/html&gt;";
+        output.append(part3);
+
+        return output.toString();
+    }
+
+    private static String renderTable(List&lt;Memo&gt; memos) {
+        StringBuilder table = new StringBuilder();
+        if (memos.size() == 0) {
+            table.append("&lt;p&gt;Please add some memos.&lt;/p&gt;");
+        } else {
+            table.append("&lt;table&gt;&lt;tr&gt;&lt;th&gt;Memo&lt;/th&gt;&lt;th&gt;Saved&lt;/th&gt;&lt;/tr&gt;");
+            for (Memo memo : memos) {
+                table.append("&lt;tr&gt;&lt;td&gt;").append(memo.getDescription()).append("&lt;/td&gt;");
+                table.append("&lt;td&gt;").append(memo.getCreated()).append("&lt;/td&gt;&lt;/tr&gt;");
+            }
+            table.append("&lt;/table&gt;&lt;br/&gt;&lt;button type=\"submit\" name=\"button\" value=\"reset\"&gt;Reset list&lt;/button&gt;");
+        }
+        return table.toString();
+    }
+}
+</pre>
+<p><strong>Listing 3-3 </strong>MemoViewRenderer class &#8211; renders the view of our application</p>
+<p>Let&#8217;s have a look at this class step by step. The class is just providing a static helper method<a class="footnote" title="The authors are aware that static helpers have their downsides, But it's just easier to implement it this way for our example" id="return-footnote-38-2" href="#footnote-38-2"><sup class="footnote">[2]</sup></a> called <code>renderResponse </code>which takes care of rendering the whole page of the application. The method is called with two parameters: <code>memos </code>which is the list of the <code>Memo </code>objects to be displayed and <code>err </code>which is an optional error message. If we don&#8217;t expect any errors, we&#8217;ll just pass <code>null</code>.</p>
+<p>The output is generated by the <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/StringBuilder.html" target="_blank"><code>StringBuilder </code></a>instance named <code>output</code>. It contains three parts whose string objects are consequently named <code>part1</code>, <code>part2 </code>and <code>part3</code>. The first part consists of the header and the HTML form containing the textfield to enter a new memo. The second part is about rendering <code>Memo </code>objects. Besides the header (<code>h1 </code>tag), its output is generated by a second private static method called <code>renderTable</code>. The last part, <code>part3</code>, just contains a footer with a copyright message.<br />
+If an error message is defined (<code>err</code> is not <code>null</code>), we also add a error message before the second part.</p>
+<p>The method for rendering the list of memos (<code>renderTable</code>) is also using a <code>StringBuilder</code>. If there are no entries in the provided list, it will just generate the information message <em>&#8216;Please add some memos&#8217;</em>. If there are entries, it firstly generates an HTML table header. Secondly it is iterating over the list of <code>Memo </code>objects and appends, for each entry, an HTML table row. Lastly, a button with the label <em>&#8216;Rest list&#8217;</em> is generated to let the user delete all memo entries.</p>
+<p>As you can see, the code for this view renderer is hard to read and maintain: most of it contains constants of HTML strings that are better stored in a template file. This is the reason which has lead to <a href="https://en.wikipedia.org/wiki/JavaServer_Pages" target="_blank">JavaServer Pages</a> (JSP), which are covered in more detail in <a title="Turn it Inside Out – JavaServer Pages" href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">chapter 4</a>.</p>
+<p>Please note that the generated HTML form contains two request parameters: <code>memo </code>and <code>button</code>. The former contains the newly to be added memo text, the later stores the name of the button which has been pressed: <code>save </code>or <code>reset</code>. We will use these parameters in the following section 3.4.</p>
+<p>Now we have to integrate the renderer in our application. We will do this by modifying the <code>sendResponse</code> method of our <code>MemoServlet</code>:</p>
+<pre class="lang:default decode:true">private void sendResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	response.setContentType("text/html");
+	response.setCharacterEncoding("utf-8");
+	response.getOutputStream().print(MemoViewRenderer.renderResponse(java.util.Collections.&lt;Memo&gt;emptyList(), null));
+}</pre>
+<p>As you can see, we&#8217;re directly calling the <code>renderResponse </code>method of the <code>MemoViewRenderer </code>to generate the output. As parameters, we provide an empty list of <code>Memo </code>objects (<code>java.util.Collections.emptyList()</code>) and <code>null </code>as <code>err </code>parameter, as we don&#8217;t want to display any errors. <a class="footnote" title="Please, don't forget the import statements in the servlet for the classes Memo and MemoViewRenderer" id="return-footnote-38-3" href="#footnote-38-3"><sup class="footnote">[3]</sup></a>.</p>
+<p>If you restart the application and request the <code>/memos</code> URL, you should see the output as shown in Figure 3-1.</p>
+<p><a href="http://www.turngeek.press/images/javaeeinaday/chapter3/3-1.png" target="_blank"><img src="http://www.turngeek.press/images/javaeeinaday/chapter3/3-1.png" alt="Screenshot of the generated output of the MemoViewRenderer" width="100%" /></a><br />
+<strong>Fig. 3-1 </strong>Screenshot of the generated output of the MemoViewRenderer</p>
+<p>It&#8217;s a little bit annoying that we have to add the <code>/memos</code> suffix each time to the application&#8217;s URL. Therefore, we are now changing the <code>index.html</code> file to do a redirect to <code>/memos</code>.<br />
+To do so, replace our <code>index.html</code> file with the content of Listing 3-4. The <code>meta </code>tag is doing the intended redirect.</p>
+<pre class="lang:xhtml decode:true">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+	&lt;meta http-equiv="refresh" content="0; URL=memos"&gt;
+&lt;/html&gt;</pre>
+<p><strong>Listing 3-4 </strong>HTML file index.html &#8211; doing a redirect to MemoServlet</p>
+<p>After restarting the application, you should directly see our application without having to type the <code>/memos </code>suffix.</p>
+<p>Try now to press the <em>&#8216;Add&#8217;</em> button. This will lead to the error message: <em>&#8216;HTTP method POST is not supported by this URL&#8217;.</em> The reason for this is that our servlet isn&#8217;t handling any POST requests, yet. We&#8217;ll change this in the following section.</p>
+<h3>3.4 Add a little bit more Action Please</h3>
+<p>In the last section, we received an error message when we were pressing an HTML button to perform an action. Reason for this was that we haven&#8217;t yet implemented some handlers to process this kind of activity. In <a href="https://struts.apache.org/" target="_blank">Struts</a>, a well-known framework to simplify servlet development, these handlers are called <em>actions</em>. From our point of view this kind of naming makes a lot of sense, therefore, we&#8217;re borrowing it here. Thanks.</p>
+<p>We&#8217;re now about to implement such action handlers. But firstly, we have to implement some kind of dispatcher whose task is to find out which action was actually called.<br />
+To do so, we&#8217;re adding the following method to our <code>MemoServlet </code>class:</p>
+<pre class="lang:java decode:true">protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    request.setCharacterEncoding("UTF-8");
+    // get post parameter
+    final String button = request.getParameter("button");
+    switch (button) {
+        case "reset":
+            actionReset(request);
+            sendResponse(request, response);
+            break;
+        case "save":
+            actionAddMemo(request);
+            sendResponse(request, response);
+            break;
+        default:
+            // no action
+            sendResponse(request, response);
+    }
+}</pre>
+<p>The <code>doPost </code>method is generally called by the servlet framework for each incoming POST request. Similar to the <code>doGet </code>method a <code>request </code>and a <code>response </code>object is passed.</p>
+<p>In the method, firstly we&#8217;re setting the encoding of the POST request parameters to be UTF-8 which is generally <a href="http://stackoverflow.com/questions/3029401/java-servlet-and-utf-8-problem" target="_blank">a good practice</a>.</p>
+<p>Secondly, we are trying to find out which button the user actually pressed and, depending on this information, we&#8217;re about to invoke a different action method. As you can see in the HTML generated by our <code>MemoViewRenderer </code>class, we are encoding in the HTML request parameter <code>button </code>which button has been pressed. Consequently, we store this parameter&#8217;s value in the variable <code>button</code>. If its value is &#8220;<code>reset</code>&#8221; we call the <code>actionReset </code>method, if it&#8217;s &#8220;<code>save</code>&#8221; we instead invoke <code>actionAddMemo</code>. If it&#8217;s neither of those, we&#8217;re not performing any action. But in all three cases we make sure to render the response by delegating to the <code>sendResponse</code> method.</p>
+<p>That way, we&#8217;re separating the dispatching of which action to call from the actual action handling. Once again <a href="https://en.wikipedia.org/wiki/Separation_of_concerns" target="_blank">separation of concerns</a> is a good design principle.</p>
+<p>Of course, we still have to implement the actual action handlers. We&#8217;re starting with the simple <code>actionReset </code>method for deleting all previously stored values. To do so, we firstly have to implement a helper method whose task is to retrieve the stored <code>Memo </code>objects from the user&#8217;s session.</p>
+<div class="textbox shaded"><strong>A request is not a session</strong>So far we have only been retrieving parameters from the incoming HTTP request. This data is only available as long as the HTTP request exists.This is contrary to the data stored in a HTTP session object. Each session object is specifically created for one user. This object exists for the duration of all requests made by the same user. Each user has its own session object. Requests from other users can not access it. That way we can store user specific data.We use it to store the list of <code>Memo </code>objects. Different user sessions can easily be emulated by accessing a web application from different browsers (e.g. Firefox, Chrome). Different techniques exist  (e.g. <a href="https://en.wikipedia.org/wiki/HTTP_cookie" target="_blank">cookies</a>) to find out which user session an incoming request belongs to. We don&#8217;t go into any detail here, but they all have in common that for each session a unique ID for distinguishing is assigned, the so called <em>session ID</em>.</div>
+<p>Add now, the needed helper method for our <code>MemoServlet </code>class:</p>
+<pre class="lang:java decode:true">private List&lt;Memo&gt; getMemos(HttpServletRequest request) {
+    HttpSession session = request.getSession();
+    List&lt;Memo&gt; memos = (List&lt;Memo&gt;)session.getAttribute("memos");
+    if (memos == null) {
+        memos = new LinkedList&lt;Memo&gt;();
+        session.setAttribute("memos", memos);
+    }
+    return memos;
+}</pre>
+<p>As you can see, it firstly receives an <a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html" target="_blank"><code>HttpSession </code></a>object which stores information about the session of the current user. The method takes advantage of the so called <a href="https://en.wikipedia.org/wiki/Lazy_initialization" target="_blank">lazy initialization</a> pattern. In our case that means, if we don&#8217;t find a list of <code>Memo </code>objects in the session&#8217;s attribute <code>memos</code>, we create a new <code><a href="http://docs.oracle.com/javase/7/docs/api/java/util/LinkedList.html" target="_blank">LinkedList </a></code>object for storing<a class="footnote" title="Please don't forget to add the imports for java.util.LinkedList, java.util.List and press.turngeek.mymemo.model.Memo" id="return-footnote-38-4" href="#footnote-38-4"><sup class="footnote">[4]</sup></a> them. After successfully creating it for the first time, we store it in the user&#8217;s session by calling the <code><a href="http://docs.oracle.com/javaee/7/api/javax/servlet/http/HttpSession.html#setAttribute(java.lang.String, java.lang.Object)" target="_blank">setAttribute</a></code> method of the <code>session </code>object.</p>
+<p>We can now use this method to implement the missing <code>actionReset </code>method:</p>
+<pre class="lang:java decode:true">private synchronized void actionReset(HttpServletRequest request) {
+    List&lt;Memo&gt; memos = getMemos(request);
+    memos.clear();
+}</pre>
+<p>It&#8217;s implementation is straightforward: it just gets the list of <code>Memo </code>objects from the user&#8217;s session and removes all entries from the list by calling <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html#clear()" target="_blank"><code>clear</code></a>.</p>
+<p>In contrast the <code>actionAddMemo </code>method is slighty more complicated:</p>
+<pre class="lang:java decode:true">private synchronized void actionAddMemo(HttpServletRequest request) {
+    String memoDescr = request.getParameter("memo");
+    if (memoDescr != null &amp;&amp; !memoDescr.isEmpty()) {
+        List&lt;Memo&gt; memos = getMemos(request);
+        // create memo
+        Memo memo = new Memo();
+        memo.setDescription(memoDescr);
+        memo.setCreated(new Date());
+        // add todo list
+        memos.add(memo);
+    } else {
+        //set error message in request
+        request.setAttribute("err", "Please, enter a memo!");
+    }
+}</pre>
+<p>Here we&#8217;re firstly getting the value of the POST parameter <code>memo </code>which was sent by our HTML page. It contains the description of the memo we want to add.</p>
+<p>If the client is actually sending a memo description, we are creating a new <code>Memo </code>object with the description sent and the actual creation timestamp. After that, we are adding this object to the list of the user&#8217;s <code>Memo </code>objects which we are retrieving by calling the <code>getMemos </code>helper method before.</p>
+<p>In case the user is not providing any value for the memo (<code>memoDescr </code>is empty or <code>null</code>), we are setting an error message in the <code>err </code>attribute of the request.<br />
+This attribute we will use in the <code>sendResponse </code>method where we are rendering the HTML page.</p>
+<p>Therefore we also have to update this method:</p>
+<pre class="lang:java decode:true">private void sendResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html");
+    response.setCharacterEncoding("utf-8");
+    String err = (String)request.getAttribute("err");
+    List&lt;Memo&gt; memos = getMemos(request);
+    response.getOutputStream().print(MemoViewRenderer.renderResponse(memos, err));
+}</pre>
+<p>Besides the <code>err </code>attribute we are also calling <code>getMemos </code>to retrieve the user&#8217;s memos. Both, a potential error message stored in variable <code>err </code>and the list of <code>Memo </code>objects are then sent to the <code>MemoViewRenderer </code>for updating the HTML page.</p>
+<p>After doing so, we have finished the implementation of our <code>MemoServlet</code>. Your work should now look the same as shown in Listing 3-5. Please have a look &#8211; a common mistake is to forget necessary imports.</p>
+<pre class="lang:java mark:4-6,16-17,35-73,78-91 decode:true">package press.turngeek.mymemo.controller;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.view.MemoViewRenderer;
+
+@WebServlet({"/MemoServlet", "/memos"})
+public class MemoServlet extends HttpServlet {
+
+    private static final long serialVersionUID = -7843898075264520941L;
+    private ServletConfig config;
+
+    @Override
+    public void init(ServletConfig config) throws ServletException {
+        this.config = config;
+    }
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // no action
+        sendResponse(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("UTF-8");
+        // get post parameter
+        final String button = request.getParameter("button");
+        switch (button) {
+            case "reset":
+                actionReset(request);
+                sendResponse(request, response);
+                break;
+            case "save":
+                actionAddMemo(request);
+                sendResponse(request, response);
+                break;
+            default:
+                // no action
+                sendResponse(request, response);
+        }
+    }
+
+    private synchronized void actionReset(HttpServletRequest request) {
+        List&lt;Memo&gt; memos = getMemos(request);
+        memos.clear();
+    }
+
+    private synchronized void actionAddMemo(HttpServletRequest request) {
+        String memoDescr = request.getParameter("memo");
+        if (memoDescr != null &amp;&amp; !memoDescr.isEmpty()) {
+            List&lt;Memo&gt; memos = getMemos(request);
+            // create memo
+            Memo memo = new Memo();
+            memo.setDescription(memoDescr);
+            memo.setCreated(new Date());
+            // add todo list
+            memos.add(memo);
+        } else {
+            //set error message in request
+            request.setAttribute("err", "Please, enter a memo!");
+        }
+    }
+
+    private void sendResponse(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("utf-8");
+        String err = (String)request.getAttribute("err");
+        List&lt;Memo&gt; memos = getMemos(request);
+        response.getOutputStream().print(MemoViewRenderer.renderResponse(memos, err));
+    }
+
+    private List&lt;Memo&gt; getMemos(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        List&lt;Memo&gt; memos = (List&lt;Memo&gt;)session.getAttribute("memos");
+        if (memos == null) {
+            memos = new LinkedList&lt;Memo&gt;();
+            session.setAttribute("memos", memos);
+        }
+        return memos;
+    }
+}
+</pre>
+<p><strong>Listing 3-5 </strong>MemoServlet class &#8211; updated implementation</p>
+<p>Maybe you have noticed that we have added the <code>synchronized </code>keyword for each action method. We don&#8217;t want to go into too much detail on this, but the reason for this is to make our servlet <a href="https://en.wikipedia.org/wiki/Thread_safety" target="_blank">thread-safe</a>.</p>
+<p>Generally there exists only one instance of the servlet class, but as for each HTTP request one thread is started, multiple HTTP requests lead to multiple threads running on this one instance.</p>
+<p>These threads may access the same shared data: our user&#8217;s session storing the <code>Memo </code>objects. Therefore we have to synchronize the execution of our code &#8211; in our case it is a good idea to do this at the level of the action methods which are modifying the data. Read <a href="http://www.javaworld.com/article/2072798/java-web-development/write-thread-safe-servlets.html" target="_blank">Write thread-safe servlets</a> for further information to this topic.</p>
+<p>You can now restart the application. It should be completely functional. If you encounter any error&#8217;s please compare your project state with the one of our Online IDE:</p>
+<p>For the time being, the implementation of the <code>MemoViewRenderer </code>is rather ugly: it contains inline HTML code which should better be handled by some kind of template engine.0<br />
+In the next chapter we will take care of this issue by introducing a technology made for rendering views: JSP.</p>
+<h3>3.5 Further Reading</h3>
+<p>Current literature is never about Java Servlets alone. We already know the reason for this. Servlets are no longer used for rendering the view of an application. Instead, they are used behind the scenes of enterprise applications (e.g. for request analysis  or filtering) and are building blocks of modern programming frameworks (e.g. JavaServer Faces). In the following chapters, we will introduce some of them and will refer to literature that does also contain current information about Java Servlet technology. Readers that are interested in the first years of the technology can refer to the following textbook:</p>
+<p><a href="http://www.amazon.com/gp/product/0596000405/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0596000405&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=NLQ2C6CANGSZDH6C" target="_blank">Jason Hunter, 2001. Java Servlet Programming (Java Series). Second Edition Edition. O&#8217;Reilly Media.</a><img style="border: none !important; margin: 0px !important;" src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=0596000405" alt="" width="1" height="1" border="0" /></p>
+<p>&nbsp;</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-38-1">Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project, and by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser. <a href="#return-footnote-38-1" class="return-footnote">&crarr;</a></li><li id="footnote-38-2">The authors are aware that static helpers have their <a href="http://stackoverflow.com/questions/14387385/java-why-is-using-static-helper-methods-bad" target="_blank">downsides</a>, But it's just easier to implement it this way for our example <a href="#return-footnote-38-2" class="return-footnote">&crarr;</a></li><li id="footnote-38-3">Please, don't forget the import statements in the servlet for the classes <code>Memo </code>and <code>MemoViewRenderer</code> <a href="#return-footnote-38-3" class="return-footnote">&crarr;</a></li><li id="footnote-38-4">Please don't forget to add the imports for <code>java.util.LinkedList</code>, <code>java.util.List</code> and <code>press.turngeek.mymemo.model.Memo</code> <a href="#return-footnote-38-4" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=3%20The%20Rise%20of%20Server-Side%20Java%20%E2%80%93%20Java%20Servlets%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F3-the-rise-of-server-side-java-java-servlets%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

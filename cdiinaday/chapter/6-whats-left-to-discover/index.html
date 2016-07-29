@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='description' content='This Cloud Tutorial is the second of an upcoming series building a web application step by step with Java EE technology. It will see us improve the architecture and design of the sample application using CDI (Contexts and Dependency Injection).' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/2015/10/cdiinaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<link rel="shortcut icon" href="http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>6 What’s Left to Discover? | Cloud Tutorial &#8211; CDI in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/cdiinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/cdiinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/cdiinaday/wp-json/' />
+<link rel='prev' title='5 Services and Alternatives' href='http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/' />
+<link rel='next' title='7  Exercises' href='http://www.turngeek.press/cdiinaday/chapter/7-exercises/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/cdiinaday/?p=27' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F6-whats-left-to-discover%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F6-whats-left-to-discover%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-27" id="6what’slefttodiscover?">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/cdiinaday/" title="Cloud Tutorial &#8211; CDI in a Day" rel="home">Cloud Tutorial &#8211; CDI in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">6 What’s Left to Discover?</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">6 What’s Left to Discover?</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/cdiinaday/chapter/7-exercises/">Next</a></span>
+    </div>				<div id="post-27" class="type-1 post-27 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>CDI contains a number of other features that are not required for our application. These are described in brief in the following sections. If you want to learn more about any of the topics, we recommend you take a look at <a href="http://docs.jboss.org/weld/reference/2.3.1.Final/en-US/html/" target="_blank">Weld, the CDI Reference Implementation</a>.</p>
+<h3>6.1 <em>ApplicationScope</em> and <em>ConversationScope</em></h3>
+<p>CDI has other interesting scopes in addition to the ones we have already described, with <em>ApplicationScope</em> and <em>ConversationScope</em> being particularly worthy of mention.</p>
+<p>With <em>ConversationScope</em>, the bean is able to control its lifecycle independently via a third object &#8211; the so-called <em>Conversation</em>. This scope is recommended for situations in which user data must be stored across multiple views, such as in the case of a <a href="https://en.wikipedia.org/wiki/Wizard_(software)" target="_blank"><em>Wizard</em></a>. When a <em>Wizard</em> is started, the <em>Conversation</em> is started also &#8211; and with it, the lifecycle of the bean. When the <em>Wizard</em> is ended, so is the <em>Conversation</em>, which in turn ends the lifecycle of the bean. The <em>Conversation</em> is started and ended using the methods <code>begin</code> and <code>end</code>.</p>
+<p><em>ApplicationScope</em> is the easiest scope to explain: beans with this scope exist only once for all users across an application. This means that beans with this scope can exchange data between all users; in our application, it could be used to cache the sum of all donations made.</p>
+<p>Corresponding annotations are <code>@ConversationScoped</code> and <code>@ApplicationScoped</code> – both are located in the package <code>javax.enterprise.context</code>.</p>
+<h3>6.2 The <em>FlowScope</em></h3>
+<p>The introduction of <a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/" target="_blank">Faces Flows</a> in JSF 2.2 represented a new concept in JSF – one that required beans with a higher lifespan than the <em>ViewScope</em> was able to offer.</p>
+<p>If a developer defines a <em>Faces Flow</em>, they need their stored data to be preserved for its entire duration. A reason for this can be that the views involved in the <em>Faces Flow</em> are required to exchange data.</p>
+<p>A <em>Faces Flow</em> does not have a set duration; instead, its duration is defined by the times at which it is started and ended. With this in mind, JSF 2.2 introduced a new scope for CDI &#8211; the so-called <em>FlowScope</em>. Beans with this scope exist for the duration of a <em>Faces Flow</em>.</p>
+<p>To make a bean <em>FlowScoped</em>, we must use the annotation <code>@FlowScoped</code> from the package <code>javax.faces.flow</code>. </p>
+<h3>6.3 Interceptors and Decorators</h3>
+<p><a href="https://docs.jboss.org/weld/reference/latest-2.2/en-US/html/interceptors.html" target="_blank"><em>Interceptors</em></a> and <em>decorators</em> both modify methods of beans using methods of other independent classes.</p>
+<p>When a method is invoked, an interceptor enables to invoke another method before or after the invocation of the original method. In CDI, an annotation is applied to the method to be modified to specify which interceptor should be used. </p>
+<p><a href="https://docs.jboss.org/weld/reference/latest-2.2/en-US/html/decorators.html" target="_blank"><em>Decorators</em></a> must implement the same interface as the bean to be modified. However, a decorator contains an additional delegation object that also implements an interface and corresponds to the runtime of the relevant bean. If a decorator is invoked using the CDI configuration file <code>beans.xml</code>, the decorator will respond to the invoking of a bean method by invoking the same method in the <em>decorator</em>. This method can then execute code and, where needed, can invoke methods of the bean to be modified using the delegation object. We have no need to explore decorators further within the scope of this workshop.</p>
+<p><em>Interceptors</em> are usually used for the decoupling of technical aspects like logging and transaction handling. <em>Decorators</em> are used for the decoupling of domain aspects, such as the storage of business rules.</p>
+<p>Java EE 7 saw the introduction of a new functionality for <em>decorators</em> and <em>interceptors</em>: if multiple <em>decorators</em> or <em>interceptors</em> were defined within an application, the developer was now able to determine in which order these should be used.</p>
+<h3>6.4 Stereotypes</h3>
+<p><em>Stereotypes</em> condense multiple annotations into one. This enables a bean to be used with a single annotation, rather than many. This is not only simpler – it also means the annotations can be changed at a central location, in the file in which the new annotation is defined.</p>
+<p>Let’s say that the new annotation, <code>@Action</code>, combines the annotations <code>@RequestScoped</code>, <code>@Transactional</code> and <code>@Named</code>. It is much easier to annotate a bean simply with</p>
+<pre class="lang:java decode:true" >
+@Action</pre>
+<p>than to annotate it with</p>
+<pre class="lang:java decode:true" >
+@RequestScoped
+@Transactional
+@Named</pre>
+<p>every time. It is worth mentioning that <code>@Transactional</code> is an annotation for the execution of a transaction; however, this will be discussed in this tutorial.</p>
+<h3>6.5 The <em>BeanManager</em></h3>
+<p>Using the <em>BeanManager</em>, a method can be instructed in the code to request a reference to a CDI bean from the CDI container. This means that the bean is not injected with the annotation <code>@Inject</code> as it usually is.</p>
+<p>The simple example below shows how a reference to our <code>CampaignListProducer</code> can be obtained using the <em>BeanManager</em>:</p>
+<pre class="wrap:true lang:java decode:true" >
+BeanManager bm = CDI.current().getBeanManager();
+Bean&lt;CampaignListProducer&gt; bean = (Bean&lt;CampaignListProducer&gt;) bm.getBeans(CampaignListProducer.class).iterator().next();
+CreationalContext&lt;CampaignListProducer&gt; ctx = bm.createCreationalContext(bean);
+CampaignListProducer producer = (CampaignListProducer) bm.getReference(bean, CampaignListProducer.class, ctx);
+</pre>
+<p>A new addition in Java EE 7 was that the expression <code>CDI.current().getBeanManager()</code> could be used to return a reference to the <em>BeanManager</em>. Before Java EE 7, such a reference could only be obtained by injecting the <em>BeanManager</em> object or by using a JNDI lookup at <code>java:comp/BeanManager</code>.</p>
+<h3>6.6 Extensions</h3>
+<p>CDI enables certain so-called <em>extensions</em> that extend the container in a variety of ways. The Apache project Deltaspike is a handy collection of such <em>extensions</em>. If you want to learn more, we recommend you take a look at the <a href="http://deltaspike.apache.org" target="_blank">Deltaspike website</a>. There, you’ll find a number of modules for extending CDI beans with functionalities that are typically associated with EJBs and are lacking in CDIs.</p>
+<h3>6.7 Disposer Methods</h3>
+<p>Producer methods were introduced in <a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">section 3.4</a>. Since these methods create a CDI bean, we might wonder how the developer is informed when the container wishes to remove the bean. This issue is of particular interest for dependent resources that must be explicitly cleaned up, such as database connections.</p>
+<p>Take a look at the following simplified example, which creates a new database connection of type <code>Connection</code> for every request:</p>
+<pre class="lang:java decode:true" >
+@Produces
+@RequestScoped
+public Connection connect() {
+...
+}</pre>
+<p>Before the request is ended, the database connection must be closed by invoking the method close. This is accomplished by the following disposer method:</p>
+<pre class="lang:java decode:true" >
+void close(@Disposes Connection connection) {
+    connection.close();
+}</pre>
+<p>What we still don’t know is how the container finds the right disposer method for a particular producer method. In fact, the answer is very simple. Firstly, both methods must be defined in the same class. Secondly, the return value of the producer method must correspond with the disposer method’s input parameter type (the parameter is also annotated with <code>@Disposes</code>).</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20CDI%20in%20a%20Day&amp;body=6%20What%E2%80%99s%20Left%20to%20Discover%3F%20-%20http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F6-whats-left-to-discover%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/cdiinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/cdiinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/cdiinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/1-why-cdi/">1 Why CDI?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">2 Getting Started</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">3 Contexts and Dependency Injection</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">4 Application Wide Messages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">5 Services and Alternatives</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">6 What’s Left to Discover?</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/7-exercises/">7  Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

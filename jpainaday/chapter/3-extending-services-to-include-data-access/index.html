@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
+<meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
+<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>3 Extending Services to Include Data Access | Cloud Tutorial &#8211; JPA in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
+<link rel='prev' title='2 Annotating Entities' href='http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/' />
+<link rel='next' title='4 Storing the Data Transactionally' href='http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=67' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F3-extending-services-to-include-data-access%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F3-extending-services-to-include-data-access%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-67" id="3extendingservicestoincludedataaccess">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">3 Extending Services to Include Data Access</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">3 Extending Services to Include Data Access</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">Next</a></span>
+    </div>				<div id="post-67" class="type-1 post-67 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>If we think of JPA as a database, then we have used the annotations from the last section to define the schema of our sample database. This means they correspond to the part of the SQL that describes the data structure, which is also known as DDL (Data Definition Language). This section is concerned with the processing of data, which means we’ll be dealing with the part of the SQL known by the acronym DML (Data Manipulation Language).</p>
+<p>This knowledge is essential for creating the services and methods that create, change or delete instances of entities.</p>
+<p>We can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=eq50gbdbln3j067j" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign after adding JPA Annotations</p>
+</div>
+<p>[/sociallocker]</p>
+<h3>3.1 Embed EntityManager</h3>
+<p>To process data, we require an instance of the class <code>EntityManager</code>. This is usually embedded in a class via dependency injection using the annotation <code>@PersistenceContext</code> from the package <code>javax.persistence</code>:</p>
+<pre class="lang:java decode:true">@PersistenceContext
+private EntityManager em;
+</pre>
+<p>For dependency injection in our sample application, however, we are using the CDI annotation <code>@Inject</code> (see <a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/" target="_blank">Cloud Tutorial CDI in a Day section 3.2</a>) for each instance. To preserve this convention for the <code>EntityManager</code>, we require a producer method (see <a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/" target="_blank">Cloud Tutorial CDI in a Day section 3.4</a>) that makes the <code>EntityManager </code>available as a CDI bean. Since the <code>EntityManager </code>is already created using the annotation <code>@PersistenceContext</code>, it will suffice to annotate the attribute with <code>@Produces</code> (from package <code>javax.enterprise.inject</code>) as well. In this case, the instance stored in the attribute will be made available as a CDI bean. Thus, we will simply add the following snippet to the class <code>Resources</code> from the package<code> press.turngeek.mycampaign.util</code>, in which our other producer methods are stored:</p>
+<pre class="lang:java decode:true">@Produces
+@PersistenceContext
+private EntityManager em;
+</pre>
+<p>The addition of this snippet will enable the <code>EntityManager </code>to be embedded in other CDI beans using the annotation <code>@Inject</code>. We will do this now for the class <code>CampaignServiceBean</code> from <code>package press.turngeek.mycampaign.services</code>:</p>
+<pre class="lang:java decode:true">@Inject
+EntityManager entityManager;
+</pre>
+<p>Once we’ve made this change, it will be possible to access an instance of the class <code>EntityManager </code>in the CDI bean <code>CampaignServiceBean </code>using the attribute <code>entityManager</code>.</p>
+<h3>3.2 Add a Database Query</h3>
+<p>Next, we want to extend the method <code>getAllCampaigns </code>of the <code>CampaignServiceBean </code>to include a database query. This should cause the method to return all <code>Campaign </code>objects stored in the database.</p>
+<p>Database queries in JPA are executed via so-called <code>NamedQueries</code>. During this process, the queries are stored directly in the entity and assigned a unique name. This explains how <code>NamedQueries </code>gots its name.</p>
+<p>We now want to add the following query. To help us understand it better, we will write it first in SQL:</p>
+<pre class="lang:java decode:true">SELECT * FROM CAMPAIGN c ORDER BY c.name
+</pre>
+<p>This query supplies all rows of the <code>CAMPAIGN </code>table, sorted according to the <code>name </code>column. As is usual in SQL, the return value is a relation; however, what we require is a list of complete objects.  This means that for the query in JPA, we need a language for executing queries to an object-oriented database. To meet this need, and to guarantee database-independent access to the persistence layer, JPA uses its own language, the JPQL (Java Persistence Query Language). While, luckily, we don’t really have to learn a new language – the expressions are very similar to SQL – readers wishing to learn about JPQL. In our current example, the expression in JPQL is as follows:</p>
+<pre class="lang:java decode:true">SELECT c FROM Campaign c ORDER BY c.name
+</pre>
+<p>The only recognisable difference is that the expression in JPQL contains c instead of <code>*</code>. In SQL, <code>*</code> returns all columns of the table specified in the <code>FROM </code>clause (in our case, the table <code>CAMPAIGN</code>). In JPQL, <code>c </code>returns the object with the name <code>c</code> (in our case, the complete <code>Campaign </code>object). Since the <code>CAMPAIGN </code>table contains multiple entries, and we are selecting all entries, a list of <code>Campaign </code>objects is returned – the list of all <code>Campaign </code>objects. If the command contained a limitation in the form of a <code>WHERE </code>clause, the expression would only return a subset of the total <code>Campaign </code>objects.</p>
+<p>This JPQL expression now just requires a unique name – we will use <code>Campaign.findAll</code>. We use the prefix <code>Campaign </code>to show that the query belongs to the <code>Campaign </code>entity. The annotation <code>@NamedQuery</code> (again from the package <code>javax.persistence</code>) can be used to define a query as follows:</p>
+<pre class="lang:java decode:true">@NamedQuery(name="Campaign.findAll",query="SELECT c FROM Campaign c ORDER BY c.name")
+</pre>
+<p><code>NamedQuery </code>is usually stored in the class of the affected entity. Thus, in our case, the class <code>Campaign </code>is expanded as follows (Codenvy might have problems resolving nested annoations. In this case just add the imports manually to the class.):</p>
+<pre class="lang:java decode:true">@NamedQueries({
+   @NamedQuery(name = Campaign.findAll, query = "SELECT c FROM Campaign c ORDER BY c.name")
+})
+@Entity
+public class Campaign {
+   public static final String findAll = "Campaign.findAll";
+...
+</pre>
+<p>To enable us to obtain type-safe access to the name of the <code>NamedQuery</code>, a constant, <code>findAll</code>, is added to store the name.</p>
+<p>In the next step, we must expand the <code>getAllCampaigns </code>method of the <code>CampaignServiceBean </code>to include the actual database access.</p>
+<p>The <code>EntityManager </code>provides the method <code>createNamedQuery </code>for accessing a <code>NamedQuery</code>. It creates a type-safe query obect of the generic type <code>TypedQuery </code>using the name of the <code>NamedQuery</code>. We must specify the class of the object to be returned as a second parameter (in our case, <code>Campaign.class</code>).</p>
+<p>When we put all of this together, we get the following expression:</p>
+<pre class="lang:java decode:true">TypedQuery&lt;Campaign&gt; query = entityManager.createNamedQuery(Campaign.findAll, Campaign.class);
+</pre>
+<p>The method <code>getResultList </code>can then be executed on the new <code>TypedQuery </code>when a list of objects is expected as the result, while <code>getSingleResult</code> can be used when the query returns only one object. Both methods carry out the actual query and return the corresponding result.</p>
+<p>Since we want to return a list of <code>Campaign </code>objects, our complete method looks as follows:</p>
+<pre class="lang:java decode:true">public List&lt;Campaign&gt; getAllCampaigns() {
+    TypedQuery&lt;Campaign&gt; query = entityManager.createNamedQuery(Campaign.findAll, Campaign.class);
+    List&lt;Campaign&gt; campaigns = query.getResultList();
+    return campaigns;
+}
+</pre>
+<h3>3.3 Executing CRUD Operations</h3>
+<p>As well as using a query language to obtain database access, we can also use the <code>EntityManager </code>to carry out the following basic database operations:</p>
+<ul>
+<li>Create new entities (Create)</li>
+<li>Read existing entities (Read)</li>
+<li>Update entitities (Update)</li>
+<li>Delete entities (Delete)</li>
+</ul>
+<p>These operations are collectively known as CRUD operations, after the first letter of each of the operation names.</p>
+<p>In order to expand the service <code>CampaignService </code>with these operations, we will now add the method declarations <code>addCampaign</code>, <code>deleteCampaign </code>and <code>updateCampaign </code>to the interface of the service (also <code>CampaignService</code>).</p>
+<p>We do not require a special method to read an existing entity. The existing method <code>CampaignService </code>– which returns a list of all <code>Campaign </code>objects via a JPQL query &#8211; is sufficient for our needs.</p>
+<p>We end up with the code from Listing 3-1 for the interface <code>CampaignService</code>. Store this in the package <code>press.turngeek.mycampaign.services</code>.</p>
+<pre class="lang:java decode:true">package press.turngeek.mycampaign.services;
+
+import press.turngeek.mycampaign.model.Campaign;
+
+import java.util.List;
+
+public interface CampaignService {
+    List&lt;Campaign&gt; getAllCampaigns();
+    void addCampaign(Campaign campaign);
+    void deleteCampaign(Campaign campaign);
+    void updateCampaign(Campaign campaign);
+}
+</pre>
+<p><strong>Listing 3-1</strong> <em>CampaignService</em> interface</li>
+<p>The missing methods must now be implemented in the actual service <code>CampaignServiceBean</code>. We will consider this class alone in the following section, disregarding the <code>MockCampaignServiceBean </code>mock implementation of the interface, since this is no longer required. You may simply delete this class altogether or fill the missing methods with empty stubs.</p>
+<p>We will now implement the method <code>addCampaign</code>. As described in section 1, the persist method of the class <code>EntityManager </code>can be used to create a new entity. This means that the implementation of the method <code>addCampaign </code>looks like this:</p>
+<pre class="lang:java decode:true">public void addCampaign(Campaign campaign) {
+    entityManager.persist(campaign);
+}
+</pre>
+<p>The method <code>updateCampaign </code>is implemented in a similar way:</p>
+<pre class="lang:java decode:true">public void updateCampaign(Campaign campaign) {
+    entityManager.merge(campaign);
+}
+</pre>
+<p>Here, the method merge is invoked in place of the method persist. Rather than creating a new entity, this updates an existing one. During this process, an object with the same identity is loaded from the database and assumes the value of the passed object. The updated object is then passed to the database<a class="footnote" title="Strictly speaking, this first happens when the flush method of the EntityManager object is invoked; however, this is invoked implicitly by the transaction." id="return-footnote-67-1" href="#footnote-67-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>Things become slightly more complex when we come to implement the method <code>deleteCampaign</code>. While the <code>EntityManager </code><em>does</em> have a remove method for deleting entities, this can only be used on instances that are managed by the <code>EntityManager</code>. This will not necessarily be the case for all possible clients of the service, which will generally use new instances of <code>Campaign </code>objects that are unknown to the <code>EntityManager</code>. For this reason, the <code>EntityManager </code>must begin by finding the <code>Campaign </code>object in the databse using the identity of the passed <code>Campaign</code> object. The following lines of code serve to accomplish this task:</p>
+<pre class="lang:java decode:true">Campaign managedCampaign = entityManager.find(Campaign.class, campaign.getId());
+</pre>
+<p>The returned <code>Campaign </code>object retrieves the <code>EntityManager </code>from the database using the identity <code>campaign.getId()</code> and manages it from this point onwards. The entity can then be removed from the database using the method remove.</p>
+<p>This gives us the following definitions for the method <code>deleteCampaign</code>:</p>
+<pre class="lang:java decode:true">public void deleteCampaign(Campaign campaign) {
+
+Campaign managedCampaign = entityManager.find(Campaign.class, campaign.getId());
+
+entityManager.remove(managedCampaign);
+
+}
+</pre>
+<div class="textbox shaded">
+<p><strong>Managed or not managed?</strong></p>
+<p>For newcomers to JPA programming, the process of differentiating between managed and unmanaged instances of entities can initially be very confusing. Generally, managed instances are returned by methods of the class <code>EntityManager</code>, and some methods expect a managed instance as parameter (the method remove, for example).</p>
+<p>Unlike unmanaged instances, managed instances have an active connection to the database. Because of this, managed instances can be used to invoke all methods of the entity, including those that assume access to the database (methods that return assigned entities via a relation, for example). If we tried to invoke such a method on/using an unmanaged entity, we would get a <code>LazyInitializationException</code>. This will be encountered quite frequently over the remaining part of this chapter.</p>
+</div>
+<h3>3.4 Extending <em>CampaignListProducer</em> With Service Delegation</h3>
+<p><code>CampaignListProducer </code>is the bean that manages the lists of the object <code>Campaign</code>. In order to do this, the bean reacts to events from other beans when a campaign must be added to or deleted from the list.</p>
+<p>Once <code>CampaignService </code>has been extended with the missing methods &#8211; add and delete &#8211; the <code>CampaignListProducer </code>will begin delegating to the relevant service methods in order to keep the list of <code>Campaign </code>objects in the database up to date.</p>
+<p>First we will modify <code>CampaignListProducer</code>’s observer method that responds to the event indicating a <code>Campaign </code>object should be added. The method at hand is <code>onCampaignAdded</code>, which now delegates the <code>Campaign </code>object to be added directly to the method <code>addCampaign </code>of the <code>CampaignService</code>:</p>
+<pre class="lang:java decode:true">public void onCampaignAdded(@Observes @Added Campaign campaign) {
+    campaignService.addCampaign(campaign);
+    init();
+}
+</pre>
+<p>Next, the init method of the <code>CampaignListProducer </code>is invoked. It updates the list of <code>Campaign </code>objects stored in the <code>CampaignListProducer </code>directly from the database.<br />
+The event for campaign deletion can be modified in the same way. To achieve this, the method <code>onCampaignDeleted </code>must be adjusted as follows:</p>
+<pre class="lang:java decode:true">public void onCampaignDeleted(@Observes @Deleted Campaign campaign) {
+    campaignService.deleteCampaign(campaign);
+    init();
+}
+</pre>
+<p>Up until now, the <code>CampaignListProducer </code>has not been required to respond to an event if a <code>Campaign </code>object is updated. The reason for this is that a <code>Campaign </code>instance exists only once per user – and is in the <code>CampaignListProducer</code>. Now, however, it exists in both the <code>CampaignListProducer </code>and the database. For this reason, the database must be informed about all changes made to a <code>Campaign </code>object.</p>
+<p>To accomplish this, we must create the qualifier <code>@Updated</code> for the campaign update event. We therefore add the following snippet to the class <code>Events</code> from package <code>press.turngeel.mycampaign.util</code>:</p>
+<pre class="lang:java decode:true">@Qualifier
+@Target({ FIELD, PARAMETER })
+@Retention(RUNTIME)
+
+public @interface Updated {
+
+}
+</pre>
+<p>This means that the new event can be triggered by <code>EditCampaignController </code>when the user updates a <code>Campaign </code>object. To accomplish this, an attribute of the type <code>Event&lt;Campaign&gt;</code>, annotated with the qualifier <code>@Updated</code>, must be added to the <code>EditCampaignController</code>:</p>
+<pre class="lang:java decode:true">@Inject @Updated
+private Event&lt;Campaign&gt; campaignUpdateEvent;
+</pre>
+<p>The event can now be triggered by invoking the fire method of the attribute. To accomplish this, the method <code>doSave </code>is expanded to include the line</p>
+<pre class="lang:java decode:true">campaignUpdateEvent.fire(campaignProducer.getSelectedCampaign());
+</pre>
+<p>This line should be invoked when the user updates a pre-existing <code>Campaign </code>object.</p>
+<p>This means that the method <code>doSave </code>now contains the following content:</p>
+<pre class="lang:java decode:true">public String doSave() {
+    if (campaignProducer.isAddMode()) {
+        campaignAddEvent.fire(
+            campaignProducer.getSelectedCampaign());
+    } else {
+        campaignUpdateEvent.fire(
+            campaignProducer.getSelectedCampaign());
+    }
+    return Pages.LIST_CAMPAIGNS;
+}
+</pre>
+<p>The <code>CampaignListProducer </code>must now respond to this new event with the qualifier <code>@Updated</code>. To enable this to happen, the following method, <code>onCampaignUpdated</code>, is added to the <code>CampaignListProducer</code>:</p>
+<pre class="lang:java decode:true">public void onCampaignUpdated(@Observes @Updated Campaign campaign) {
+    campaignService.updateCampaign(campaign);
+    init();
+}
+</pre>
+<p>The event handling occurs in the same way as for other methods. The <code>Campaign </code>object is delegated to the <code>updateCampaign </code>method of the <code>CampaignService </code>and the list of <code>Campaign</code> objects is reloaded from the databse using the method <code>init</code>. Unfortunately, <em>Codenvy&#8217;s Java editor has problems resolving inner types</em>. Our annotation <code>@Updated</code> is defined as an inner type of class <code>Events</code>. Please, add the import statement <code>import press.turngeek.mycampaign.util.Events.Updated;</code> to the classes <code>CampaignListProducer</code> and <code>EditCampaignController</code> by hand.</p>
+<p>Service delegation for the <code>CampaignListProducer </code>bean is now complete. Since the <code>CampaignListProducer </code>now retrieves the current status of campaigns from the database using the method init and must no longer cache this information, the bean no long requires the SessionScope. Accordingly, this may be now changed to RequestScope. To accomplish this, the annotation <code>@SessionScoped</code> in the class <code>CampaignListProducer </code>must be replaced by the annotation <code>@RequestScoped</code>:</p>
+<pre class="lang:java decode:true">@RequestScoped
+public class CampaignListProducer {
+...
+</pre>
+<p>Since, as a result of this change, we are now dealing with a bean with RequestScope, the class is also no longer required to implement <code>Serializable</code>. Please remove this interface along with the class variable <code>serialVersionUID</code>.</p>
+<p>Once this is done, the implementation of the <code>CampaignListProducer </code>for this iteration is complete. It should now successfully delegate the task of updating the list of <code>Campaign </code>objects to the <code>CampaignService</code>.</p>
+<p><strong>Please be patient!</strong> The current project is not deployable since we have not yet configured a data base. So if you run the project, you will always get a deployment error! We will solve this problem in the next chapter!</p>
+<p>If you have other problems with your project, please compare it with the project behind the following link:</p>
+<p>[sociallocker]</p>
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=6o9ca0tyjv1v6gpw" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
+<p class="wp-caption-text">My-Campaign after embedding EntityManager in Services</p>
+</div>
+<p>[/sociallocker]</p>
+<hr /><div class="footnotes"><ol><li id="footnote-67-1">Strictly speaking, this first happens when the flush method of the <code>EntityManager </code>object is invoked; however, this is invoked implicitly by the transaction. <a href="#return-footnote-67-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20JPA%20in%20a%20Day&amp;body=3%20Extending%20Services%20to%20Include%20Data%20Access%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F3-extending-services-to-include-data-access%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

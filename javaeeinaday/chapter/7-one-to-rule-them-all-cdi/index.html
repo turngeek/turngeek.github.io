@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='Marcus Schiesser and Martin Schmollinger' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='datePublished' content='2015-09-06' id='datePublished'>
+<meta itemprop='description' content='Learn the core components of the Java Enterprise Edition (Servlets, JSP, JSF, CDI and EJB) in barely a day. To make this possible you don'>
+<meta itemprop='image' content='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/2015/06/javaeeinaday_bookcover.png' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>7 One to Rule them All &#8211; CDI | Cloud Tutorial &#8211; Java EE in a Day</title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaeeinaday/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaeeinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaeeinaday/wp-content/uploads/sites/4/custom-css/web.css?ver=1441711174' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaeeinaday/wp-json/' />
+<link rel='prev' title='6 Business Rules the World – EJB' href='http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaeeinaday/?p=47' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F7-one-to-rule-them-all-cdi%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaeeinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F7-one-to-rule-them-all-cdi%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-47" id="7onetorulethemall&#8211;cdi">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaeeinaday/" title="Cloud Tutorial &#8211; Java EE in a Day" rel="home">Cloud Tutorial &#8211; Java EE in a Day</a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">7 One to Rule them All &#8211; CDI</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">7 One to Rule them All &#8211; CDI</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">Next</a></span>
+    </div>				<div id="post-47" class="type-1 post-47 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In this chapter, we get in touch with the most current bean technology in Java EE, namely <em>Contexts and Dependency Injection (CDI)</em>. Before we start, please verify again that your project is accessible in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project and by that to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-47-1" href="#footnote-47-1"><sup class="footnote">[1]</sup></a>.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=uojnr12njo9j4p9v" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 4 (JSP MVC)" width="77" height="21" /></a>
+<p class="wp-caption-text">Project after Chapter 6 (EJB)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=yh40q4edg5m22m6f--></p>
+<p>CDI is the newest Java component technology. CDI 1.1 is part of Java EE 7. CDI is a very modern managed bean technology providing an enhanced dependency mechanism together with several scopes for JSF applications. Furthermore, CDI supports loose coupling by event-based messaging within the same Java virtual machine. That means, CDI beans can fire events which other CDI beans may catch and process. CDI provides similar features as EJB. E.g. since CDI 1.1 it is possible to configure the same transactional behaviour as for EJB beans. Additionally, CDI provides a mechanism to extend its abilities. Several project use this mechanism to provide CDI extensions, e.g. <a href="https://deltaspike.apache.org/">Apache DeltaSpike</a> or <a href="http://seamframework.org/Community/CDIExtensions.html">Seam 3</a>. In the following, we will show how to replace JSF Managed Beans as well EJB in our sample application My-Memo by CDI.</p>
+<h3>7.1 Using CDI for Controllers</h3>
+<p>The &#8220;C&#8221; in CDI stands for &#8220;Contexts&#8221;. Beans are always injected into a certain context or scope that determines their lifetime. Like JSF Managed Beans, CDI provides several scopes for JSF applications in the kind of Java annotations. If not configured in another way using the file <a href="http://docs.oracle.com/javaee/6/tutorial/doc/gjbnz.html" target="_blank"><code>beans.xml</code></a>, any bean class that is annotated with a CDI Scope is managed during runtime by the CDI container. Besides the basic scopes that have already been provided by JSF Managed Beans (<code>@ApplicationScoped</code>, <code>@SessionScoped</code>, <code>@ViewScope</code> and <code>@RequestScoped</code>), CDI 1.1  (package <code>javax.enterprise.context</code>) and JSF 2.2 (package <code>javax.faces.flow</code>) provide further scopes in Java EE 7 as depicted in Tab 7-1.</p>
+<table>
+<tbody>
+<tr>
+<td><strong>Scope</strong></td>
+<td><strong>Description</strong></td>
+</tr>
+<tr>
+<td><a href="http://docs.oracle.com/javaee/7/api/javax/enterprise/context/Dependent.html" target="_blank"><code>@Dependent</code></a></td>
+<td> The bean inherits the scope of the bean that injected it.</td>
+</tr>
+<tr>
+<td><a href="http://docs.oracle.com/javaee/7/api/javax/enterprise/context/ConversationScoped.html" target="_blank"><code>@ConversationScoped</code></a></td>
+<td> The bean lives as long as a conversation is active. A conversation is explicitly started and stopped in the code. The bean may survive several views.</td>
+</tr>
+<tr>
+<td><a href="http://docs.oracle.com/javaee/7/api/javax/faces/flow/FlowScoped.html" target="_blank"><code>@FlowScoped</code></a></td>
+<td> These beans are backing beans for <a href="https://blogs.oracle.com/arungupta/entry/jsf_2_2_faces_flow" target="_blank">JSF Faces Flows</a>.</td>
+</tr>
+</tbody>
+</table>
+<p>CDI beans that need to be accessed by JSF Facelets directly must be annotated with <a href="http://docs.oracle.com/javaee/7/api/javax/inject/Named.html" target="_blank"><code>@Named</code></a> (package <code>javax.inject</code>). If no specific name is defined by the annotation, the name that can be used in the EL expression of the Facelet matches the bean&#8217;s class name beginning with a lower case letter.</p>
+<p>Hence, all we have to do to turn our controller bean <code>MemoController</code> from a JSF Managed Bean into a CDI bean is to exchange the scope annotation and to add <code>@Named</code> at the class level (see Listing 7-1).</p>
+<pre class="lang:default mark:6,8,16,17,19 decode:true" title="MemoController class (CDI bean)">package press.turngeek.mymemo.controller;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.enterprise.context.SessionScoped;
+import javax.ejb.EJB;
+import javax.inject.Named;
+
+import javax.faces.event.ActionEvent;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.service.MemoServiceBean;
+
+@SessionScoped
+@Named
+public class MemoController implements Serializable {
+
+    private static final long serialVersionUID = 8994022512914167890L;
+
+    private Memo memo;
+
+    @EJB
+    private MemoServiceBean memoService;
+
+    public MemoController() {
+        memo = new Memo();
+    }
+
+    public Memo getMemo() {
+        return memo;
+    }
+
+    public void setMemo(Memo memo) {
+        this.memo = memo;
+    }
+
+    public void doAdd(ActionEvent event) {
+        memoService.addMemo(memo);
+        memo.setDescription("");
+    }
+
+    public void doReset(ActionEvent event) {
+        memoService.resetMemos();
+    }
+
+    public List&lt;Memo&gt; getMemos() {
+        return memoService.getAllMemos();
+    }
+}</pre>
+<p><strong>Listing 7-1 </strong>MemoController class (CDI)</p>
+<p>The Faclet <code>memos.xhtml</code> can be leaved unchanged, because the name of the bean remains the same (<code>memoController</code>). Please verify your code and run the application again to check the expected behaviour.</p>
+<h3>7.2 Using CDI for BusinessLogic and Data Storage</h3>
+<p>Now we address our bean classes <code>MemoStorage </code>and <code>MemoServiceBean </code>that were  implemented as EJBs in the last section. At a first glance, it seems to be desirable to set their scopes to session scope, since we want to store our memos in the session again.</p>
+<p>Let us start with our class <code>MemoStore</code>. Using session scope again, means that the application server must be able to serialize beans so that we have to implement <code>java.io.Serializable</code> again.</p>
+<pre class="lang:default mark:3,7,11,12,14 decode:true" title="MemoStore class (CDI)">package press.turngeek.mymemo.data;
+
+import java.io.Serializable;
+import java.util.List;
+import java.util.LinkedList;
+
+import javax.enterprise.context.SessionScoped;
+
+import press.turngeek.mymemo.model.Memo;
+
+@SessionScoped
+public class MemoStore implements Serializable {
+
+    private static final long serialVersionUID = -3258831452772896931L;
+
+    private List&lt;Memo&gt; memos;
+
+    public MemoStore() {
+        memos = new LinkedList&lt;Memo&gt;();
+    }
+
+    public List&lt;Memo&gt; findAll() {
+        return memos;
+    }
+
+
+    public void persist(Memo memo) {
+        memos.add(memo);
+    }
+
+    public void removeAll() {
+        memos.clear();
+    }
+}
+</pre>
+<p><strong>Listing 7-2 </strong>MemoStore class (CDI)</p>
+<p>As already mentioned, CDI provides the same possibilities as EJB to add transactional behaviour to beans. Currently, the EJB container executes each method of our SSB in a new transaction. In order to receive the same behaviour for a CDI bean, the activation can be declared with the annotation <a href="http://docs.oracle.com/javaee/7/api/javax/transaction/Transactional.html" target="_blank"><code>@Transactional</code></a> (package <code>javax.transaction</code>) at the class level. Setting the only attribute value of the annotation to the transaction type <a href="http://docs.oracle.com/javaee/7/api/javax/transaction/Transactional.TxType.html" target="_blank"><code>Transactional.TxType.REQUIRED</code></a> leads to the desired behaviour.</p>
+<p>CDI beans can be easily related to another by an advanced DI mechanism. Besides field injection that we already know from JSF Managed Beans and EJB, it adds e.g. constructor and method injection (i.e. at runtime arguments of constructors or methods are injected by the CDI container) too. Further, the mechanism adds a fine grained resolution of demanded types at the injection point by a new <a href="https://blogs.oracle.com/arungupta/entry/totd_161_java_ee_6" target="_blank">qualifier concept</a>. But at this point, we don&#8217;t have to go into detail, because we just need a simple field injection. This can be realized using the annotation <code>@Inject</code> (package <code>javax.inject.Inject</code>). Now, we can refactor our class <code>MemoServiceBean</code> as depicted in Listing 7-3.</p>
+<pre class="lang:default mark:6,7,8,13,14,17 decode:true">package press.turngeek.mymemo.service;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.data.MemoStore;
+
+@RequestScoped
+@Transactional(value=Transactional.TxType.REQUIRED)
+public class MemoServiceBean {
+
+    @Inject
+    private MemoStore memoStore;
+
+    public List&lt;Memo&gt; getAllMemos() {
+        List&lt;Memo&gt; memos = memoStore.findAll();
+        return memos;
+    }
+
+    public void addMemo(Memo memo) {
+        Memo newMemo = new Memo();
+        newMemo.setDescription(memo.getDescription());
+        newMemo.setCreated(new Date());
+        memoStore.persist(newMemo);
+    }
+
+    public void resetMemos() {
+        memoStore.removeAll();
+    }
+}</pre>
+<p><strong>Listing 7-3 </strong>MemoServiceBean class (CDI)</p>
+<p>As you can see, we didn&#8217;t use session scope for our service. Instead, we use request scope. The reason for this is that we don&#8217;t store any session data in the bean. For each request a new service bean is created and provided with a reference to the session scoped <code>MemoStore</code> bean by the DI mechanism of CDI (<code><a href="http://docs.oracle.com/javaee/7/api/javax/inject/Named.html" target="_blank">@Inject</a></code>). This relieves the server and avoids wasting resources.</p>
+<p>Finally, we have to update our controller bean MemoController too. Currently, we still use the EJB DI mechanism (<code>@EJB</code>). This won&#8217; work anymore, since <code>MemoServiceBean</code> is no longer managed by the EJB container, but by the CDI container. Consequently, we have to exchange <code>@EJB</code> by <code>@Inject</code>.  We also have to make our mind up about which CDI scope to use. The only data stored in the controller bean is an instance of the class Memo. Since this data is only needed as long the user works with our only view, view scope is preferrable over session scope<a class="footnote" title="In fact, since we clear the properties of the Memo object stored in the controller after adding a new memo to the list, even request scope would be sufficient for the scope of the controller. Nevertheless, we prefer the view scope, since in general it is necessary to work on the same data as long as the user stays on the same view." id="return-footnote-47-2" href="#footnote-47-2"><sup class="footnote">[2]</sup></a>. The resulting code is presented in Listing 7-4.</p>
+<pre class="lang:default mark:6,7,15,23 decode:true" title="MemoController class (CDI)">package press.turngeek.mymemo.controller;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import javax.faces.event.ActionEvent;
+
+import press.turngeek.mymemo.model.Memo;
+import press.turngeek.mymemo.service.MemoServiceBean;
+
+@ViewScoped
+@Named
+public class MemoController implements Serializable {
+
+    private static final long serialVersionUID = 8994022512914167890L;
+
+    private Memo memo;
+
+    @Inject
+    private MemoServiceBean memoService;
+
+    public MemoController() {
+        memo = new Memo();
+    }
+
+    public Memo getMemo() {
+        return memo;
+    }
+
+    public void setMemo(Memo memo) {
+        this.memo = memo;
+    }
+
+    public void doAdd(ActionEvent event) {
+        memoService.addMemo(memo);
+        memo.setDescription("");
+    }
+
+    public void doReset(ActionEvent event) {
+        memoService.resetMemos();
+    }
+
+    public List&lt;Memo&gt; getMemos() {
+        return memoService.getAllMemos();
+    }
+}</pre>
+<p><strong>Listing 7-4 </strong>MemoController class (CDI)</p>
+<h3>7.3 Conclusions</h3>
+<p>In this section, we introduced CDI as a new component technology that comprises functionalities of JSF Managed Beans and EJB. In our application, we replaced both technologies by CDI and that simplified the resulting project. From our point of view there is no need to use JSF Managed Beans in the future anymore. CDI contains all features of JSF Managed Beans and provides more functionalities and a state of the art DI mechanism. JSF Managed Beans are deprecated to our opinion.</p>
+<p>Although, we were able to replace EJB by CDI in our application, this is not always possible in general. Indeed, the CDI standard provides some features that are provided by EJB in the same way (e.g. transactional behaviour), but the EJB standard still has some features that are not supported by CDI out-of-the box (e.g. security or timers). On the other hand, more and more features are added to CDI by extensions, so that in the near future EJB might be replaced by CDI, too.</p>
+<p>In current projects, CDI and EJB are used together successfully. Nevertheless, it is recommendable in these cases not to mix bean technologies within one layer of the software architecture.</p>
+<p>If you are not happy with your own implementation, you can compare your implementation with ours by following the factory link below.</p>
+<p>[sociallocker]
+<div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=aq0lsrs69u2ijzs3" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 4 (JSP MVC)" width="77" height="21" /></a>
+<p class="wp-caption-text">Project after Chapter 7 (CDI)</p>
+</div>
+<p>[/sociallocker]<br />
+<!--https://codenvy.com/f?id=zakggz87xsruasma--></p>
+<h3>7.4 Further Reading</h3>
+<p>Currently, there are only few books that address CDI exclusively. Below, you will find a reference to a book that gives an introduction to the reference implementation Weld. Further, there are several books about Java EE or Java EE technologies like EJB that provide single chapters about CDI. One example is listed below, too.</p>
+<p><a target="_blank" href="http://www.amazon.com/gp/product/1782160183/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1782160183&linkCode=as2&tag=turpre-20&linkId=KDWFVC4DWZNHPQEO">Ken Finnigan, 2013. JBoss Weld CDI for Java Platform. Edition. Packt Publishing.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1782160183" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /></p>
+<p><a target="_blank" href="http://www.amazon.com/gp/product/1935182994/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=1935182994&linkCode=as2&tag=turpre-20&linkId=YYGDTYBOBZ2PDUC4">Debu Panda, 2014. EJB 3 in Action. Second Edition Edition. Manning Publications.</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&l=as2&o=1&a=1935182994" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" /> (Chapter 12 is about CDI)</p>
+<h3>Discussion</h3>
+<p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
+<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<hr /><div class="footnotes"><ol><li id="footnote-47-1">Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project and by that to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser. <a href="#return-footnote-47-1" class="return-footnote">&crarr;</a></li><li id="footnote-47-2">In fact, since we clear the properties of the <code>Memo </code>object stored in the controller after adding a new memo to the list, even request scope would be sufficient for the scope of the controller. Nevertheless, we prefer the view scope, since in general it is necessary to work on the same data as long as the user stays on the same view. <a href="#return-footnote-47-2" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Cloud%20Tutorial%20-%20Java%20EE%20in%20a%20Day&amp;body=7%20One%20to%20Rule%20them%20All%20%26%238211%3B%20CDI%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaeeinaday%2Fchapter%2F7-one-to-rule-them-all-cdi%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaeeinaday">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaeeinaday/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter introduction"><a href="http://www.turngeek.press/javaeeinaday/front-matter/introduction/">Introduction</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								Chapters								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/1-our-sample-application-my-memo/">1 Our Sample Application – My-Memo</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/2-from-the-drawing-board-a-static-html-skeleton/">2 From the Drawing Board – A Static HTML Skeleton</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/3-the-rise-of-server-side-java-java-servlets/">3 The Rise of Server-Side Java – Java Servlets</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/4-turn-it-inside-out-javaserver-pages/">4 Turn it Inside Out – JavaServer Pages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/5-click-me-if-you-can-javaserver-faces/">5 Click Me If You Can – JavaServer Faces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/6-business-rules-the-world-ejb/">6 Business Rules the World – EJB</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaeeinaday/chapter/7-one-to-rule-them-all-cdi/">7 One to Rule them All - CDI</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter what-next"><a href="http://www.turngeek.press/javaeeinaday/back-matter/next/">What Next?</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaeeinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

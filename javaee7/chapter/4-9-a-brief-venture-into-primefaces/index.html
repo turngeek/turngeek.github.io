@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/2015/06/javaee7_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4.9 A Brief Venture into PrimeFaces | Tutorial &#8211; Java EE 7 </title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/custom-css/web.css?ver=1441711134' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7/wp-json/' />
+<link rel='prev' title='4.7 Implementation of the Remaining Use Cases' href='http://www.turngeek.press/javaee7/chapter/1-7-implementation-of-the-remaining-use-cases/' />
+<link rel='next' title='4.8 New Functionalities in Java EE 7' href='http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7/?p=437' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F4-9-a-brief-venture-into-primefaces%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F4-9-a-brief-venture-into-primefaces%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-437" id="4.9abriefventureintoprimefaces">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaee7/" title="Tutorial &#8211; Java EE 7 " rel="home">Tutorial &#8211; Java EE 7 </a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4.9 A Brief Venture into PrimeFaces</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4.9 A Brief Venture into PrimeFaces</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaee7/chapter/4-10-exercises/">Next</a></span>
+    </div>				<div id="post-437" class="type-1 post-437 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>We have managed to fulfil the majority of our web application user interface requirements using the JSF Standard. However, we want to get the most out of our web application that we possibly can. The use of external JSF libraries is necessary to enable us to do this. The following digression will look at PrimeFaces as an example.</p>
+<p>Though JSF provides a framework for the development of web applications, it provides only a limited number of UI components. These components are often insufficient for the implementation of a professional web application. However, the ongoing standardization of JSF has made the development and use of additional libraries noticeably simpler.</p>
+<p>Popular additional libraries are Apache MyFaces, ICEFaces, RichFaces and PrimeFaces. Though the simultaneous use of multiple additional libraries is possible, it is usually advised against to preserve the UI’s visual consistency. We will use PrimeFaces for our project.</p>
+<p>PrimeFaces is a JSF component library offering a number of very useful extensions. The library is considered lightweight due to it consisting of just a single Java archive (JAR file) and due to the fact that no particular configuration is required and it has no dependencies to other libraries. The JAR file must be available in the project and the Facelet must be provided with the correct namespace: these are essentially the only two things required to enable us to use the library’s tags.</p>
+<h3>1.9.1 Installation Using Maven</h3>
+<p>Since we’re managing our project configuration with Maven, we must adjust a few settings in the <code>pom.xml</code> file to enable Maven to use the desired version of PrimeFaces. To this, we must amend the file with a dependency:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">...
+&lt;dependencies&gt;
+	...
+	&lt;dependency&gt;
+		&lt;groupId&gt;org.primefaces&lt;/groupId&gt;
+		&lt;artifactId&gt;primefaces&lt;/artifactId&gt;
+		&lt;version&gt;4.0&lt;/version&gt;
+	&lt;/dependency&gt;
+&lt;/dependencies&gt;
+...
+</pre>
+<p>And that’s it! We can begin using the PrimeFaces tags in the Facelets immediately. The documentation for the PrimeFaces components can be found online at:</p>
+<p><code><a href="http://primefaces.org/documentation.html" target="_blank">http://primefaces.org/documentation.html</a></code> or <code><a href="http://www.primefaces.org/docs/api/4.0/" target="_blank">http://www.primefaces.org/docs/api/4.0/</a></code>. The XML namespace for the tags is: <code>xmlns:p="http://primefaces.org/ui"</code>.</p>
+<h3>1.9.2 New Choice of Colours for Editing the Donation Form</h3>
+<p>Now that we have access to the PrimeFaces library, the first improvement we want to make relates to the Facelet <code>editDonationForm.xhtml</code> – the input screen for the use case <em>Edit donation form</em>. <em>Combo boxes</em> are provided in the form to enable the user to choose their desired background and text color. The URL of the donation form is displayed in a text area and adjusts itself automatically to account for the currently selected color (see ‎Fig. 4-6). The combo boxes display a text representation of the colors with their hexadecimal values. In situations where a limited choice of colors will suffice, this approach can work. If the user wishes to select a color at will, however, this input component is highly unsuitable. We are going to use PrimeFaces to rectify this current disadvantage of our application. The optimization process refers back to the requirements in <a title="3.4 Use Cases" href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/" target="_blank">section 3.4.3</a>. There, we defined the need for the view to contain <em>colorpicker controls</em> that can only return valid color values.</p>
+<p><strong>New Tags for Color Selection</strong></p>
+<p>The PrimeFaces library offers a special component for choosing colors, the <em>color picker</em>. This component allows the user to pick colors from a color palette. The advantages of this are twofold: as well as allowing the user to pick any color, it also lets them the see the color itself on the screen. The tag <code>&lt;p:colorPicker&gt;</code> can be used to add a color palette to a Facelet.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;p:colorPicker&gt;</code> in a nutshell</strong></p>
+<p>Component for picking colors. The user chooses their desired color from the color palette provided.</p>
+<p>Selected attributes:</p>
+<p><code>id</code>: Unique identifier of the component</p>
+<p><code>value</code>: Value of the component. Generally contains an EL expression that binds the parameter to an attribute of type String in a bean.</p>
+<p><code>widgetVar</code>: Identifier for the client-side processing with JavaScript</p>
+</div>
+<p>Like standard tags, this tag can be configured using attributes. Attributes with the same characteristics have the same name in PrimeFaces as they do in the JSF Standard. Attributes taking the same name include the <code>id</code> and <code>value</code> attributes.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;p:colorPicker id="bgColor"
+	value="#{editDonationFormController.bgColor}"
+	widgetVar="bgPicker"&gt;
+&lt;/p:colorPicker&gt;
+</pre>
+<p>While the <em>color picker</em> lets us enhance the experience of the user when picking colors, it also causes us to lose the dynamic that we achieved in the combo box using the <code>&lt;f:ajax&gt;</code> tag. Unfortunately, the current version of PrimeFaces does not offer the opportuntity for the URL in the text area to be adjusted directly after a color change using Ajax. However, the PrimeFaces command button (<code>&lt;p:commandButton&gt;</code>) does. We will therefore introduce an extra button, <em>Update URL</em>, to update the URL text area using Ajax.</p>
+<p>The appearance of the same components in different libraries can sometimes vary drastically. The standard components of JSF differ significantly in appearance from the components of PrimeFaces. Since the purpose of this digression is to try out PrimeFaces, we will replace all standard components with the corresponding PrimeFaces extensions. This makes the appearance of the site more uniform.</p>
+<p>Let’s look at athe Facelet <code>editDonationForm.xhtml</code>. Here, we won’t only replace the buttons (tag <code>&lt;h:commandButton&gt;</code>), but also the text areas  (tag <code>&lt;h:textarea&gt;</code>) in which the URL is displayed (see ‎Listing  4-28). The attributes are the same as for standard components, but have additional functionality. A useful, standard component-extending property of the PrimeFaces command button component is the attribute <code>update</code>, which allows us to specify that another component should be updated using Ajax when the button is clicked. As a value, the <code>update</code> attribute expects the <code>id</code> of the component to be updated (or a list of IDs from multiple components). We will use this functionality for our <em>Update URL</em> button. The <code>url</code> ID is the ID of the text area displaying the URL. When the button is clicked, the text area is the only part of the page that is refreshed using Ajax.</p>
+<p><code>&lt;p:commandButton value="Update URL" update="url" /&gt;</code></p>
+<p><strong>The Enhanced Implementation of Color Selection with PrimeFaces</strong></p>
+<p>We will first change the Facelet <code>editDonationForm.xhtml</code> as follows:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	<strong>xmlns:p="http://primefaces.org/ui"</strong>
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{msg['editDonationForm.edit_donation_form']}&lt;/h1&gt;
+				&lt;h:form&gt;
+					&lt;h:panelGrid columns="2"&gt;
+						&lt;h:outputLabel
+							value=
+								"#{msg['editDonationForm.background_color']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						<strong>&lt;p:colorPicker id="bgColor"
+							value="#{editDonationFormController.bgColor}"
+							widgetVar="bgPicker"&gt;
+						&lt;/p:colorPicker&gt;</strong>
+						&lt;h:outputLabel value=
+							"#{msg['editDonationForm.text_color']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						<strong>&lt;p:colorPicker id="textColor"
+							value="#{editDonationFormController.textColor}"
+							widgetVar="textPicker"&gt;
+						&lt;/p:colorPicker&gt;</strong>
+						&lt;h:outputLabel value=
+							"#{msg['editDonationForm.form_url']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						<strong>&lt;p:inputTextarea id="url" 
+							rows="6" cols="30" readonly="true"
+							value="#{editDonationFormController.url}" /&gt;</strong>
+					&lt;/h:panelGrid&gt;
+					<strong>&lt;p:commandButton value="Update URL" update="url" /&gt;
+					&lt;p:commandButton value="OK"
+						action="#{editDonationFormController.doOk}" 
+						ajax="false" /&gt;</strong>
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong> Listing 4-28</strong>    Facelet <em>editDonationForm.xthml</em></p>
+<p>We will test the changes immediately after this adjustment by executing our Maven build and deployment and accessing the page for editing the donation form in the browser. In Fig. 4-9, we see the new choice buttons for picking the colors. The current selection is displayed on the button as a square.</p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-9</strong>     The view for editing the donation form of a campaign with the PrimeFaces color picker</p>
+<p>Clicking the button brings up a color palette (see‎ Fig.4-10). After choosing a new color, we can update the URL accordingly by clicking on the button <em>Update URL</em>.</p>
+<p>&nbsp;</p>
+<p><b>Fig. 4-10</b>     The view for editing the donation form of a campaign with PrimeFaces color selection and the color palette open</p>
+<div class="textbox shaded">
+<p><strong><code>ajax="true"</code> or <code>ajax="false"</code>?</strong></p>
+<p>If we look more closely at the Facelet in ‎Listing  4-28, we notice that the tag <code>&lt;p:commandButton&amp;gt</code>; is used once for the button Update URL and once for the button OK, but the attribute <code>ajax</code> is only given the value <code>false</code> in the latter of these two cases. Why?</p>
+<p>The PrimeFaces command button executes an Ajax request by default, which means that the affected components are the only ones to be processed and re-rendered on the server side. If the attribute <code>ajax</code> is set to <code>false</code>, a complete Faces request is run. Since the <em>Update URL</em> button should update only the text area containing the URL, an Ajax request is the right choice here. In contrast, when the <em>OK</em> button is pressed, the entire view is changed. This necessitates a complete Faces request, which means that <code>ajax="false"</code> is what we should choose.</p>
+</div>
+<h3>1.9.3 Tabs for Creating and Editing Campaign Data</h3>
+<p>In line with the requirements laid out in <a title="3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor”" href="http://www.turngeek.press/javaee7/part/3-requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">Chapter 3</a>, the campaign data must be represented using tabs (see Figures 3-14 and 3-15). Since the JSF standard does not support tabs, our implementation so far has required us to display all the data at once (see  ‎Fig. 4-3). We can now use the PrimeFaces library to implement tabs very easily.</p>
+<p><strong>The New Tags for Tabs</strong></p>
+<p>Tabs can be built into a page very simply using the tags <code>&lt;p:tabView&gt;</code> and <code>&lt;p:tab&gt;</code>.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;p:tabView&gt;</code> und <code>&lt;p:tab&gt;</code> in a nutshell</strong></p>
+<p>Components for implementation of a tabbed panel</p>
+<p><code>&lt;p:tabView&gt;</code></p>
+<p>A <em>Tab View</em> provides the frame for the individual tabs</p>
+<p>Selected attributes:</p>
+<p><code>id</code>: Unique identifier of the component</p>
+<p><code>&lt;p:tab&gt;</code></p>
+<p>A tab is a child element of the <em>Tab View</em>.</p>
+<p><code>title</code>: Title of the tab</p>
+</div>
+<p>We only need a few attributes for our implementation. The basic structure then appears as follows:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">…
+&lt;p:tabView id="tabView"&gt;
+	&lt;p:tab title="#{msg['editCampaign.general']}"&gt;
+	...
+	&lt;/p:tab&gt;
+	&lt;p:tab title="#{msg['editCampaign.bank_account']}"&gt;
+	...
+	&lt;/p:tab&gt;
+&lt;/p:tabView&gt;
+</pre>
+<p><strong> The Enhanced Representation of Campaign Data with PrimeFaces</strong></p>
+<p>Our implementation has so far involved a form (tag <code>&lt;h:form&gt;</code>) containing two grids (tag <code>&lt;h:panelGrid&gt;</code>). In our new implementation, we will embed a <em>Tab View</em> in the form instead (see ‎Listing 4-29). Each of the two grids will be placed in its own tab. Additionally, we will replace the standard component <code>&lt;h:textfield&gt;</code> with the PrimeFaces component <code>&lt;p:textfield&gt;</code> for the text inputs and the standard tags <code>&lt;h:message&gt;</code> and <code>&lt;h:messages&gt;</code> with the PrimeFaces tags <code>&lt;p:message&gt;</code> and <code>&lt;p:messages&gt;</code> to achieve as uniform an appearance as possible. We use the latter to ensure that possible errors in the hidden tab are made visible to the user. The attribute <code>closable="true"</code> gives the user the option to close the error screen.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{campaignProducer.addMode ?
+					msg['editCampaign.add_new_campaign'] :
+					msg['editCampaign.edit_campaign']}&lt;/h1&gt;
+				&lt;h:form&gt;
+					<strong>&lt;p:messages closable="true" /&gt;
+					&lt;p:tabView id="tabView"&gt;
+						&lt;p:tab title="#{msg['editCampaign.general']}"&gt;</strong>
+							&lt;h:panelGrid columns="3"&gt;
+								&lt;h:outputLabel value=
+									"#{msg['editCampaign.name']}:"&gt;
+								&lt;/h:outputLabel&gt;
+								<strong>&lt;p:inputText</strong> id="a_name"
+									value=
+										"#{campaignProducer.selectedCampaign.name}"
+									validatorMessage=
+										"#{msg['editCampaign
+											.campaign_name_validation']}"&gt;
+									&lt;f:passThroughAttribute name="placeholder"
+										value=
+											"#{msg['editCampaign
+												.name_of_the_campaign']}" /&gt;
+									&lt;f:validateRequired /&gt;
+									&lt;f:validateLength minimum="4" maximum="30" /&gt;
+								<strong>&lt;/p:inputText&gt;</strong>
+								<strong>&lt;p:message for="a_name" /&gt;</strong>
+								&lt;h:outputLabel value=
+									"#{msg['editCampaign.target_amount']}:"&gt;
+								&lt;/h:outputLabel&gt;
+								&lt;h:panelGroup&gt;
+									<strong>&lt;p:inputText</strong> id="a_targetAmount"
+										value=
+											"#{campaignProducer
+												.selectedCampaign.targetAmount}"
+										validatorMessage=
+											"#{msg['editCampaign
+												.target_amount_validation']}"&gt;
+										&lt;f:convertNumber maxFractionDigits="2" 
+											minFractionDigits="2" /&gt;
+										&lt;f:validateRequired /&gt;
+										&lt;f:validateDoubleRange minimum="10.0" /&gt;
+									<strong>&lt;/p:inputText&gt;</strong> EUR
+								&lt;/h:panelGroup&gt;
+								<strong>&lt;p:message for="a_targetAmount" /&gt;</strong>
+								&lt;h:outputLabel value=
+									"#{msg['editCampaign.donation_amount']}:"&gt;
+								&lt;/h:outputLabel&gt;
+								&lt;h:panelGroup&gt;
+									<strong>&lt;p:inputText</strong> id="a_donationMinimum"
+										value=
+											"#{campaignProducer
+												.selectedCampaign.donationMinimum}"
+										validatorMessage=
+										"#{msg['editCampaign
+											.donation_amount_validation']}"&gt;
+										&lt;f:convertNumber maxFractionDigits="2" 
+											minFractionDigits="2" /&gt;
+										&lt;f:validateRequired /&gt;
+										&lt;f:validateDoubleRange minimum="1.0" /&gt;
+									<strong>&lt;/p:inputText&gt;</strong> EUR
+								&lt;/h:panelGroup&gt;
+								<strong>&lt;p:message for="a_donationMinimum" /&gt;</strong>
+							&lt;/h:panelGrid&gt;
+						<strong>&lt;/p:tab&gt;
+						&lt;p:tab title="#{msg['editCampaign.bank_account']}"&gt;</strong>
+							&lt;h:panelGrid columns="3"&gt;
+								&lt;h:outputLabel value=
+									"#{msg['editCampaign.name']}:"&gt;
+								&lt;/h:outputLabel&gt;
+								<strong>&lt;p:inputText</strong> id="b_name"
+									value=
+										"#{campaignProducer
+											.selectedCampaign.account.name}"&gt;
+									&lt;f:validateRequired /&gt;
+								<strong>&lt;/p:inputText&gt;
+								&lt;p:message for="b_name" /&gt;</strong>
+								&lt;h:outputLabel value=
+									"#{msg['editCampaign.iban']}:"&gt;
+								&lt;/h:outputLabel&gt;
+								<strong>&lt;p:inputText</strong> id="b_iban"
+									value=
+										"#{campaignProducer
+											.selectedCampaign.account.iban}"&gt;
+									&lt;f:validateRequired /&gt;
+								<strong>&lt;/p:inputText&gt;
+								&lt;p:message for="b_iban" /&gt;</strong>
+								&lt;h:outputLabel value=
+									"#{msg['editCampaign.name_of_bank']}:"&gt;
+								&lt;/h:outputLabel&gt;
+								<strong>&lt;p:inputText</strong> id="b_name_bank"
+									value=
+										"#{campaignProducer
+											.selectedCampaign.account.nameOfBank}"&gt;
+									&lt;f:validateRequired /&gt;
+								<strong>&lt;/p:inputText&gt;
+								&lt;p:message for="b_name_bank" /&gt;</strong>
+							&lt;/h:panelGrid&gt;
+						<strong>&lt;/p:tab&gt;
+					&lt;/p:tabView&gt;
+					&lt;p:commandButton value="#{msg['editCampaign.save']}" 
+						ajax="false" action=
+							"#{editCampaignController.doSave}" /&gt;
+					&lt;p:commandButton value="#{msg['editCampaign.cancel']}"
+						immediate="true" ajax="false"
+						action="#{editCampaignController.doCancel}" /&gt;</strong>
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 4-29</strong>     Facelet <em>editCampaign.xhtml</em></p>
+<p>After carrying out a new deployment, we can try out our changes. The result is shown in Fig 4-11.</p>
+<p>&nbsp;</p>
+<p><strong>Figure 4-11</strong>     The view for editing a campaign after integration of the Tab View component from PrimeFaces</p>
+<h3>1.9.4 The Confirmation Dialog Box for the Use Case <em>Delete Campaign</em></h3>
+<p>Though we have not yet implemented the use case for deleting a campaign, we have already built a link into the <code>listCampaigns.xhtml</code> Facelet for invoking the deletion method in the controller (see link with the label “x” in Fig. 4-2). The deletion of data is a sensitive process in applications. A user can easily click on a link by mistake and find the data record gone. For this reason, we want to insert a dialog box that double checks with the user whether they really want to delete the campaign.</p>
+<p><strong>The New Tags for the Confirmation Dialog Box</strong></p>
+<p>The PrimeFaces library allows us to define a dialog confirmation box with the tag <code>&lt;p:confirmDialog&gt;</code>. The entire dialog box is controlled on the client side using JavaScript. Additionally, the component provides the JavaScript functions <code>show()</code> and <code>hide()</code> for displaying and closing the dialog box. The following summary of characteristics provides an overview of the most important attributes.</p>
+<div class="textbox shaded">
+<p><strong><code>&lt;p:confirmDialog&gt;</code> in a nutshell</strong></p>
+<p>Components for implementing a confirmation dialog box</p>
+<p>Selected attributes:</p>
+<p><code>message</code>: Text of the dialog box that is displayed to the user</p>
+<p><code>header</code>: Title of the dialog window</p>
+<p><code>severity</code>: Severity of the message (alert/info)</p>
+<p><code>widgetVar</code>: Client-side title of the dialog box for JavaScript accesses from other components. The JavaScript functions <code>show()</code> and <code>hide()</code> can be invoked using this name.</p>
+</div>
+<p>The basic structure of our confirmation dialog box therefore appears as follows:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;p:confirmDialog message="#{msg['listCampaigns.ask_delete_campaign']}"
+	header=" Delete campaign" 
+	severity="alert"
+	widgetVar="confirmation"&gt;
+	...
+&lt;/p:confirmDialog&gt;
+</pre>
+<p>We can configure the content freely within the <code>&lt;p:confirmDialog&gt;</code> tag. Generally, however, buttons are used to confirm or cancel an action.</p>
+<p><strong>The Implementation of a Dialog Box with PrimeFaces</strong></p>
+<p>Alongside the introduction of the confirmation dialog box, we will also insert a button (<code>&lt;p:commandButton&gt;</code>) to replace the link with value “x” that has hitherto existed for the purpose of deleting a campaign.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;p:commandButton onclick="confirmation.show()"
+	actionListener="#{listCampaignsController.doDeleteCampaign(campaign)}"
+	icon="ui-icon-close"
+/&gt; 
+</pre>
+<p>This button can also be used to start the dialog box via the attribute <code>onclick</code> (using the dialog box label defined with <code>widgetVar</code>, <code>confirmation</code>, and the JavaScript function <code>show()</code>). It can also use the attribute <code>actionListener</code> to invoke the Java method <code>doDeleteCampaign</code> in the <code>ListCampaignsController</code> controller. We have access to the campaign to be deleted only at this point within the Facelet and must therefore invoke the deletion method here too, although it is not yet definite that the deletion is really desired by the user. For the reason, the method <code>doDeleteCampaign</code> can only serve to mark the campaign for possible deletion. The campaign can only actually be removed once the deletion has been confirmed. We’ll talk more about this later.</p>
+<p>The attribute <code>icon</code> is a neat option in PrimeFaces that allows standard CSS classes from the <em>ThemeRoller</em> CSS framework (<code><a href="http://jqueryui.com/themeroller/" target="_blank">http://jqueryui.com/themeroller/</a></code>) to be used for displaying the button. For our current purposes, PrimeFace offers the class <code>.ui-icon-close</code>, which places an “x” on the button.</p>
+<p>To implement the Facelet, we must once again begin by localizing a number of texts (category <code># listCampaigns.xhtml</code>). To do this, we will insert the following rows in the file <code>messages_en.properties</code>:</p>
+<p><code>listCampaigns.ask_delete_campaign=Really delete campaign?<br />
+listCampaigns.delete_campaign=Delete campaign<br />
+listCampaigns.yes=Yes<br />
+listCampaigns.no=No</code></p>
+<p>The corresponding German translations will be added to the file <code>messages_de.properties</code>:</p>
+<p><code>listCampaigns.ask_delete_campaign=Aktion wirklich löschen?<br />
+listCampaigns.delete_campaign=Aktion löschen<br />
+listCampaigns.yes=Ja<br />
+listCampaigns.no=Nein<br />
+</code></p>
+<p>Before we address the changes in the <code>ListCampaignsController</code> controller, we’ll look at the new implementation of the Facelet <code>listCampaigns.xhtml</code> from ‎Listing  4-30. Here, too, we’ll replace all of the standard components for which suitable PrimeFaces replacements exist. New tags we’ll see are <code>&lt;p:dataTable&gt;</code>, <code>&lt;p:column&gt;</code> and <code>&lt;p:commandLink&gt;</code>.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{msg['listCampaigns.my_campaigns']}&lt;/h1&gt;
+				&lt;h:form&gt;
+					<strong>&lt;p:dataTable value="#{campaignListProducer.campaigns}"
+						var="campaign"&gt;
+						&lt;p:column&gt;
+							&lt;p:commandButton onclick="confirmation.show()"
+								actionListener=
+								"#{listCampaignsController
+									.doDeleteCampaign(campaign)}"
+								icon="ui-icon-close" /&gt;
+						&lt;/p:column&gt;
+						&lt;p:column&gt;</strong>
+							&lt;f:facet name="header"&gt;
+								#{msg['listCampaigns.name']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.name}" /&gt;
+						<strong>&lt;/p:column&gt;
+						&lt;p:column&gt;</strong>
+							&lt;f:facet name="header"&gt;
+								#{msg['listCampaigns.target_amount']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.targetAmount}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						<strong>&lt;/p:column&gt;
+						&lt;p:column&gt;</strong>
+							&lt;f:facet name="header"&gt;
+								#{msg['listCampaigns.donated_so_far']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{campaign.amountDonatedSoFar}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						<strong>&lt;/p:column&gt;
+						&lt;p:column&gt;</strong>
+							&lt;p:commandLink value="#{msg['listCampaigns.edit']}" 
+								ajax="false"
+								action=
+									"#{listCampaignsController
+										.doEditCampaign(campaign)}" /&gt;
+						<strong>&lt;/p:column&gt;
+						&lt;p:column&gt;
+							&lt;p:commandLink value=
+									"#{msg['listCampaigns.list_donations']}"
+								ajax="false"
+								action=
+									"#{listCampaignsController
+										.doListDonations(campaign)}" /&gt;
+						&lt;/p:column&gt;
+						&lt;p:column&gt;
+						&lt;p:commandLink value="#{msg['listCampaigns.form']}" 
+							ajax="false"
+							action="#{listCampaignsController
+								.doEditDonationForm(campaign)}" /&gt;
+						&lt;/p:column&gt;
+					&lt;/p:dataTable&gt;
+					&lt;p:commandButton value=
+							"#{msg['listCampaigns.add_campaign']}"
+						ajax="false" 
+						action="#{listCampaignsController.doAddCampaign}" /&gt;
+					&lt;p:confirmDialog
+						message="#{msg['listCampaigns.ask_delete_campaign']}"
+						header="#{msg['listCampaigns.delete_campaign']}" 
+						severity="alert"
+						widgetVar="confirmation"&gt;
+						&lt;p:commandButton value="#{msg['listCampaigns.yes']}"
+							oncomplete="confirmation.hide()" ajax="false"
+							actionListener="#{listCampaignsController
+								.commitDeleteCampaign}" /&gt;
+						&lt;p:commandButton value="#{msg['listCampaigns.no']}"
+							onclick="confirmation.hide()" /&gt;
+					&lt;/p:confirmDialog&gt;</strong>
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 4-30</strong>     Facelet <em>listCampaigns.xhtml</em></p>
+<p>At this point, we want to take a further detailed look at the child elements of the tag <code>&lt;p:confirmDialog&gt;</code>. We will add two buttons to the dialog box: the first for confirming the deletion, and the second for cancelling the deletion process. Both use the <code>value</code> attribute to show the user a label and <code>onclick</code> to close the dialog box via the JavaScript function <code>hide()</code>. If the deletion is confirmed, we use the <code>actionListener</code> attribute to invoke the <code>commitDeleteCampaign</code> method in the <code>ListCampaignsController</code> controller. This method will take care of the actual deletion. These methods have been missing from our implementation so far, which is why we need to discuss the changes to the controller now.</p>
+<p>As mentioned above, the deletion process requires two different methods. The method <code>void doDeleteCampaign(Campaign campaign)</code> marks a Campaign object for deletion, while the method <code>void commitDeleteCampaign()</code> actually carries the deletion out. The marking of the campaign is achieved via an instance variable in the controller class (see ‎Listing  4-31).</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">...
+public class ListCampaignsController implements Serializable {
+	private static final long serialVersionUID = 8693277383648025822L;
+
+	@Inject
+	private CampaignProducer campaignProducer;
+	
+	<strong>private Campaign campaignToDelete; 
+	...
+
+	public void doDeleteCampaign(Campaign campaign) {
+		this.campaignToDelete = campaign;
+		System.out.println("Aktion zum löschen vorgemerkt");
+	}
+
+	public void commitDeleteCampaign() {
+		System.out.println("Aktion löschen noch nicht implementiert");
+	}</strong>
+}
+</pre>
+<p><strong>Listing 31</strong>     <em>ListCampaignsController</em> class</p>
+<p>As soon as all changes have been carried out, we can deploy the application on WildFly and try it out. In ‎Fig. 4-12, we see the effect of the PrimeFaces components on the appearance of the page. ‎Fig. 4-13: shows the confirmation dialog box for the deletion of a campaign.</p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-12</strong>     Campaign list with PrimeFaces components and new buttons for deleting a campaign</p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-13</strong>     PrimeFaces confirmation dialog box that appears when campaign is deleted</p>
+<div class="textbox shaded">
+<p><strong>Congratulations!</strong></p>
+<p>You have now successfully completed the first iteration! Just one small task remains: In order for later stages of the workshop to function without problems, it is crucial that you complete exercise 1.10.1. All other exercises are optional. Unless you are explicitly instructed otherwise, the results of the optional exercises must be reversed after completion to avoid unwanted side effects on later parts of the workshop.</p>
+</div>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Tutorial%20-%20Java%20EE%207%20&amp;body=4.9%20A%20Brief%20Venture%20into%20PrimeFaces%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F4-9-a-brief-venture-into-primefaces%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaee7">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaee7/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter foreword"><a href="http://www.turngeek.press/javaee7/front-matter/introduction/">Foreword</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								1 A Profiled Introduction								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-1-structure-of-an-enterprise-java-application/">1.1 Java EE 7 – The Standard for Enterprise Java</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-2-the-java-enterprise-edition-java-ee/">1.2 The Component Architecture of Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-3-the-target-architecture/">1.3 The Target Architecture</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-4-what-next/">1.4 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/setting-up-the-development-environment/">				2 Setting Up the Development Environment				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/tools-and-servers-for-java-ee/">2.1 Tools and Servers for Java EE</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/installation-of-the-required-software-packages/">2.2 Installation of the Required Software Packages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-3-from-project-to-running-web-application-2/">2.3 From Project to Running Web Application</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/">2.4 Eclipse Luna - More Than a Text Editor</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-5-other-tools-used-in-this-workshop/">2.5 Other Tools Used in This Workshop</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">				3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor” 				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-1-introduction/">3.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-2overview-of-use-cases/">3.2	Overview of Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-3domain-classes/">3.3	Domain Classes</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/">3.4 Use Cases</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/4-iteration-1-jsf/">				4 Iteration No. 1 - JavaServer Faces				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-1/">4.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-2/">4.2 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-3/">4.3 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-4/">4.4 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-5-our-first-use-case-display-and-edit-campaign/">4.5 Our First Use Case: "Display and edit campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">4.6 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-7-implementation-of-the-remaining-use-cases/">4.7 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">4.8 New Functionalities in Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">4.9 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-10-exercises/">4.10 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>								5 Functional Tests								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/5-1-introduction/">5.1 Introduction</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter appendix"><a href="http://www.turngeek.press/javaee7/back-matter/appendix/">Appendix</a>
+              						</li>
+																		<li class="back-matter bibliography"><a href="http://www.turngeek.press/javaee7/back-matter/bibliography/">Bibliography</a>
+              						</li>
+																		<li class="back-matter miscellaneous"><a href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Buy the book</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

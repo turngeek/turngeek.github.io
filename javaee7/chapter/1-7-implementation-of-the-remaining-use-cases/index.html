@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/2015/06/javaee7_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4.7 Implementation of the Remaining Use Cases | Tutorial &#8211; Java EE 7 </title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/custom-css/web.css?ver=1441711134' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7/wp-json/' />
+<link rel='prev' title='4.6 Additional JSF and Java EE Technologies' href='http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/' />
+<link rel='next' title='4.9 A Brief Venture into PrimeFaces' href='http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7/?p=434' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F1-7-implementation-of-the-remaining-use-cases%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F1-7-implementation-of-the-remaining-use-cases%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-434" id="4.7implementationoftheremainingusecases">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaee7/" title="Tutorial &#8211; Java EE 7 " rel="home">Tutorial &#8211; Java EE 7 </a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4.7 Implementation of the Remaining Use Cases</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4.7 Implementation of the Remaining Use Cases</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">Next</a></span>
+    </div>				<div id="post-434" class="type-1 post-434 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>Now we can return to our implementation and focus our attention on the rest of the use cases from <a title="3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor”" href="http://www.turngeek.press/javaee7/part/3-requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">Chapter 3</a>. To better understand their implementation, however, we should take another look at the input screen and the processing logic of the corresponding use case before taking any practical steps.</p>
+<h3>4.7.1 Editing Campaigns and Creating New Campaigns</h3>
+<p>The use cases <em>Edit campaigns</em> and <em>Create new campaign</em> have the same input screen and can therefore be managed with the same controller class. The only difference between the two use cases is that the first case involves the editing of the existing <code>Campaign</code> object, which means that the current values of the properties must be displayed in the input screen. If a new campaign is being set up, a new <code>Campaign</code> object must be created and its properties set with new values via the input screen. Furthermore, we must manage the processing mode that determines whether a new campaign should be created or an existing campaign edited. The management of the Campaign object and the processing mode is implemented in the class <code>CampaignProducer</code> (see ‎Listing  4-19).</p>
+<p><strong>The <em>CampaignProducer</em> Class</strong></p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">package de.dpunkt.myaktion.data;
+
+import de.dpunkt.myaktion.model.Campaign;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+
+@SessionScoped
+@Named
+public class CampaignProducer implements Serializable {
+	private static final long serialVersionUID = -1828660647917534556L;
+
+	private enum Mode {
+		EDIT, ADD
+	}
+	private Campaign campaign;
+	private Mode mode;
+
+	public Campaign getSelectedCampaign() {
+		return campaign;
+	}
+	public void setSelectedCampaign(Campaign campaign) {
+		this.campaign = campaign;
+	}
+	public boolean isAddMode() {
+		return mode == Mode.ADD;
+	}
+	public void prepareAddCampaign() {
+		this.campaign = new Campaign();
+		this.mode = Mode.ADD;
+	}
+	public void prepareEditCampaign(Campaign campaign) {
+		this.campaign = campaign;
+		this.mode = Mode.EDIT;
+	}
+}
+</pre>
+<p><b>Listing 4-19</b>     <em>CampaignProducer</em> class</p>
+<p>The processing mode is determined via an inner enumeration type (<code>enum Mode</code>). It can take the values <code>EDIT</code> or <code>ADD</code>. For this reason, alongside the attribute of type <code>Campaign</code>, the class also possesses an attribute of the type  <code>CampaignProducer.Mode</code>.</p>
+<p>An object of the class can be injected in a controller bean, making its data is available for the whole session. The controller can carry out the initialization of the bean depending on the current processing mode either via the method <code>prepareAddCampaign</code> or the method <code>prepareEditCampaign</code>. In the first case, a new Campaign object is created; in the second case, the object to be edited is passed. The rest of the getter and setter methods enable the attributes of the bean to be accessed.</p>
+<p>The use case controller class <code>EditCampaignController</code> (see Listing 4-20) uses both the class <code>CampaignProducer</code> and the class <code>CampaignListProducer</code>, which manages our example data. This is necessary because new or edited campaigns must be added to the list of campaigns. It’s at this point that dependency injection comes into play. We declare an attribute of the type <code>CampaignListProducer</code> and an attribute of the type <code>CampaignProducer</code> in the controller class and and add the annotation <code>@Inject</code> to each. At runtime, the application server will now ensure that we have access to the bean via the declared variables. Since the context is set to <code>@SessionScoped</code> in both classes, we can be sure that all controller beans of the same user session are accessing the same bean.</p>
+<p><strong>The <em>EditCampaignController</em> Class</strong></p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">package de.dpunkt.myaktion.controller;
+
+import de.dpunkt.myaktion.data.CampaignListProducer;
+import de.dpunkt.myaktion.data.CampaignProducer;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.Serializable;
+
+@SessionScoped
+@Named
+public class EditCampaignController implements Serializable {
+	private static final long serialVersionUID = 2815796004558360299L;
+
+	@Inject
+	private CampaignListProducer campaignListProducer;
+	@Inject
+	private CampaignProducer campaignProducer;
+
+	public String doSave() {
+		if (campaignProducer.isAddMode()) {
+			campaignListProducer.getCampaigns().add(
+					campaignProducer.getSelectedCampaign());
+		}
+		return Pages.LIST_CAMPAIGNS;
+	}
+	public String doCancel() {
+		return Pages.LIST_CAMPAIGNS;
+	}
+}
+</pre>
+<p><strong>Listing 4-20</strong>     <em>EditCampaignController</em> class</p>
+<p>Our controller classes contain two methods for controlling the flow. On the one hand, after editing or creating a campaign, we must be able to save it. This is accomplished by the <code>doSave</code> method. The logic of the method must take the current mode into account. If we are editing an existing campaign, there is nothing more to be done. However, if a new campaign is created, this must be admitted to the list of campaigns via the available <code>ListCampaignProducer</code> bean. In both cases, the user is redirected to the view <code>LIST_CAMPAIGNS</code> afterwards.</p>
+<p>The option to cancel the process is also provided for. This is accomplished by the method <code>doCancel</code>. Here, all we need to is to navigate back to the view <code>campaignList</code>.</p>
+<p><strong>The <em>editCampaign.xhtml </em>Facelet</strong></p>
+<p>If we look at the layouts of the input screens in Figures 3-14 and 3-15 in <a title="3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor”" href="http://www.turngeek.press/javaee7/part/3-requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">Chapter 3</a>, we see that a tab panel  was provided. In the layout, we have arranged the general campaign data and the bank account details in different tabs. However, we have not yet talked about how such a component would work – and we would not find it in the JSF standard, even if we wanted to! This is a typical motive for using an additional JSF library. We will demonstrate the use of <em>PrimeFaces</em> for this purpose in <a title="4.9 A Brief Venture into PrimeFaces" href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">section ‎4.9</a>. For the moment, we’ll do without tabs and represent the two sets of data one under the other in two grids (tag <code>&lt;h:panelGrid&gt;</code>). As for every other Facelet of the application, we also require a number of texts, which will be displayed on the page according to the language preferences set in the browser. We will modify the properties file <code>messages_en.properties</code> with the following input:</p>
+<p><code># editCampaign.xhtml<br />
+editCampaign.add_new_campaign=Add a new campaign<br />
+editCampaign.edit_campaign=Edit campaign<br />
+editCampaign.general=General<br />
+editCampaign.name=Name<br />
+editCampaign.campaign_name_validation=The name of a campaign must be at least 4 and max. 30 characters long.<br />
+editCampaign.name_of_the_campaign=Name of the campaign<br />
+editCampaign.target_amount=Target amount<br />
+editCampaign.target_amount_validation=The target amount for the campaign must be at least 10 Euros.<br />
+editCampaign.donation_amount=Donation amount<br />
+editCampaign.donation_amount_validation=The donation amount must be at least 1 Euro.<br />
+editCampaign.bank_account=Bank account<br />
+editCampaign.iban=IBAN<br />
+editCampaign.name_of_bank=Name of Bank<br />
+editCampaign.save=Save</code></p>
+<p>In addition, we will add the following lines to the file <code>messages_de.properties</code>:</p>
+<p><code># editCampaign.xhtml<br />
+editCampaign.add_new_campaign=Neue Aktion anlegen<br />
+editCampaign.edit_campaign=Aktionsdaten editieren<br />
+editCampaign.general=Allgemein<br />
+editCampaign.name=Name<br />
+editCampaign.campaign_name_validation=Der Name einer Aktion muss min. 4 und darf max. 30 Zeichen lang sein.<br />
+editCampaign.name_of_the_campaign=Name der Spendenaktion<br />
+editCampaign.target_amount=Spendenziel<br />
+editCampaign.target_amount_validation=Das Spendenziel für die Aktion muss min. 10 Euro sein.<br />
+editCampaign.donation_amount=Spendenbetrag<br />
+editCampaign.donation_amount_validation=Der Spendenbetrag muss min. 1 Euro sein.<br />
+editCampaign.bank_account=Bankverbindung<br />
+editCampaign.iban=IBAN<br />
+editCampaign.name_of_bank=Name der Bank<br />
+editCampaign.save=Speichern<br />
+editCampaign.cancel=Abbrechen</code></p>
+<p>‎Listing  4-21 shows the implementation of the Facelet.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{campaignProducer.addMode ?
+					msg['editCampaign.add_new_campaign'] :
+					msg['editCampaign.edit_campaign']}&lt;/h1&gt;
+				&lt;h:form&gt;
+					&lt;h:panelGrid columns="3"&gt;
+						&lt;f:facet name="header"&gt;
+							#{msg['editCampaign.general']}
+						&lt;/f:facet&gt;
+						&lt;h:outputLabel value="#{msg['editCampaign.name']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:inputText id="a_name"
+							value="#{campaignProducer.selectedCampaign.name}"
+							validatorMessage=
+								"#{msg['editCampaign.campaign_name_validation']}"&gt;
+							&lt;f:passThroughAttribute name="placeholder"
+								value=
+									"#{msg['editCampaign.name_of_the_campaign']}" 
+							/&gt;
+							&lt;f:validateRequired /&gt;
+							&lt;f:validateLength minimum="4" maximum="30" /&gt;
+						&lt;/h:inputText&gt;
+						&lt;h:message for="a_name" style="color: red;" /&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editCampaign.target_amount']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:panelGroup&gt;
+							&lt;h:inputText id="a_targetAmount"
+								value=
+									"#{campaignProducer
+										.selectedCampaign.targetAmount}"
+								validatorMessage=
+									"#{msg['editCampaign
+										.target_amount_validation']}"&gt;
+								&lt;f:convertNumber maxFractionDigits="2" 
+									minFractionDigits="2" /&gt;
+								&lt;f:validateRequired /&gt;
+								&lt;f:validateDoubleRange minimum="10.0" /&gt;
+							&lt;/h:inputText&gt; EUR
+						&lt;/h:panelGroup&gt;
+						&lt;h:message for="a_targetAmount" style="color: red;" /&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editCampaign.donation_amount']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:panelGroup&gt;
+							&lt;h:inputText id="a_donationMinimum"
+								value=	"#{campaignProducer
+									.selectedCampaign.donationMinimum}"
+								validatorMessage=
+									"#{msg['editCampaign.
+										donation_amount_validation']}"&gt;
+								&lt;f:convertNumber maxFractionDigits="2" 
+									minFractionDigits="2" /&gt;
+								&lt;f:validateRequired /&gt;
+								&lt;f:validateDoubleRange minimum="1.0" /&gt;
+							&lt;/h:inputText&gt; EUR
+						&lt;/h:panelGroup&gt;
+						&lt;h:message for="a_donationMinimum" 
+							style="color: red;" /&gt;
+					&lt;/h:panelGrid&gt;
+					&lt;h:panelGrid columns="3"&gt;
+						&lt;f:facet name="header"&gt;
+							#{msg['editCampaign.bank_account']}
+						&lt;/f:facet&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editCampaign.name']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:inputText id="b_name"
+							value=
+								"#{campaignProducer
+									.selectedCampaign.account.name}"&gt;
+							&lt;f:validateRequired /&gt;
+						&lt;/h:inputText&gt;
+						&lt;h:message for="b_name" style="color: red;" /&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editCampaign.iban']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:inputText id="b_iban"
+							value=	"#{campaignProducer
+										.selectedCampaign.account.iban}"&gt;
+							&lt;f:validateRequired /&gt;
+						&lt;/h:inputText&gt;
+						&lt;h:message for="b_iban" style="color: red;" /&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editCampaign.name_of_bank']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:inputText id="b_name_bank"
+							value=	"#{campaignProducer
+										.selectedCampaign.account.nameOfBank}"&gt;
+							&lt;f:validateRequired /&gt;
+						&lt;/h:inputText&gt;
+						&lt;h:message for="b_name_bank" style="color: red;" /&gt;
+					&lt;/h:panelGrid&gt;
+					&lt;h:commandButton value="#{msg['editCampaign.save']}"
+						action="#{editCampaignController.doSave}" /&gt;
+					&lt;h:commandButton value="#{msg['editCampaign.cancel']}"
+						immediate="true" action=
+							"#{editCampaignController.doCancel}" /&gt;
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+</pre>
+<p><strong>Listing 4-21</strong>     <em>editCampaign.xhtml</em> Facelet</p>
+<p>As with previous Facelets, we will save the file <code>editCampaign.xhtml</code> in our project structure in the directory <code>src\main\webapp</code>.</p>
+<p>In the Facelet, we can easily recognize the binding of the attributes of the <code>Campaign</code> object to the input fields using EL expressions. The respective <code>Campaign</code> object is referenced in the EL expression via the <code>selectedCampaign</code> attribute of the <code>CampaignProducer</code> bean. The methods <code>doSave</code> and <code>doCancel</code> belonging to the controller class <code>editCampaignController</code> are registered with both buttons of the Facelet as <em>action</em> methods using EL expressions.</p>
+<p><strong>Adjusting the Existing Facelets and Classes</strong></p>
+<p>We have now created the Facelet and the controller for both use cases. All we are missing is integration with the use case <em>Display and edit campaign</em>. To do this, we must edit the class <code>ListCampaignsController</code>, which will reference the <code>editCampaign.xhtml</code> using the methods <code>doEditCampaign</code> and <code>doAddCampaign</code>. In both methods, the relevant campaign (a new campaign, or one selected by the user) and the processing mode must be set. We therefore require a reference to the <code>CampaignProducer</code> bean. To create this, we will declare an instance variable of the type <code>CampaignProducer</code> in the <code>ListCampaignsController</code> class and provide it with the annotation <code>@Inject</code>. This causes the application server to provide a bean for the desired reference at runtime.</p>
+<p><code>@Inject<br />
+private CampaignProducer campaignProducer;</code></p>
+<p>We must not forget to add the import command for the annotation <code>@Inject</code>.</p>
+<p><code>import javax.inject.Inject;</code></p>
+<p>We will now use this reference in the methods <code>doEditCampaign</code> and <code>doAddCampaign</code> to implement the logic. We can suppress the logging to standard output using <code>System.out.println</code>.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">...
+public String doAddCampaign() {
+	campaignProducer.prepareAddCampaign();
+	return Pages.EDIT_CAMPAIGN;
+}
+public String doEditCampaign(Campaign campaign) {
+	campaignProducer.prepareEditCampaign(campaign);
+	return Pages.EDIT_CAMPAIGN; 
+}
+...
+</pre>
+<p>When editing an existing campaign, the <code>Campaign</code> object to be edited is passed as an argument. When creating a campaign, a new object is created in the <code>prepareAddCampaign</code> method of the <code>CampaignProducer</code> class.</p>
+<p>The use cases <em>Edit campaign</em> and <em>Create new campaign</em> can now be run. Try them out for yourself! Please don’t forget that WildFly must be started and that we must redeploy the most recent version of the project with Maven. For comparison purposes, Fig. 4-3 shows the view that should appear for adding a new campaign. You can see the inline label in the Name input field.</p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-3</strong>     View for creating a new campaign</p>
+<p>At this point, it’s essential for us to see how the page behaves when an input is entered incorrectly. In order to receive an error message, we will simply leave the input fields empty and click on the <em>Save</em> button. The result is shown in Fig. 4-4. Firstly, we see the standard error message (<code>j_idt8:*</code>). Secondly, we see the error messages that we set explicitly via the <code>validatorMessage</code> attribute when creating the text inputs (<code>&lt;h:inputText&gt;</code>). Naturally, the error messages are shown in the language set in the browser.</p>
+<p><strong>Fig. 4-4</strong>     The form for creating a new campaign, with error messages</p>
+<h3>4.7.2 Displaying the List of Donations</h3>
+<p>With the next use case, <em>Display list of donors</em>, we want to see who has already donated to a campaign. If we look at our domain classes, we see the relationship between <em>campaign </em>and <em>donation </em>is particularly important for this use case. A campaign can have no donations or multiple donations and donations are managed as a list for each campaign. Let’s look first at the controller class and then the Facelet.</p>
+<p><strong>The <em>ListDonationsController</em> Controller Class</strong></p>
+<p>As laid out in <a title="3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor”" href="http://www.turngeek.press/javaee7/part/3-requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">Chapter 3</a>, we only need a confirmation button on the page that will redirect the user back to the campaign list homepage when the button is pressed. This logic will be implemented in the <code>doOk</code> method.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">package de.dpunkt.myaktion.controller;
+
+import de.dpunkt.myaktion.model.Donation.Status;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import java.io.Serializable;
+
+@SessionScoped
+@Named
+public class ListDonationsController implements Serializable {
+	private static final long serialVersionUID = 437878972432L;
+
+	public String doOk() {
+		return Pages.LIST_CAMPAIGNS;
+	}
+}
+</pre>
+<p><strong>Listing 4-22</strong>     <em>ListDonationsController</em> class</p>
+<p><strong>The listDonations.xhtml Facelet</strong></p>
+<p>For the implementation of this Facelet, we will refer to the Facelet <code>listCampaigns.xhtml</code> in ‎Listing  4-21, since it also presents data from a list in tabular form. Here, again, we will use the <code>h:dataTable</code> tag within the form (see ‎Listing  4-23). Before that, we will modify our two properties files as we’ve become accustomed to doing. The file <code>messages_en.properties</code> will be supplemented with the following rows:</p>
+<p><code># listDonations.xhtml<br />
+listDonations.donation_list=List of donations<br />
+listDonations.beneficiary_account=Beneficiary account<br />
+listDonations.iban=IBAN<br />
+listDonations.name=Name<br />
+listDonations.name_of_bank=Name of Bank<br />
+listDonations.donation_amount=Donation amount<br />
+listDonations.receipt=Receipt<br />
+listDonations.yes=yes<br />
+listDonations.no=no<br />
+listDonations.status=Status<br />
+listDonations.status.TRANSFERRED=transferred<br />
+listDonations.status.IN_PROCESS=in process</code></p>
+<p>We will then add the corresponding German terms to the <code>messages_de.properties</code> file:</p>
+<p><code># listDonations.xhtml<br />
+listDonations.donation_list=Spenderliste<br />
+listDonations.beneficiary_account=Empfängerkonto<br />
+listDonations.iban=IBAN<br />
+listDonations.name=Name<br />
+listDonations.name_of_bank=Name der Bank<br />
+listDonations.donation_amount=Spendenbetrag<br />
+listDonations.receipt=Quittung<br />
+listDonations.yes=ja<br />
+listDonations.no=nein<br />
+listDonations.status=Status<br />
+listDonations.status.TRANSFERRED=überwiesen<br />
+listDonations.status.IN_PROCESS=in Bearbeitung</code></p>
+<p>We can now proceed with the implementation of the Facelet <code>listDonations.xhtml</code>:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{msg['listDonations.donation_list']}
+					'#{campaignProducer.selectedCampaign.name}'
+				&lt;/h1&gt;
+				&lt;h2&gt;#{msg['listDonations.beneficiary_account']}:
+					#{campaignProducer.selectedCampaign.account.name},
+					#{msg['listDonations.iban']}:
+					#{campaignProducer.selectedCampaign.account.iban},
+					#{campaignProducer
+						.selectedCampaign.account.nameOfBank}
+				&lt;/h2&gt;
+				&lt;h:form&gt;
+					&lt;h:dataTable value=
+							"#{campaignProducer.selectedCampaign.donations}"
+						var="donation"&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listDonations.name']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{donation.donorName}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listDonations.iban']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{donation.account.iban}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listDonations.name_of_bank']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value=
+								"#{donation.account.nameOfBank}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listDonations.donation_amount']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value="#{donation.amount}"&gt;
+								&lt;f:convertNumber type="currency" 
+									currencyCode="EUR" /&gt;
+							&lt;/h:outputText&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listDonations.receipt']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value=
+								"#{donation.receiptRequested ? 
+									msg['listDonations.yes'] 
+										: msg['listDonations.no']}" /&gt;
+						&lt;/h:column&gt;
+						&lt;h:column&gt;
+							&lt;f:facet name="header"&gt;
+								#{msg['listDonations.status']}
+							&lt;/f:facet&gt;
+							&lt;h:outputText value=
+									"#{msg['listDonations.status.TRANSFERRED']}"
+								rendered="#{donation.status == 'TRANSFERRED'}" /&gt;
+							&lt;h:outputText value=
+									"#{msg['listDonations.status.IN_PROCESS']}"
+								rendered="#{donation.status == 'IN_PROCESS'}" /&gt;
+						&lt;/h:column&gt;
+					&lt;/h:dataTable&gt;
+					&lt;h:commandButton value="OK"
+						action="#{listDonationsController.doOk}" /&gt;
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt; 
+</pre>
+<p><strong>Listing 4-24</strong>     <em>listDonations.</em><em>xhtml</em> Facelet</p>
+<p>Most of the tags used have already been explained in the context of understanding the list of campaigns, so we can refrain from giving a fresh explanation here. The following two constructs however, are new:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;h:outputText value="#{<strong>donation.receiptRequested ? 
+			msg['listDonations.yes']: msg['listDonations.no'</strong>]}" /&gt;
+</pre>
+<p>Here, the <em>conditional operator</em> used in the EL expression should be well-known to the reader from the Java programming language. The value taken by the <code>value</code> attribute of the <code>&lt;h:outputText&gt;</code> tag is determined depending on a boolean expression. The boolean expression is placed before the question mark and, in our case, is implemented by the <code>receiptRequested</code> attribute of type <code>boolean</code> belonging to the class <code>Donation</code>. If the value is true, the value after the question mark and up to the colon is used; if not, the value after the colon is used. With regards to content, this is an elegant way to display whether or not a donation receipt is required.</p>
+<p>The second construct also makes use of the expressive power of the expression language:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;h:outputText value=#{msg['listDonations.status.TRANSFERRED']}"
+			<strong>rendered="#{donation.status == 'TRANSFERRED'}"</strong> /&gt;
+&lt;h:outputText value="#{msg['listDonations.status.IN_PROCESS']}"
+			<strong>rendered="#{donation.status == 'IN_PROCESS'}"</strong> /&gt;
+</pre>
+<p>The <code>rendered</code> attribute of the <code>&lt;h:outputText&gt;</code> tag expects a boolean value and uses it to control the display. The text will be displayed only if the value is set to <code>true</code>. For the attribute’s value, we use an EL expression that contains a comparison operation to check which status is set in the donation to be displayed. Only one of the comparisons can ever be successful, with the result that only one of the texts can actually be displayed.</p>
+<p><strong>Adjusting the Existing Classes</strong></p>
+<p>The <code>ListDonationsController</code> bean requires the selected <code>Campaign</code> object, which should have been stored in the <code>CampaignProducer</code> beforehand.</p>
+<p>This must occur in the <code>doListDonations</code> method of the <code>ListCampaignsController</code> class, since this is where the selected <code>Campaign</code> object is passed as an argument.</p>
+<p>In this method, therefore, we once again require a reference to the <code>CampaignProducer</code> bean to enable us to pass it the chosen campaign. The <code>doListDonations</code> method of the <code>ListCampaignsController</code> class can be implemented as follows:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">public String doListDonations(Campaign campaign) {
+	campaignProducer.setSelectedCampaign(campaign);
+	return Pages.LIST_DONATIONS;
+}
+</pre>
+<p>Nothing more needs to be adjusted. We can try out the newly implemented use case immediately following the obligatory Maven build. As an example, ‎Fig.4-5 shows the list of donors for the first campaign. The donations are represented in tabular form as desired (tag <code>&lt;h:dataTable&gt;</code>).</p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-5</strong>     View of the donor list for the campaign &#8220;Shirts for the U19 Team&#8221;</p>
+<h3>4.7.3 Editing a Donation Form</h3>
+<p>We’ll now look at the use case <em>Edit donation form. </em>This use case should enable the user to manage the address (URL) of the donation form and a number of settings pertaining to how it is displayed. The background color and the color of the text can be adjusted for the form and are included in the address as HTTP GET parameters. We will begin by re-implementing the controller. Once this is done, we’ll move to the Facelet.</p>
+<p><strong>The EditDonationFormController Class</strong></p>
+<p>The controller bean manages the corresponding campaign and the previously-named properties: address (<code>url</code>), background color (<code>bgColor</code>) and text color (<code>textColor</code>). The URL is dynamically created from the other properties. Leaving out the color properties and the campaign ID (<code>campaignId</code>), we will first hard-code the URL. The values of the properties will be encoded in the HTTP GET request – which is specified by the URL &#8211; as values of the request parameters <code>bgColor</code>, <code>textColor</code> and <code>campaignId</code>.</p>
+<p>The class in ‎Listing  4-24 has the usual getter and setter methods and requires access to the chosen campaign in order to generate the URL. This access is obtained once again via the <code>CampaignProducer</code> bean, which we will inject in the controller for this purpose. In line with the description of the use case in <a title="3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor”" href="http://www.turngeek.press/javaee7/part/3-requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">Chapter 3</a>, only one confirmation button is required in the view. The logic will be implemented in the controller using the method <code>doOk()</code>, at which point nothing else happens except the redirection of the user back to the list of campaigns.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">package de.dpunkt.myaktion.controller;
+
+import de.dpunkt.myaktion.data.CampaignProducer;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import java.io.Serializable;
+
+@SessionScoped
+@Named
+public class EditDonationFormController implements Serializable {
+	private static final long serialVersionUID = -4210085664588144340L;
+	private String textColor = "000000";
+	private String bgColor = "ffffff";
+	@Inject
+	private CampaignProducer campaignProducer;
+
+	public String doOk() {
+		return Pages.LIST_CAMPAIGNS;
+	}
+	public String getUrl() {
+		return "http://localhost:8080/my-aktion/donateMoney.jsf?bgColor="
+				+ bgColor + "&amp;textColor=" + textColor + "&amp;campaignId="
+				+ campaignProducer.getSelectedCampaign().getId();
+	}
+	public String getTextColor() {
+		return textColor;
+	}
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
+	public String getBgColor() {
+		return bgColor;
+	}
+	public void setBgColor(String bgColor) {
+		this.bgColor = bgColor;
+	}
+}
+</pre>
+<p><strong>Listing 4-24</strong>     <em>EditDonationFormController</em> class</p>
+<p><strong>The editDonationForm.xhtml Facelet</strong></p>
+<p>Next, we will determine the language-dependent text for the Facelet. To do this, we insert the following lines in the properties file <code>messages_en.properties</code>:</p>
+<p><code># editDonationForm.xhtml<br />
+editDonationForm.edit_donation_form=Edit donation form<br />
+editDonationForm.background_color=Background color<br />
+editDonationForm.text_color=Text color<br />
+editDonationForm.form_url=Form URL</code></p>
+<p>The properties file <code>messages_de.properties</code> should then be supplemented with the following entries:</p>
+<p><code># editDonationForm.xhtml<br />
+editDonationForm.edit_donation_form=Spendenformular bearbeiten<br />
+editDonationForm.background_color=Hintergrundfarbe<br />
+editDonationForm.text_color=Textfarbe<br />
+editDonationForm.form_url=URL des Formulars<br />
+</code></p>
+<p>‎Listing  4-25 shows the implementation of the Facelet for editing the properties of the donation form.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+&lt;body&gt;
+	&lt;f:view contracts="#{view.locale.language}"&gt;
+		&lt;ui:composition template="/template.xhtml"&gt;
+			&lt;ui:define name="content"&gt;
+				&lt;h1&gt;#{msg['editDonationForm.edit_donation_form']}&lt;/h1&gt;
+				&lt;h:form&gt;
+					&lt;h:panelGrid columns="2"&gt;
+						&lt;h:outputLabel
+							value=
+								"#{msg['editDonationForm.background_color']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:selectOneMenu id="bgColor"
+								value="#{editDonationFormController.bgColor}"&gt;
+							&lt;f:selectItem itemLabel="#FFFFFF" 
+								itemValue="FFFFFF" /&gt;
+							&lt;f:selectItem itemLabel="#000000" 
+								itemValue="000000" /&gt;
+							&lt;f:selectItem itemLabel="#FF0000" 
+								itemValue="FF0000" /&gt;
+							&lt;f:ajax render="url" /&gt;
+						&lt;/h:selectOneMenu&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editDonationForm.text_color']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:selectOneMenu id="textColor"
+							value="#{editDonationFormController.textColor}"&gt;
+							&lt;f:selectItem itemLabel="#FFFFFF" 
+								itemValue="FFFFFF" /&gt;
+							&lt;f:selectItem itemLabel="#000000" 
+								itemValue="000000" /&gt;
+							&lt;f:selectItem itemLabel="#FF0000" 
+								itemValue="FF0000" /&gt;
+							&lt;f:ajax render="url" /&gt;
+						&lt;/h:selectOneMenu&gt;
+						&lt;h:outputLabel value=
+							"#{msg['editDonationForm.form_url']}:"&gt;
+						&lt;/h:outputLabel&gt;
+						&lt;h:inputTextarea id="url" rows="6" 
+							cols="30" readonly="true"
+							value="#{editDonationFormController.url}" /&gt;
+					&lt;/h:panelGrid&gt;
+					&lt;h:commandButton value="OK"
+						action="#{editDonationFormController.doOk}" /&gt;
+				&lt;/h:form&gt;
+			&lt;/ui:define&gt;
+		&lt;/ui:composition&gt;
+	&lt;/f:view&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 4-25</strong>     Facelet <em>editDonationForm.xhtml</em></p>
+<p>The Facelet presents data in tabular form using the <code>&lt;h:panelGrid&gt;</code> tag. The table has two columns. The first column contains the names of the fields (tag <code>&lt;h:outputText&gt;</code>), while the second contains the input components. For the colors, a <em>combo box</em> is used as a choice component (tag <code>&lt;h:selectOneMenu&gt;</code>). The URL is displayed in a text area (tag <code>&lt;h:textArea&gt;</code>) that cannot be changed manually (attribute <code>readonly="true"</code>). As explained in <a title="4.6 Additional JSF and Java EE Technologies" href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">section ‎4.6.6</a>, we use the <code>&lt;f:ajax&gt;</code> tag within the color choice component to automatically adjust the URL in the text area in the event of a color change without having to reload the whole page. At the end of the form is the confirmation button (tag <code>&lt;h:commandButton&gt;</code>) that activates the controller method <code>doOk</code>. Notice here that the use of a <em>combo box</em> for color selection is suboptimal, because the colors must be selected by means of a Hexcode. A better option would be a choice component in which a range of colors are displayed for the user to choose from. A component like this, which is often referred to as a <em>color picker</em>, does not exist in the JSF standard. However, the extension PrimeFaces, which we’ll look at in <a title="4.9 A Brief Venture into PrimeFaces" href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">section ‎4.9.2</a>, can help us in this regard.</p>
+<p><strong>Adjust the Existing Classes</strong></p>
+<p>As with the previous use case, the editing of the donation form is dependent on the selected campaign. The selected campaign is stored in the <code>CampaignProducer</code> bean. This means that we need to adjust the controller class <code>ListCampaignsController</code>. We must modify the method <code>doEditDonationForm</code> in such a way that the selected campaign is set in the <code>CampaignProducer</code> bean.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">public String doEditDonationForm(Campaign campaign) {
+	campaignProducer.setSelectedCampaign(campaign);
+	return Pages.EDIT_DONATION_FORM;
+}
+</pre>
+<p>Following the obligatory Maven build step, we can now try out our newly implemented use case.  ‎Fig. 4-6 shows our screen for editing the donation form. Features we see here include the <em>combo box</em> choice component (tag <code>&lt;h:selectOneMenu&gt;</code>), the text area (tag <code>&lt;h:textarea&gt;</code>) and a button for submitting the form (tag <code>&lt;h:commandButton&gt;</code>).  At this point, we should briefly test out the Ajax functionality. To do this, change one of the choices in a combo box. The URL in the text area should adjust automatically to reflect the new value.</p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-6</strong>     Screen for editing a donation form</p>
+<p><strong>Generating the Form URL</strong></p>
+<p>The controller <code>EditDonationFormController</code> supplies the URL using the method <code>getUrl()</code>.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">public String getUrl() {
+		return "http://localhost:8080/my-aktion/donateMoney.jsf?bgColor="
+				+ bgColor + "&amp;textColor=" + textColor + "&amp;campaignId="
+				+ campaignProducer.getSelectedCampaign().getId();
+	}
+</pre>
+<p>We can see that the URL is specified in the program code. The hard-coded address only works if the browser and server are run on the same computer. In a real-world environment, however, this is almost never the case. We must alter the method in such a way that it generates the URL automatically with the correct protocol, host, port and web context. We can read this information from the current <em>request</em>. To obtain it, we must descend a little into the depths of the Java EE APIs. The class representing an HTTP request in Java EE is the <code>javax.servlet.http.HttpServletRequest</code> class of the Servlet API. Access to the current instance can be obtained once again via the <code>FacesContext</code>.</p>
+<p>The URL is generated using two methods. The private method <code>getAppUrl</code> determines the URL of the web application, then the public method <code>getUrl</code> uses this and amends the address with the Facelet name and the parameters.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">private String getAppUrl() {
+	HttpServletRequest req = (HttpServletRequest) FacesContext
+			.getCurrentInstance().getExternalContext().getRequest();
+	String scheme = req.getScheme();
+	String serverName = req.getServerName();
+	int serverPort = req.getServerPort();
+	String contextPath = req.getContextPath();
+	return scheme + "://" + serverName + ":" + serverPort + contextPath;
+}
+
+public String getUrl() {
+	return getAppUrl() + "/" + Pages.DONATE_MONEY + ".jsf" + "?bgColor="
+			+ bgColor + "&amp;textColor=" + textColor + "&amp;campaignId="
+			+ campaignProducer.getSelectedCampaign().getId();
+}
+</pre>
+<p>We obtain a reference to the current instance of the <code>HttpServletRequest</code> class via the current instance of the <code>FacesContext</code> class. This offers us a range of methods for retrieving information from the request. The object also contains all the information for the URL, and we take advantage of this for the automatic generation of the donation form URL. We supplement this information with the name of the Facelet from the <code>Pages</code> class and append the current color values and the ID of the campaign as GET parameters. Once we’ve done this, the URL will always adjust itself automatically to the execution environment and the deployment of the application.</p>
+<h3>4.7.4 Donating Money</h3>
+<p>The implementation of the use case <em>Donate money</em> differs somewhat from the other implementations. This use case is the only one that is not used by the organizer themselves, but by a random group of Internet users.  Therefore, the Facelet is not embedded in our template, but rather defines its own page. The organizer of a campaign can send the URL of the <em>“Donate money”</em> page to potential donors, allowing them to use it. Contained in the URL as HTTP GET parameters are the text and background color for the donation form and the ID of the campaign to be donated to.  These data must be interpreted in the Facelet and the page displayed accordingly.</p>
+<p>Even though this case is slightly different, we still require a controller behind the Facelet to manage the <code>Donation</code> object and to save the donation for the campaign after it has been sent. Since the use case is initiated by the user via the URL, the controller does not afford us access to the <code>Campaign</code> object associated with the donation. Without the persistence layer, assignment of the <code>campaignId</code> to a <code>Campaign</code> object is only possible with great effort. We will revisit and solve this issue in <a title="Buy the book" href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Chapter 7</a> with the help of JPA. The controller can then read the campaign from the database to add the donation and write both back into the database. Until then, however, we will live with the fact that the donation is not saved when the <em>Donate</em> button is clicked, and is therefore lost.</p>
+<p><strong>The DonateMoneyController Controller Class</strong></p>
+<p>In the <code>DonateMoneyController</code> class from ‎Listing  4-26, we require access to the JSF API classes <code>FacesContext</code> and <code>FacesMessage</code> to be able to dispay a donation confirmation message to the user. The current <code>FacesContext</code> also allows us to obtain the correct <em>ResourceBundle</em>, which we require for displaying the message in the correct language. A <code>FacesMessage</code> is created for this purpose in the method <code>doDonation</code> and is stored in the current <code>FacesContext</code>. JSF uses this to display the thank you message to the user following the execution of <code>doDonation</code> and the rebuilding of the page.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">package de.dpunkt.myaktion.controller;
+
+import de.dpunkt.myaktion.model.Donation;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.inject.Named;
+import java.io.Serializable;
+import java.text.MessageFormat;
+import java.util.ResourceBundle;
+
+@SessionScoped
+@Named
+public class DonateMoneyController implements Serializable {
+	private static final long serialVersionUID = 5493038842003809106L;
+	private String textColor = "000000";
+	private String bgColor = "ffffff";
+	private Long campaignId;
+	private Donation donation;
+
+	public DonateMoneyController() {
+		this.donation = new Donation();
+	}
+	public Long getCampaignId() {
+		return campaignId;
+	}
+	public void setCampaignId(Long campaignId) {
+		this.campaignId = campaignId;
+	}
+	public Donation getDonation() {
+		return donation;
+	}
+	public void setDonation(Donation donation) {
+		this.donation = donation;
+	}
+	public String getTextColor() {
+		return textColor;
+	}
+	public void setTextColor(String textColor) {
+		this.textColor = textColor;
+	}
+	public String getBgColor() {
+		return bgColor;
+	}
+	public void setBgColor(String bgColor) {
+		this.bgColor = bgColor;
+	}
+	public String doDonation() {
+		final FacesContext facesContext = FacesContext.getCurrentInstance();
+		final ResourceBundle resourceBundle = facesContext.getApplication()
+				.getResourceBundle(facesContext, "msg");
+		final String msg = resourceBundle.getString("donateMoney.thank_you");
+		facesContext.addMessage(null, new FacesMessage(
+				FacesMessage.SEVERITY_INFO, msg, null));
+		this.donation = new Donation();
+		return Pages.DONATE_MONEY;
+	}
+}
+</pre>
+<p><strong>Listing 4-26</strong>     <em>DonateMoneyController</em> class</p>
+<p><strong>The donateMoney.xhtml Facelet</strong></p>
+<p>Like the previous Facelets, the donateMoney.xhtml Facelet requires a number of language-dependent messages and texts. Therefore, before we look at the Facelet itself, we need to adjust our properties file. We will add the following lines of code to the file <code>messages_en.properties</code>:</p>
+<p><code>donateMoney.donate_money=Donate money<br />
+donateMoney.name=Name<br />
+donateMoney.iban=IBAN<br />
+donateMoney.name_of_bank=Name of bank<br />
+donateMoney.donation_amount=Donation amount<br />
+donateMoney.i_want_a_receipt=Yes, I would like a donation receipt<br />
+donateMoney.donate=Donate<br />
+donateMoney.thank_you=Thank you for your donation!</code></p>
+<p>In addition to the above, we will insert the following lines of code in the <code>messages_de.properties</code> file:</p>
+<p><code># donateMoney.xhtml<br />
+donateMoney.donate_money=Geld spenden<br />
+donateMoney.name=Name<br />
+donateMoney.iban=IBAN<br />
+donateMoney.name_of_bank=Name der Bank<br />
+donateMoney.donation_amount=Spendenbetrag<br />
+donateMoney.i_want_a_receipt=Ja, ich möchte eine Spendenquittung<br />
+donateMoney.donate=Spenden<br />
+donateMoney.thank_you=Vielen Dank für die Spende!</code></p>
+<p>At the beginning of the <code>donateMoney.xhtml</code> Facelet in ‎Listing  4-27, the GET parameters of the HTTP request are read out, validated and bound to the properties of the controller bean. Directly afterwards, the color values supplied by the controller are used in the <code>style</code> attribute of the <code>&lt;body&gt;</code> HTML tag to take care of the desired color scheme for the display. After the <code>&lt;h1&gt;</code> title in each of the languages, there is a section with error messages. First come the global messages (<code>&lt;h:messages globalOnly="true"/&gt;</code>), then the <code>&lt;h:message&gt;</code> tags for validation of the view parameter. The rest of the Facelet contains components we already know:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"&gt;
+&lt;h:head&gt;
+	&lt;title&gt;#{msg['donateMoney.donate_money']}&lt;/title&gt;
+	&lt;meta charset="utf-8" /&gt;
+	&lt;f:metadata&gt;
+		&lt;f:viewParam id="bgColor" name="bgColor"
+			value="#{donateMoneyController.bgColor}"&gt;
+			&lt;f:validateRegex pattern="[A-Fa-f0-9]{6}" /&gt;
+		&lt;/f:viewParam&gt;
+		&lt;f:viewParam id="textColor" name="textColor"
+			value="#{donateMoneyController.textColor}"&gt;
+			&lt;f:validateRegex pattern="[A-Fa-f0-9]{6}" /&gt;
+		&lt;/f:viewParam&gt;
+		&lt;f:viewParam id="campaignId" name="campaignId"
+			converter="javax.faces.Long"
+			value="#{donateMoneyController.campaignId}"&gt;
+		&lt;/f:viewParam&gt;
+	&lt;/f:metadata&gt;
+&lt;/h:head&gt;
+&lt;h:body style="margin:0; 
+		font-family: Verdana, sans-serif; 
+		font-size: 0.9em;
+		background-color: ##{donateMoneyController.bgColor}; 
+		color: ##{donateMoneyController.textColor}"&gt;
+	&lt;h1&gt;#{msg['donateMoney.donate_money']}&lt;/h1&gt;
+	&lt;h:messages globalOnly="true" /&gt;
+	&lt;h:message for="bgColor" style="color: red;" /&gt;
+	&lt;h:message for="textColor" style="color: red;" /&gt;
+	&lt;h:message for="campaignId" style="color: red;" /&gt;
+	&lt;h:form&gt;
+		&lt;h:panelGrid columns="3"&gt;
+			&lt;h:outputLabel value="#{msg['donateMoney.name']}:"&gt;
+			&lt;/h:outputLabel&gt;
+			&lt;h:inputText id="name"
+					value="#{donateMoneyController.donation.donorName}"&gt;
+				&lt;f:validateRequired /&gt;
+			&lt;/h:inputText&gt;
+			&lt;h:message for="name" style="color: red;" /&gt;
+			&lt;h:outputLabel value="#{msg['donateMoney.iban']}:"&gt;
+			&lt;/h:outputLabel&gt;
+			&lt;h:inputText id="iban"
+					value="#{donateMoneyController.donation.account.iban}"&gt;
+				&lt;f:validateRequired /&gt;
+			&lt;/h:inputText&gt;
+			&lt;h:message for="iban" style="color: red;" /&gt;
+			&lt;h:outputLabel value="#{msg['donateMoney.name_of_bank']}:"&gt;
+			&lt;/h:outputLabel&gt;
+			&lt;h:inputText id="name_bank"
+				value="#{donateMoneyController.donation.account.nameOfBank}"&gt;
+				&lt;f:validateRequired /&gt;
+			&lt;/h:inputText&gt;
+			&lt;h:message for="name_bank" style="color: red;" /&gt;
+			&lt;h:outputLabel value="#{msg['donateMoney.donation_amount']}:"&gt;
+			&lt;/h:outputLabel&gt;
+			&lt;h:panelGroup&gt;
+				&lt;h:inputText id="donationAmount"
+						value="#{donateMoneyController.donation.amount}"&gt;
+					&lt;f:validateRequired /&gt;
+					&lt;f:convertNumber maxFractionDigits="2" 
+						minFractionDigits="2" /&gt;
+				&lt;/h:inputText&gt; EUR
+			&lt;/h:panelGroup&gt;
+			&lt;h:message for="donationAmount" style="color: red;" /&gt;
+		&lt;/h:panelGrid&gt;
+		&lt;h:selectBooleanCheckbox
+			value="#{donateMoneyController.donation.receiptRequested}" /&gt; 
+			#{msg['donateMoney.i_want_a_receipt']}&lt;br /&gt;
+		&lt;h:commandButton value="#{msg['donateMoney.donate']}"
+			action="#{donateMoneyController.doDonation}" /&gt;
+	&lt;/h:form&gt;
+&lt;/h:body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 4-27</strong>     <em>donateMoney.</em><em>xhtml</em> Facelet</p>
+<p>We do not have to make any adjustments to the already-programmed Facelets and classes. Again, we can try out the newly implemented use case directly after the obligatory Maven build. In order to obtain a donation form for a campaign in the browser, we must enter the URL from the form <em>Edit donation form </em>(see ‎Fig. 4-6 ) into the browser. As an example,Fig. 4-7 shows the form for the first campaign on the list. We have already filled out the form and clicked the button <em>Donate.</em></p>
+<p>&nbsp;</p>
+<p><strong>Fig. 4-7</strong>     Filled-out donation form</p>
+<p>The page is reloaded and now displays the message generated by the controller (<code>FacesMessage</code>) underneath the title <em>Donate money</em> (see Fig. 4-8).</p>
+<p>&nbsp;</p>
+<p><b>Fig. 4-8</b>     Response page with the FacesMessage after submitting a completed donation form</p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Tutorial%20-%20Java%20EE%207%20&amp;body=4.7%20Implementation%20of%20the%20Remaining%20Use%20Cases%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F1-7-implementation-of-the-remaining-use-cases%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaee7">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaee7/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter foreword"><a href="http://www.turngeek.press/javaee7/front-matter/introduction/">Foreword</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								1 A Profiled Introduction								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-1-structure-of-an-enterprise-java-application/">1.1 Java EE 7 – The Standard for Enterprise Java</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-2-the-java-enterprise-edition-java-ee/">1.2 The Component Architecture of Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-3-the-target-architecture/">1.3 The Target Architecture</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-4-what-next/">1.4 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/setting-up-the-development-environment/">				2 Setting Up the Development Environment				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/tools-and-servers-for-java-ee/">2.1 Tools and Servers for Java EE</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/installation-of-the-required-software-packages/">2.2 Installation of the Required Software Packages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-3-from-project-to-running-web-application-2/">2.3 From Project to Running Web Application</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/">2.4 Eclipse Luna - More Than a Text Editor</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-5-other-tools-used-in-this-workshop/">2.5 Other Tools Used in This Workshop</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">				3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor” 				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-1-introduction/">3.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-2overview-of-use-cases/">3.2	Overview of Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-3domain-classes/">3.3	Domain Classes</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/">3.4 Use Cases</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/4-iteration-1-jsf/">				4 Iteration No. 1 - JavaServer Faces				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-1/">4.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-2/">4.2 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-3/">4.3 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-4/">4.4 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-5-our-first-use-case-display-and-edit-campaign/">4.5 Our First Use Case: "Display and edit campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">4.6 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-7-implementation-of-the-remaining-use-cases/">4.7 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">4.8 New Functionalities in Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">4.9 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-10-exercises/">4.10 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>								5 Functional Tests								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/5-1-introduction/">5.1 Introduction</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter appendix"><a href="http://www.turngeek.press/javaee7/back-matter/appendix/">Appendix</a>
+              						</li>
+																		<li class="back-matter bibliography"><a href="http://www.turngeek.press/javaee7/back-matter/bibliography/">Bibliography</a>
+              						</li>
+																		<li class="back-matter miscellaneous"><a href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Buy the book</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

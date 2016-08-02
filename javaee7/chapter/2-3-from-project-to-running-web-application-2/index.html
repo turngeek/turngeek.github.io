@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/2015/06/javaee7_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>2.3 From Project to Running Web Application | Tutorial &#8211; Java EE 7 </title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/custom-css/web.css?ver=1441711134' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7/wp-json/' />
+<link rel='prev' title='1.4 What Next?' href='http://www.turngeek.press/javaee7/chapter/1-4-what-next/' />
+<link rel='next' title='2.4 Eclipse Luna &#8211; More Than a Text Editor' href='http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7/?p=161' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F2-3-from-project-to-running-web-application-2%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F2-3-from-project-to-running-web-application-2%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-161" id="2.3fromprojecttorunningwebapplication">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaee7/" title="Tutorial &#8211; Java EE 7 " rel="home">Tutorial &#8211; Java EE 7 </a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">2.3 From Project to Running Web Application</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaee7/chapter/installation-of-the-required-software-packages/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">2.3 From Project to Running Web Application</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/">Next</a></span>
+    </div>				<div id="post-161" class="type-1 post-161 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>In the following section, we will use Maven to create our first Java EE 7 web project. We will then add a welcome page for our application and use Maven again to deploy the project on the server. Maven is a complex tool that cannot be covered fully in the space we have here; what follows will use only a fraction of the possibilities it offers. For background knowledge on Maven, we recommend you study the Maven User Center tutorial (<a href="http://maven.apache.org/users/index.html" target="_blank">http://maven.apache.org/users/index.html</a>) or relevant textbooks<span style="color: #000000"> <a title="Bibliography" href="http://www.turngeek.press/javaee7/back-matter/bibliography/">(Sonatype 2014)</a> </span>in  parallel to this chapter.</p>
+<h3>2.3.1  Creating an Empy Java EE 7 Web Project with Maven</h3>
+<p>The Maven system offers users the opportunity to define templates for particular types of Java projects. The generation of a template for a company project, for example, enables a higher degree of project standardization. These templates are known in Maven as <em>archetypes</em>. Corresponding archetypes also exist for Java EE 7 applications.</p>
+<p>A pared down, “bare essentials” <em>archetype </em>for Java EE 7 projects has been developed by Adam Bien, whose credentials include membership of the Java Community Processes expert panel that worked on the Java EE 7 specification<a class="footnote" title="see http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7 and https://github.com/AdamBien/javaee7-essentials-archetype" id="return-footnote-161-1" href="#footnote-161-1"><sup class="footnote">[1]</sup></a>. We will use his template to generate an initial Maven project configuration and structure for our application.</p>
+<p>In order to accomplish this, we will first either create a new directory for all current and future projects, or choose an existing directory to use<a class="footnote" title="Eclipse users can later use this directory as a workspace" id="return-footnote-161-2" href="#footnote-161-2"><sup class="footnote">[2]</sup></a>. In the following section, we will name the directory <code>Java-EE-Workspace</code>. We will then switch to this directory in the command prompt and execute Maven with the <em>archetype</em> mentioned above. Please be aware that the command will be given with all options in one line of the command prompt:<br />
+<code><br />
+mvn archetype:generate -DarchetypeGroupId=com.airhacks -DarchetypeArtifactId=javaee7-essentials-archetype -DarchetypeVersion=1.2<br />
+</code><br />
+Since Maven refers to a central directory in the Web for information about the archetypes and libraries required for the project, working with Maven requires us to maintain a connection to the Internet. Maven creates a directory called <code>.m2</code> in the Home directory of the user, where it deposits local copies of data and libraries requested from the central directory. This increases the speed at which Maven runs during subsequent use.</p>
+<p>The creation of Maven projects in interactive mode (standard setting) occurs in a step-by-step fashion whereby different information about the project is requested from the user. First, we will be asked by Maven about the <code>groupId</code>: a unique identifier for the organization or group that created the project. It is customary here to use the fully qualifed domain name of the individual organization; for our book, therefore, we will enter the domain of dpunkt.verlag, <code>de.dpunkt</code>:<br />
+<code><br />
+Define value for property 'groupId': : de.dpunkt<br />
+</code><br />
+Next, we will be asked for the <code>artifactId</code>, a unique base name for the primary artifact that is created by the project. This is usually a Java archive (e.g. WAR or EAR). A typical Maven-generated artifact takes the form <code>&lt;artifactId&gt;-&lt;version&gt;.&lt;extension&gt;</code>; however, the <em>archetype</em> we are using disregards the version number at this step. For our project, we will use the name <code>my-aktion</code> as the <code>artifactId</code>.<br />
+<code><br />
+Define value for property 'artifactId': : my-aktion<br />
+</code><br />
+Next, the version number can also be entered. <code>1.0-SNAPSHOT</code> is provided as a default value. The addition of <code>SNAPSHOT</code> indicates that this version is still in development. We can accept this default by pressing the enter key.<br />
+<code><br />
+Define value for property 'version':  1.0-SNAPSHOT: :<br />
+</code><br />
+When asked for the property package, we will enter the value <code>de.dpunkt.myaktion</code> and press the enter key. This value will later serve as a prefix for our project’s Java packages.<br />
+<code><br />
+Define value for property 'package':  de.dpunkt: : de.dpunkt.myaktion<br />
+</code><br />
+Next, all information that has been entered thus far will be summarized and can be confirmed by pressing Y and then the enter key:<br />
+<code><br />
+[INFO] Generating project in Interactive mode<br />
+[INFO] Archetype repository missing. Using the one from [com.airhacks:javaee7-essentials-archetype:1.2] found in catalog remote<br />
+Define value for property 'groupId': : de.dpunkt<br />
+Define value for property 'artifactId': : my-aktion<br />
+Define value for property 'version':  1.0-SNAPSHOT: :<br />
+Define value for property 'package':  de.dpunkt: : de.dpunkt.my-aktion<br />
+Confirm properties configuration:<br />
+groupId: de.dpunkt<br />
+artifactId: my-aktion<br />
+version: 1.0-SNAPSHOT<br />
+package: de.dpunkt.my-aktion<br />
+Y: : Y<br />
+</code><br />
+You will then receive confirmation from Maven that the project has been successfully created (<code>BUILD SUCCESS</code>):<br />
+<code><br />
+[INFO] ----------------------------------------------------------<br />
+[INFO] Using following parameters for creating project from Archetype: javaee7-essentials-archetype:1.2<br />
+[INFO] ----------------------------------------------------------<br />
+[INFO] Parameter: groupId, Value: de.dpunkt<br />
+[INFO] Parameter: artifactId, Value: my-aktion<br />
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT<br />
+[INFO] Parameter: package, Value: de.dpunkt.my-aktion<br />
+[INFO] Parameter: packageInPathFormat, Value: de/dpunkt/my-aktion<br />
+[INFO] Parameter: package, Value: de.dpunkt.my-aktion<br />
+[INFO] Parameter: version, Value: 1.0-SNAPSHOT<br />
+[INFO] Parameter: groupId, Value: de.dpunkt<br />
+[INFO] Parameter: artifactId, Value: my-aktion<br />
+[INFO] project created from Archetype in dir: C:\Users\MS\my-aktion<br />
+[INFO] ----------------------------------------------------------<br />
+[INFO] BUILD SUCCESS<br />
+[INFO] ----------------------------------------------------------<br />
+[INFO] Total time: 02:03 min<br />
+[INFO] Finished at: 2014-06-10T20:32:06+01:00<br />
+[INFO] Final Memory: 11M/112M<br />
+[INFO] ----------------------------------------------------------<br />
+</code><br />
+In the directory <code>Java-EE-Workspace</code>, you will now find a directory called <code>my-aktion</code> that contains the project structure for the Java EE web project. The configuration of the Maven project is stored in the file <code>pom.xml</code><a class="footnote" title="Do not rename this file – Maven will search for a configuration file with this name each time the program is started." id="return-footnote-161-3" href="#footnote-161-3"><sup class="footnote">[3]</sup></a>. All information that has been entered thus far in interactive mode will be stored there, as will a number of values provided by the archetype. The file is nevertheless very compact (see Listing 2-1).</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Initial Maven project configuration file pom.xml.">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;${groupId}&lt;/groupId&gt;
+    &lt;artifactId&gt;${artifactId}&lt;/artifactId&gt;
+    &lt;version&gt;${version}&lt;/version&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax&lt;/groupId&gt;
+            &lt;artifactId&gt;javaee-api&lt;/artifactId&gt;
+            &lt;version&gt;7.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;finalName&gt;${artifactId}&lt;/finalName&gt;
+    &lt;/build&gt;
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+        &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;
+    &lt;/properties&gt;
+&lt;/project&gt;</pre>
+<p><strong>Listing 2-1</strong>     Initial Maven project configuration file <code>pom.xml</code>.</p>
+<p>Essentially, our <code>pom.xml</code> file states that a web archive is to be created from the project (tag <code>&lt;packaging&gt;</code>), that the name of the web archive (and therefore also the web application) is <em>my-aktion</em> (tag <code>&lt;finalName&gt;</code>), that our project is dependent on the Java EE 7 API (tag <code>&lt;dependency&gt;</code>) and that Java 8 should be used (tag <code>&lt;maven.compiler.source&gt;</code> or <code>&lt;maven.compiler.target&gt;</code>).  Over the course of this workshop, we will continue to add to the file <code>pom.xml</code> and to integrate additional dependencies to libraries or plug-ins into the project. Our first change involves setting the character set for the source files of our project to UTF-8. To accomplish this, we will insert the following tag in the <code>&lt;properties&gt;</code> section:<br />
+<code><br />
+&lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;<br />
+</code><br />
+Theoretically, the <em>my-aktion</em> project that we have created can already be deployed in WildFly. However, since the project does not yet contain a Facelet, no pages can be displayed within the browser. Since we have not yet set up an IDE, you are free to choose the  text editor with which you wish to create the Facelets for your application’s welcome page. A suitable, free option is Notepad++, which offers a number of useful functionalities including syntax highlighting for different formats (<a href="http://notepad-plus-plus.org/" target="_blank">http://notepad-plus-plus.org/</a>).</p>
+<p>Using the text editor, we will create a file <code>index.xhtml</code> in the directory <code>my-aktion\src\main\webapp</code> as shown in Listing 2-2. Make sure that the file is actually saved in the specified directory under the given name.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false tab-convert:true lang:xhtml decode:true" title="Facelet index.xhtml">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" 
+        xmlns:h="http://xmlns.jcp.org/jsf/html"&gt; 
+    &lt;h:head&gt; 
+        &lt;title&gt;Workshop Java EE 7&lt;/title&gt; 
+    &lt;/h:head&gt; 
+    &lt;h:body&gt; 
+        &lt;h1&gt;Java EE 7: Welcome to our Workshop!&lt;/h1&gt; 
+    &lt;/h:body&gt; 
+&lt;/html&gt;</pre>
+<p><strong>Listing 2-2</strong>     Facelet <code>index.xhtml</code></p>
+<p>We have now created a Java EE web project with Maven and added the first Facelet. In order for the application server to recognize that it is dealing with a JSF application, we must add the configuration file <code>faces-config.xml</code> (as shown in Listing 2-3) to the directory <code>my-aktion\src\main\webapp\WEB-INF</code>. If directories are not present in your project folder, you must create these as well.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true" title="Configuration file faces-config.xml">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;faces-config version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+        http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"&gt;
+&lt;/faces-config&gt;</pre>
+<p><strong>Listing 2-3</strong> Configuration file <code>faces-config.xml</code></p>
+<p>This is not the only way to enable JSF for the application in the application server. For the moment, however, it is the easiest, since this file will also be required to internationalize our application in Chapter 4.</p>
+<p>In the following section, we will make the project available on WildFly. In order to do this, all sources must be compiled and a web archive must be created built and deployed on the application server.</p>
+<h3>2.3.2 The First Build and the First Deployment</h3>
+<p>Maven’s functionality can be extended using plug-ins. We will use a Maven plug-in for WildFly to simplify the build and deployment process. The WildFly Maven plug-in enables us to transfer a web archive to the application server directly via the network. Plug-ins can be added to Maven projects using the file <code>pom.xml</code>. Within the <code>&lt;build&gt;</code> tag, we can add a <code>&lt;plugins&gt;</code> tag to specify our plug-ins. We can insert the WildFly plug-in as follows:</p>
+<pre class="nums-toggle:false wrap-toggle:false plain-toggle:false expand-toggle:false lang:default mark:18-24 decode:true" title="Extended Maven project configuration file pom.xml">&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+    &lt;groupId&gt;${groupId}&lt;/groupId&gt;
+    &lt;artifactId&gt;${artifactId}&lt;/artifactId&gt;
+    &lt;version&gt;${version}&lt;/version&gt;
+    &lt;packaging&gt;war&lt;/packaging&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;javax&lt;/groupId&gt;
+            &lt;artifactId&gt;javaee-api&lt;/artifactId&gt;
+            &lt;version&gt;7.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+    &lt;build&gt;
+        &lt;finalName&gt;${artifactId}&lt;/finalName&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.wildfly.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;wildfly-maven-plugin&lt;/artifactId&gt;
+                &lt;version&gt;1.0.1.Final&lt;/version&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;1.8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;1.8&lt;/maven.compiler.target&gt;
+        &lt;failOnMissingWebXml&gt;false&lt;/failOnMissingWebXml&gt;
+    &lt;/properties&gt;
+&lt;/project&gt;</pre>
+<p><strong>Listing 2-4</strong> Extended Maven project configuration file <code>pom.xml</code>.</p>
+<p>Now we’re away! In order for the application to be deployed in WildFly, WildFly must be started. If this is not – or is no longer – the case, we can start the server in <em>stand-alone mode</em> as described in <a title="2.2 Installation of the Required Software Packages" href="http://www.turngeek.press/javaee7/chapter/2-2-installation-of-the-required-software-packages/">section 2.2.3</a>. Use a new Windows command prompt to access the project directory <code>my-aktion</code>.</p>
+<p>The WildFly-Maven plug-in provides several commands for controlling the deployment process<a class="footnote" title="See also https://docs.jboss.org/wildfly/plugins/maven/latest/" id="return-footnote-161-4" href="#footnote-161-4"><sup class="footnote">[4]</sup></a>. We will start the deployment of the project by using the following Maven command:<br />
+<code><br />
+mvn package wildfly:deploy<br />
+</code><br />
+This command specifies two Maven <em>goals</em> as parameters: <code>package</code> and <code>wildfly:deploy</code>. Maven goals perform a series of commands aimed at fulfilling a clearly defined goal.</p>
+<p>The Maven goal package belongs to the standard phase of the Maven lifecycle and is responsible for ensuring that all classes are compiled and a web archive is created. The resulting file can be found in the <code>target</code> directory of the project folder. The Maven goal <code>wildfly:deploy</code> is made available by the Maven WildFly plug-in and carries out the deployment of the web archive on WildFly. Several status messages regarding the build and deployment process will appear in your window. Finally, a success message with the date and time should appear:<br />
+<code><br />
+[INFO] ----------------------------------------------------------<br />
+[INFO] BUILD SUCCESS<br />
+[INFO] ----------------------------------------------------------<br />
+[INFO] Total time: 3.439 s<br />
+[INFO] Finished at: 2014-06-10T20:55:20+01:00<br />
+[INFO] Final Memory: 13M/78M<br />
+[INFO] ----------------------------------------------------------<br />
+</code><br />
+Take a look at the application server window. A message showing the action should appear here directly after deployment:<br />
+<code><br />
+20:58:04,290 INFO  [org.wildfly.extension.undertow] (MSC service thread 1-2) JBAS017534: Registered web context: /my-aktion<br />
+20:58:04,311 INFO  [org.jboss.as.server] (management-handler-thread - 1) JBAS018559: Deployed "my-aktion.war" (runtime-name : "my-aktion.war")<br />
+</code><br />
+We can also undo the deployment by executing the following command in the project folder:<br />
+<code><br />
+mvn wildfly:undeploy<br />
+</code><br />
+The removal of the application will also be displayed in the application server window:<br />
+<code><br />
+20:59:16,125 INFO  [org.jboss.as.server] (management-handler-thread - 1) JBAS018558: Undeployed "my-aktion.war" (runtime-name: "my-aktion.war")<br />
+</code><br />
+The build process works incrementally, which means that only new elements or elements that have changed since the last build will be compiled or added (during the creation of the web archive). For this reason, multiple iterations of elements that have been deleted or moved around within the project structure can still be located in the resulting web archive. It is necessary, therefore, to clean the project up from time to time; the Maven goal <code>clean</code> can help us to do this. The following command deletes the build area within the project’s <code>target</code> directory.<br />
+<code><br />
+mvn clean<br />
+</code><br />
+For the next section, you should have deployed the project successfully as described earlier using <code>mvn package wildfly:deploy</code>.</p>
+<h3>2.3.3 Testing the Deployment</h3>
+<p>We now want to test whether deployment has been carried out correctly. To do this, we can start a browser and access the following URL:</p>
+<p><a href="http://localhost:8080/my-aktion/index.jsf" target="_blank">http://localhost:8080/my-aktion/index.jsf</a></p>
+<p>Pay attention to upper and lower case, since Java EE differentiates between upper and lower case letters in URLs after the domain name.</p>
+<p>If deployment was successful, the browser will display our site as an output as illustrated in Fig. 2-1.</p>
+<p><a href="http://www.turngeek.press/images/javaee7/chapter2/2-1.png" target="_blank"><img src="http://www.turngeek.press/images/javaee7/chapter2/2-1.png" alt="The welcome page of the My-Aktion application following successful deployment" width="100%" /></a><br />
+<strong>Fig. 2-1</strong> The welcome page of the My-Aktion application following successful deployment</p>
+<p>Did you see something similar on your display? Congratulations! You have created your first Java EE web application and made it available on a WildFly application server. If not, you should review the individual steps once more and be on the lookout for potential errors.</p>
+<p>As you will doubtless have noticed, the application does not yet possess any logic, and our only page consists of static content. Over the course of this book, you will learn step-by-step how real web applications are developed with Java EE. However, the build and deployment process will remain the same from this point onwards.</p>
+<hr /><div class="footnotes"><ol><li id="footnote-161-1">see <span style="color: #0000ff"><a style="color: #0000ff" href="http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7" target="_blank">http://www.adam-bien.com/roller/abien/entry/setting_up_java_ee_7</a></span> and <a href="https://github.com/AdamBien/javaee7-essentials-archetype" target="_blank">https://github.com/AdamBien/javaee7-essentials-archetype</a> <a href="#return-footnote-161-1" class="return-footnote">&crarr;</a></li><li id="footnote-161-2">Eclipse users can later use this directory as a <em>workspace</em> <a href="#return-footnote-161-2" class="return-footnote">&crarr;</a></li><li id="footnote-161-3">Do not rename this file – Maven will search for a configuration file with this name each time the program is started. <a href="#return-footnote-161-3" class="return-footnote">&crarr;</a></li><li id="footnote-161-4">See also <a href="https://docs.jboss.org/wildfly/plugins/maven/latest/" target="_blank">https://docs.jboss.org/wildfly/plugins/maven/latest/</a> <a href="#return-footnote-161-4" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Tutorial%20-%20Java%20EE%207%20&amp;body=2.3%20From%20Project%20to%20Running%20Web%20Application%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F2-3-from-project-to-running-web-application-2%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaee7">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaee7/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter foreword"><a href="http://www.turngeek.press/javaee7/front-matter/introduction/">Foreword</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								1 A Profiled Introduction								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-1-structure-of-an-enterprise-java-application/">1.1 Java EE 7 – The Standard for Enterprise Java</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-2-the-java-enterprise-edition-java-ee/">1.2 The Component Architecture of Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-3-the-target-architecture/">1.3 The Target Architecture</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-4-what-next/">1.4 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/setting-up-the-development-environment/">				2 Setting Up the Development Environment				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/tools-and-servers-for-java-ee/">2.1 Tools and Servers for Java EE</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/installation-of-the-required-software-packages/">2.2 Installation of the Required Software Packages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-3-from-project-to-running-web-application-2/">2.3 From Project to Running Web Application</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/">2.4 Eclipse Luna - More Than a Text Editor</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-5-other-tools-used-in-this-workshop/">2.5 Other Tools Used in This Workshop</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">				3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor” 				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-1-introduction/">3.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-2overview-of-use-cases/">3.2	Overview of Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-3domain-classes/">3.3	Domain Classes</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/">3.4 Use Cases</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/4-iteration-1-jsf/">				4 Iteration No. 1 - JavaServer Faces				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-1/">4.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-2/">4.2 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-3/">4.3 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-4/">4.4 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-5-our-first-use-case-display-and-edit-campaign/">4.5 Our First Use Case: "Display and edit campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">4.6 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-7-implementation-of-the-remaining-use-cases/">4.7 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">4.8 New Functionalities in Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">4.9 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-10-exercises/">4.10 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>								5 Functional Tests								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/5-1-introduction/">5.1 Introduction</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter appendix"><a href="http://www.turngeek.press/javaee7/back-matter/appendix/">Appendix</a>
+              						</li>
+																		<li class="back-matter bibliography"><a href="http://www.turngeek.press/javaee7/back-matter/bibliography/">Bibliography</a>
+              						</li>
+																		<li class="back-matter miscellaneous"><a href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Buy the book</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

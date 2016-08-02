@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/2015/06/javaee7_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>Foreword | Tutorial &#8211; Java EE 7 </title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/custom-css/web.css?ver=1441711134' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7/wp-json/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7/?p=4' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Ffront-matter%2Fintroduction%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Ffront-matter%2Fintroduction%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-front-matter postid-4" id="foreword">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaee7/" title="Tutorial &#8211; Java EE 7 " rel="home">Tutorial &#8211; Java EE 7 </a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">Foreword</h2>
+					<div class="nav">
+  <!-- 	<h2 class="entry-title">Foreword</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaee7/chapter/1-1-structure-of-an-enterprise-java-application/">Next</a></span>
+    </div>				<div id="post-4" class="foreword post-4 front-matter type-front-matter status-publish hentry front-matter-type-foreword">
+					
+					<div class="entry-content">
+					  				    									
+					<h3>1 Who Is This Book For?</h3>
+<p>The workshop contained within this book aims to offer an introduction to Java Enterprise Edition 7 (Java EE 7). Our starting point for this complex topic will be the <em>web profile</em> introduced in Java EE 6: a standardized subset of Java EE APIs that are intended specifically for web applications. This book will guide the reader through the step-by-step development of a web application based on web profile technologies. The end stage of development will also see us use some APIs that are <em>not</em> part of the web profile, but are of high practical relevance for professional applications.</p>
+<p>Though this book will also impart plenty of information regarding the ways in which Java EE 7 has been improved in comparison to its predecessor, it has been envisioned primarily for beginners seeking a comprehensive introduction to Java EE in the current version rather than for experienced Java developers wishing to bring their knowledge up to date.</p>
+<p>The book&#8217;s success depends on the possession of some general and some more specialist areas of knowledge by the reader.</p>
+<p>General requirements include:</p>
+<ul>
+<li>good knowledge of object-oriented programming with Java</li>
+<li>basic knowledge of the Java SE API</li>
+<li>basic knowledge of web technologies (HTTP, HTML, web server)</li>
+<li>basic knowledge of databases and XML</li>
+<li>basic knowledge of distributed systems</li>
+<li>basic operating system knowledge</li>
+</ul>
+<p>Special requirements include:</p>
+<ul>
+<li>basic knowledge of Java annotations</li>
+<li>basic knowledge of an integrated development environment for Java</li>
+<li>knowledge of the operating system&#8217;s command line</li>
+<li>basic principles of SQL</li>
+</ul>
+<p>If you are not yet familiar with these more specialized concepts, you can pick up the necessary knowledge quite quickly in parallel to your study of the book. The general requirements, however, are somewhat broader in scope and represent knowledge that can generally only be acquired over a longer period of study.</p>
+<p>We envision this book as being of particular use to the following groups (though this list is in no way intended to be exhaustive):</p>
+<ul>
+<li>Web developers who possess Java knowledge but who have so far worked predominantly with alternative web programming languages such as PHP and ASP.NET</li>
+<li>Java developers whose work to date has involved developing for other platforms (e.g. desktop or mobile devices)</li>
+<li>Students of computer science or business information systems in the more advanced semesters of their Bachelor degree</li>
+</ul>
+<p>Java EE is a powerful programming platform, and beginners can easily feel overwhelmed. This book aims, wherever possible, to “skim off” the more complex aspects of each topic and afford the beginner an overview of key information. This is intended to ease the reader in and maintain high levels of motivation.</p>
+<p>Some of you reading this book will doubtlessly already be Java EE experts. In this case, we ask for your understanding regarding any lack of completeness that has resulted unavoidably from simplifications made. This is a compromise we have accepted consciously, both for didactic purposes and on the basis that a sound introduction leaves plenty of time for finer details and alternative methods later. The knowledge base afforded you by this book will also enable you to quickly get to grips with new aspects of Java EE.</p>
+<h3>2 A Note on the Second Edition</h3>
+<p>Java EE has been available in Version 7 since the second quarter of 2013. Oracle’s reference implementation is the Glassfish application server in Version 4. The time between the final release of a Java EE specification and the release of a marketable Java EE application server can be very lengthy. While Glassfish 4 was the only Java EE 7 application server at the time of writing the first edition of this book, WildFly 8 (the successor to JBoss AS 7) has since emerged as another prominent implementation. On grounds of the widespread use of JBoss AS 7, we consider WildFly 8 to be of the highest practical relevance for beginners, which is why it is used for the majority of the development in this book. In the last iteration of the software development cycle, we will also deploy the Glassfish 4 application server. This is intended to broaden the learner’s competence regarding the use of tools. This list of execution environments is rounded off by <em>OpenShift</em>, the PaaS offering from Red Hat, which enables the user to deploy Java EE 7 applications in the cloud.</p>
+<p>While Version 7 includes many improvements to important component specifications (JSF, CDI, JPA, EJB), it is not important for beginners to understand them fully at this point. This second edition of the book does not purport to educate readers in using these improved features, but to provide them with a sound and comprehensive introduction to Java EE as a whole. That being said, we <em>will </em>be deploying the most significant and exciting of these new innovations, including the new REST API and WebSockets with HTML5. Theoretical sections at the end of every chapter will also address aspects of and improvements to Java EE 7 that are not encountered in the development phases.</p>
+<p>New for the second edition is instruction regarding features of Java EE 7 related to JavaServer Faces, including resource library contracts and HTML5 support. Additionally, the second edition has taken steps to incorporate the internationalization of Java EE applications, and a new chapter has been added on functional tests.</p>
+<p>We believe that the concept and scope of the book renders it ideal for newcomers to Java EE. It is intended to provide the reader with a broad but controlled introduction to the topic: to familiarize them with new possibilities offered by Java EE 7, to enable them to try out the highlights and to equip them with the skills and knowledge to work with a range of commonly used open source products.</p>
+<h3>3 Additional Information On the Book</h3>
+<p>The complete source code for the applications developed within this book (&#8220;My-Aktion&#8221; [My Campaign] and &#8220;My-Aktion-Monitor&#8221; [My Campaign Monitor]) can be found on <a href="https://github.com/marcusschiesser/my-aktion-2nd">GitHub</a>, the popular community platform for developers. <a title="Buy the book" href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Section A.2</a> in the appendix contains information on how Git should be used to gain access to the code.</p>
+<p>&lt;!&#8211;<br />
+A website has also been created to accompany the book. On it can be found supplemental information regarding the book and the use of Java EE technologies.<br />
+<a href="http://www.javaee7.de/tutorial">http://www.javaee7.de/tutorial</a><br />
+&#8211;&gt;</p>
+<h4>4 Structure of the Book</h4>
+<p><a title="1 A Profiled Introduction" href="http://www.turngeek.press/javaee7/part/main-body/">Chapter 1</a> is intended to afford the reader a brief overview of Java EE. In it, we will develop a target architecture to accompany us through the rest of the book.</p>
+<p>In <a title="2 Setting Up the Development Environment" href="http://www.turngeek.press/javaee7/part/setting-up-the-development-environment/">Chapter 2</a>,  we move to look at the development and execution environment for our software project. We will learn how to install WildFly and how to create an initial Java EE project and deploy it on WildFly. This will be accomplished with the help of Maven, a widely used project configuration management tool.</p>
+<p>The Appendix contains a supplementary <a title="Buy the book" href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">section, A.1</a>, that is intended to be used in parallel to Chapters 1 and 2 by interested readers wishing to gain a quick understanding of Java EE applications at the source code level.</p>
+<p><a title="3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor”" href="http://www.turngeek.press/javaee7/part/requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">Chapter 3</a> describes the application that is to be created. The description will focus on functional use cases and their processes as well as on domain classes and associated graphical interfaces.</p>
+<p>The development of the software will be accomplished in multiple iterations. Each chapter will cover one iteration and will end with a range of tasks. The first iteration begins in <a title="4 Iteration 1 – JSF" href="http://www.turngeek.press/javaee7/part/4-iteration-1-jsf/">Chapter 4</a> with the web interface. The application will be fully operational upon completion of the iteration described in <a title="Buy the book" href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Chapter 8</a>. <a title="Buy the book" href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Chapter 9</a> will see us make use of a further application server, Glassfish 4, to implement the final use case.</p>
+<p><a title="Buy the book" href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Chapter 10</a> is devoted to the topic of “Java EE 7 and the Cloud”. While full standardization in this regard is expected to be accomplished with the release of Java EE 8, a proprietary cloud offering for Java EE applications is already in existence. We will show you how to deploy the &#8220;My-Aktion&#8221; application for the cloud provider OpenShift. OpenShift offers WildFly instances in the cloud, enabling the distribution of Java EE applications on the web without the operation of a corresponding server.</p>
+
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Tutorial%20-%20Java%20EE%207%20&amp;body=Foreword%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Ffront-matter%2Fintroduction%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaee7">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaee7/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter foreword"><a href="http://www.turngeek.press/javaee7/front-matter/introduction/">Foreword</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								1 A Profiled Introduction								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-1-structure-of-an-enterprise-java-application/">1.1 Java EE 7 – The Standard for Enterprise Java</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-2-the-java-enterprise-edition-java-ee/">1.2 The Component Architecture of Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-3-the-target-architecture/">1.3 The Target Architecture</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-4-what-next/">1.4 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/setting-up-the-development-environment/">				2 Setting Up the Development Environment				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/tools-and-servers-for-java-ee/">2.1 Tools and Servers for Java EE</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/installation-of-the-required-software-packages/">2.2 Installation of the Required Software Packages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-3-from-project-to-running-web-application-2/">2.3 From Project to Running Web Application</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/">2.4 Eclipse Luna - More Than a Text Editor</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-5-other-tools-used-in-this-workshop/">2.5 Other Tools Used in This Workshop</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">				3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor” 				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-1-introduction/">3.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-2overview-of-use-cases/">3.2	Overview of Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-3domain-classes/">3.3	Domain Classes</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/">3.4 Use Cases</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/4-iteration-1-jsf/">				4 Iteration No. 1 - JavaServer Faces				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-1/">4.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-2/">4.2 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-3/">4.3 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-4/">4.4 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-5-our-first-use-case-display-and-edit-campaign/">4.5 Our First Use Case: "Display and edit campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">4.6 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-7-implementation-of-the-remaining-use-cases/">4.7 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">4.8 New Functionalities in Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">4.9 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-10-exercises/">4.10 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>								5 Functional Tests								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/5-1-introduction/">5.1 Introduction</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter appendix"><a href="http://www.turngeek.press/javaee7/back-matter/appendix/">Appendix</a>
+              						</li>
+																		<li class="back-matter bibliography"><a href="http://www.turngeek.press/javaee7/back-matter/bibliography/">Bibliography</a>
+              						</li>
+																		<li class="back-matter miscellaneous"><a href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Buy the book</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

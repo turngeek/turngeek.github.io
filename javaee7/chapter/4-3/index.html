@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ --> 
+<!--[if lt IE 7 ]> <html lang="en-US" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en-US" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en-US" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en-US" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html lang="en-US" class="no-js"> <!--<![endif]-->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="https://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+    <![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta itemprop='author' content='Marcus Schiesser and Martin Schmollinger' id='author'>
+<meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
+<meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
+<meta itemprop='image' content='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/2015/06/javaee7_cover.jpg' id='image'>
+<meta itemprop='inLanguage' content='en' id='inLanguage'>
+<meta itemprop='publisher' content='TurnGeek' id='publisher'>
+<link rel="shortcut icon" href="http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<title>4.3 Internationalization | Tutorial &#8211; Java EE 7 </title>
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://www.turngeek.press/javaee7/xmlrpc.php" />
+
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/javaee7\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/javaee7/wp-content/uploads/sites/2/custom-css/web.css?ver=1441711134' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='http://www.turngeek.press/javaee7/wp-json/' />
+<link rel='prev' title='4.2 Domain Classes as JavaBeans' href='http://www.turngeek.press/javaee7/chapter/4-2/' />
+<link rel='next' title='4.4 The Templating System' href='http://www.turngeek.press/javaee7/chapter/4-4/' />
+<meta name="generator" content="WordPress 4.4" />
+<link rel='shortlink' href='http://www.turngeek.press/javaee7/?p=316' />
+<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F4-3%2F" />
+<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/javaee7/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F4-3%2F&#038;format=xml" />
+<style type="text/css">
+/* <![CDATA[ */
+img.latex { vertical-align: middle; border: none; background: none; }
+/* ]]> */
+</style>
+
+</head>
+<body class="single single-chapter postid-316" id="4.3internationalization">
+	<!-- Faccebook share js sdk -->
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, "script", "facebook-jssdk"));</script>
+
+<!-- a11y toolbar -->
+<div class="a11y-toolbar">
+	</div>
+<!-- // a11y toolbar -->
+
+
+	   	 
+		<span itemscope itemtype="http://schema.org/WebPage" itemref="about copyrightHolder copyrightYear inLanguage publisher">		
+		<div class="nav-container">
+				<nav>
+			
+			 		<!-- Book Title -->
+				    <h1 class="book-title"><a href="http://www.turngeek.press/javaee7/" title="Tutorial &#8211; Java EE 7 " rel="home">Tutorial &#8211; Java EE 7 </a></h1>
+			    
+			   
+			    
+					    <div class="sub-nav-left">
+							<!-- Logo -->
+							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+					    </div> <!-- end .sub-nav-left -->
+			    
+			    <div class="sub-nav-right">
+			    
+					    	
+						
+						<!-- --> 
+				
+				</div> <!-- end .sub-nav-right -->
+			</nav>
+			      
+			  <div class="sub-nav">       
+			     <!-- Author Name -->   
+			    <div class="author-wrap"> 
+			    									     	<h3>Marcus Schiesser and Martin Schmollinger</h3>
+		     					     </div> <!-- end .author-name -->
+		     
+			  </div><!-- end sub-nav -->  
+			    
+				 
+		</div> <!-- end .nav-container -->
+
+	<div class="wrapper"><!-- for sitting footer at the bottom of the page -->	    
+			<div id="wrap">	    
+				<div id="content">
+
+	 	
+							<h2 class="entry-title">4.3 Internationalization</h2>
+					<div class="nav">
+  	<span class="previous"><a href="http://www.turngeek.press/javaee7/chapter/4-2/">Previous</a></span>
+  <!-- 	<h2 class="entry-title">4.3 Internationalization</h2> -->
+  	<span class="next"><a href="http://www.turngeek.press/javaee7/chapter/4-4/">Next</a></span>
+    </div>				<div id="post-316" class="type-1 post-316 chapter type-chapter status-publish hentry">
+					
+					<div class="entry-content">
+					  				    									
+					<p>Web applications are frequently distributed and used on an international scale. For this reason, it’s essential that views are able to adjust dynamically to different languages and countries without having to be changed at the code level. Languages, countries and even narrower categories such as regions  can be represented by the Java type <code>java.util.Locale</code>.</p>
+<p>The <code>String</code> representation of a <em>locale</em> is a well-known identifier that encodes the language and country using their standard two-character abbreviations in lower and upper case letters respectively. For example, <code>de</code> stands for German and <code>DE</code> for Germany, which means that <code>de_DE</code> stands for German/Germany and <code>de_AT</code> for German/Austria.</p>
+<p>The string representation can be further refined by appending additional variants for regions (for example, <code>de_DE-BW</code> stands for German/Germany/Baden-Württemberg, a region in the southwest of Germany). In light of this, we often refer to applications, websites or individual areas of a website as being <em>localized</em> – that is, displayed according to the particulars of the current <em>locale</em>.</p>
+<p>A number of tags can be localized in JSF by specifying a <code>Locale</code> object or its <code>String</code> representation (e.g. the displaying of dates).  If a tag does not possess explicit information about a <em>locale</em>, the <em>locale</em> of the enclosing tag will be used. If this tag also does not possess any information, the <em>locale</em> can be read from a browser request. The <code>Accept-Language</code> header on the request contains a list of accepted <em>locales</em>, which can be managed in the browser settings.</p>
+<p>In addition to “localizable” tags, the automatic adjustment of texts is another important requirement. In each view, there are titles or captions that must be furnished with different content (e.g. English or German terms) depending on the respective <em>locale</em>. The translations are managed in the form of key-word pairs. The class <code>java.util.ResourceBundle</code> represents and implements this form of management. JSF applications allow us to deposit the <em>ResourceBundle</em> data in properties files. When the view is rendered, the text will then be read from the relevant properties file via the key and in accordance with the current <em>locale</em>.</p>
+<p>The configuration file <code>faces-config.xml</code>, which we have already come across, can be used to determine which <em>locales</em> are supported by our JSF application and which <em>ResourceBundles</em> are available globally. Our My-Aktion application will support German and English. When the client does not explicitly supply a supported language in its HTTP request, English will be used as the default language. To implement internationalization, we will therefore introduce a <em>ResourceBundle</em> called <code>messages</code> for localizing text messages. This involves assigning a variable name <code>msg</code> that can be used in the Facelets’ EL expressions to acces the localized text. We can modify the file <code>faces-config.xml</code> according to Listing 4:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;faces-config version="2.2"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
+	http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"&gt;
+	<strong>&lt;application&gt;
+		&lt;locale-config&gt;
+			&lt;default-locale&gt;en&lt;/default-locale&gt;
+			&lt;supported-locale&gt;en&lt;/supported-locale&gt;
+			&lt;supported-locale&gt;de&lt;/supported-locale&gt;
+		&lt;/locale-config&gt;
+		&lt;resource-bundle&gt;
+			&lt;base-name&gt;messages&lt;/base-name&gt;
+			&lt;var&gt;msg&lt;/var&gt;
+		&lt;/resource-bundle&gt;
+	&lt;/application&gt;</strong>
+&lt;/faces-config&gt;
+</pre>
+<p><strong>Listing 4.4     </strong>Configuration file <em>faces.config.xml</em></p>
+<p>As a datastore for our <em>ResourceBundle</em> <code>message</code>, we will now create a properties file for each <em>locale</em> in the directory <code>src\main\resources</code>. The file names consist of the base name <code>messages</code> &#8211; as specified in Listing 4-4 &#8211; plus the string representation of the respective <em>locale</em> and the suffix <code>.properties</code>.</p>
+<p>In order to be able to try out the concept, we want to localize the title and welcome form of the welcome page <code>index.xhtml</code>. To do this, we will create the properties files <code>messages_en.properties</code> and <code>messages_de.properties</code> in accordance with ‎Listing 4-5 and ‎Listing 4-6. Lines that begin with <code>#</code> are comments. We will use the English terms as keys.</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true"># index.xhtml
+welcome.title=Workshop Java EE 7
+welcome.text=Java EE 7: Welcome to our Workshop!
+</pre>
+<p><strong>Listing 4.5     </strong>Properties file <em>messages_en.properties</em></p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true"># index.xhtml
+welcome.title= Workshop Java EE 7
+welcome.text=Java EE 7: Willkommen zu unserem Workshop!</pre>
+<p><strong>Listing 4.6     </strong>Properties file <em>messages_de.properties</em></p>
+<div class="textbox shaded">
+<p><strong>Hierarchical Searches in Properties Files</strong></p>
+<p>Often, a <em>locale</em>-independent properties file containing all the default texts of the application is defined. For our ResourceBundle, this would be the file with the name <code>messages.properties</code>. It represents the root of a search tree that will ideally store the properties files for the languages on the second level, the countries on the third level and the regionson the fourth level. The search begins in the most specialized file (i.e. the leaf of the tree) and, if unsuccessful, moves towards the root with the hopes of yielding results. For the <em>locale</em> <code>de_DE</code>, the search would begin in <code>messages_de_DE.properties</code> before moving to <code>messages_de.properties</code> and finally to messages.properties.</p>
+</div>
+<p>All that’s left to do now is to access the <em>ResourceBundle</em> in the Facelet <code>index.xhtml</code>; then, we’ll be ready attempt localization. To do this, we will replace the hard-coded texts with EL expression using the corresponding keys in the properties files. We will adjust the Facelet as shown in ‎Listing 7:</p>
+<pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">&lt;!DOCTYPE html&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" 	
+	xmlns:h="http://xmlns.jcp.org/jsf/html"&gt;
+	&lt;h:head&gt;
+		&lt;title&gt;#<strong>{msg['welcome.title']}</strong>&lt;/title&gt;
+	&lt;/h:head&gt;
+	&lt;h:body&gt;
+		&lt;h1&gt;#<strong>{msg['welcome.text']}</strong>&lt;/h1&gt;
+	&lt;/h:body&gt;
+&lt;/html&gt;
+</pre>
+<p><strong>Listing 7     </strong>The <em>index.xhtml</em> Facelet</p>
+<p>We can trial our whole implementation by running our browser with multiple <em>locales. </em>Firefox lets us add language packages as add-ons. Additionally, there are other add-ons that allow us to easily adjust the desired <em>locale </em>of the browser<a class="footnote" title="e.g. https://addons.mozilla.org/de/firefox/addon/quick-locale-switcher/" id="return-footnote-316-1" href="#footnote-316-1"><sup class="footnote">[1]</sup></a>. The result that appears in the browser when <code><a href="http://localhost:8080/my-aktion/index.jsf" target="_blank">http://localhost:8080/my-aktion/index.jsf</a></code> is accessed should vary depending on which <em>locale</em> has been set. Try it out and see for yourself!</p>
+<hr /><div class="footnotes"><ol><li id="footnote-316-1">e.g. <code><a href="https://addons.mozilla.org/de/firefox/addon/quick-locale-switcher/" target="_blank">https://addons.mozilla.org/de/firefox/addon/quick-locale-switcher/</a></code> <a href="#return-footnote-316-1" class="return-footnote">&crarr;</a></li></ol></div>
+					</div><!-- .entry-content -->
+				</div><!-- #post-## -->
+
+			
+				</div><!-- #content -->
+			
+				<!-- Share buttons -->
+	<div class="share-wrap-single">
+		<ul class="share share-single">
+						<li class="email"><a href="mailto:?subject=I%20wanted%20to%20share%20this%20post%20with%20you%20from%20Tutorial%20-%20Java%20EE%207%20&amp;body=4.3%20Internationalization%20-%20http%3A%2F%2Fwww.turngeek.press%2Fjavaee7%2Fchapter%2F4-3%2F" title="Email to a friend" target="_blank">Share via Email</a>
+			</li>
+			<li class="twitter"><a href="https://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-width="97px">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script></li>
+			<li class="facebook"><div class="fb-like" data-send="false" data-layout="button_count" data-width="60" data-show-faces="false"></div></li>
+									
+		</ul>
+	</div><!-- end .share-wrap-single --> 
+			
+				
+		
+	<div id="sidebar">
+
+		<ul id="booknav">
+		<!-- If Logged in show ADMIN -->
+								
+				<li class="home-btn"><a href="http://www.turngeek.press/javaee7">Home</a></li>
+
+		<!-- TOC button always there -->
+				<li class="toc-btn"><a href="http://www.turngeek.press/javaee7/table-of-contents">Table of Contents</a></li>
+			</ul>
+
+		<!-- Pop out TOC only on READ pages -->
+						<div id="toc">
+			<a href="#" class="close">Close</a>
+			<ul>
+				<li><h4><!-- Front-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="front-matter foreword"><a href="http://www.turngeek.press/javaee7/front-matter/introduction/">Foreword</a>
+              						</li>
+											</ul>
+				</li>
+								<li><h4>								1 A Profiled Introduction								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-1-structure-of-an-enterprise-java-application/">1.1 Java EE 7 – The Standard for Enterprise Java</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-2-the-java-enterprise-edition-java-ee/">1.2 The Component Architecture of Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-3-the-target-architecture/">1.3 The Target Architecture</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-4-what-next/">1.4 What Next?</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/setting-up-the-development-environment/">				2 Setting Up the Development Environment				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/tools-and-servers-for-java-ee/">2.1 Tools and Servers for Java EE</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/installation-of-the-required-software-packages/">2.2 Installation of the Required Software Packages</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-3-from-project-to-running-web-application-2/">2.3 From Project to Running Web Application</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-4-eclipse-luna-more-than-a-text-editor/">2.4 Eclipse Luna - More Than a Text Editor</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/2-5-other-tools-used-in-this-workshop/">2.5 Other Tools Used in This Workshop</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/requirements-of-the-sample-applications-my-aktion-and-my-aktion-monitor/">				3 Requirements of the Sample Applications “My-Aktion” and “My-Aktion-Monitor” 				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-1-introduction/">3.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-2overview-of-use-cases/">3.2	Overview of Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-3domain-classes/">3.3	Domain Classes</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/">3.4 Use Cases</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>				<a href="http://www.turngeek.press/javaee7/part/4-iteration-1-jsf/">				4 Iteration No. 1 - JavaServer Faces				</a>				</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-1/">4.1 Introduction</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-2/">4.2 Domain Classes as JavaBeans</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-3/">4.3 Internationalization</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-4/">4.4 The Templating System</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-5-our-first-use-case-display-and-edit-campaign/">4.5 Our First Use Case: "Display and edit campaign"</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-6-additional-jsf-and-java-ee-technologies/">4.6 Additional JSF and Java EE Technologies</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/1-7-implementation-of-the-remaining-use-cases/">4.7 Implementation of the Remaining Use Cases</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-8-new-functionalities-in-java-ee-7/">4.8 New Functionalities in Java EE 7</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-9-a-brief-venture-into-primefaces/">4.9 A Brief Venture into PrimeFaces</a>
+                							</li>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/4-10-exercises/">4.10 Exercises</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4>								5 Functional Tests								</h4></li>
+				<li>
+					<ul>
+																				<li class="chapter type-1"><a href="http://www.turngeek.press/javaee7/chapter/5-1-introduction/">5.1 Introduction</a>
+                							</li>
+											</ul>
+				</li>
+								<li><h4><!-- Back-matter --></h4></li>
+				<li>
+					<ul>
+																		<li class="back-matter appendix"><a href="http://www.turngeek.press/javaee7/back-matter/appendix/">Appendix</a>
+              						</li>
+																		<li class="back-matter bibliography"><a href="http://www.turngeek.press/javaee7/back-matter/bibliography/">Bibliography</a>
+              						</li>
+																		<li class="back-matter miscellaneous"><a href="http://www.turngeek.press/javaee7/back-matter/buy-the-book/">Buy the book</a>
+              						</li>
+											</ul>
+				</li>
+			</ul>
+		</div><!-- end #toc -->
+		
+
+	</div><!-- end #sidebar -->
+	
+	</div><!-- #wrap -->
+	<div class="push"></div>
+	
+	</div><!-- .wrapper for sitting footer at the bottom of the page -->
+
+
+<div class="footer">
+	<div class="inner">
+								
+			
+						<p class="cie-name"><a href="http://pressbooks.com">Pressbooks.com: Simple Book Production</a></p>
+	</div><!-- #inner -->
+</div><!-- #footer -->
+</span><!-- schema.org -->
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='http://www.turngeek.press/javaee7/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>

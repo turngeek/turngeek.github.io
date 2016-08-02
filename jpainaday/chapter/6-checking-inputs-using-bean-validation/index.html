@@ -161,11 +161,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 </ul>
 <p>Both mechanisms occur in a fully automated manner. Rather than producing lines of code, the progammer is required simply to annotate the attribute of the entity to be checked with an annotation from the Bean Validation API.</p>
 <p>Again, we can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=3vxd8ixcbyl2tsr2" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign Persist Donations</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>6.1 Annotate Entities with Conditions</h3>
 <p>To prompt the entities to use Bean Validation, individual attributes of the entities must be annotated with annotations from the Bean Validation API. The annotations are generally located in the package <code>javax.validation.constraints</code>. In our sample application, we can transfer a definition of a condition from the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> directly into a corresponding annotation.</p>
 <p>Let’s start with the <code>targetAmount</code> attribute of type <code>Double</code> from the class <code>Campaign</code>.</p>
@@ -324,11 +324,11 @@ private List&lt;Donation&gt; donations;
 <p>The various cascading operations can be combined as desired in the definition of the relationship. This makes it possible to set combinations such as <code>REFRESH</code> and <code>REMOVE</code>. However, if you want to cascade all possible operations at the same time, it is not necessary to list them individually. In this case, you can simply attach the attribute cascade to the value <code>CascadeType.ALL</code>.</p>
 <p>A cascading operation also works recursively: if a further entity is assigned to an assigned entity and both relationships have set the same cascading operation, the operation will be extended over two entities. If our Donation object had assigned a further object with <code>CascadeType.REMOVE</code>, this would also be removed at the same time as the higher-level <code>Campaign</code> object.</p>
 <p>If you have other problems with your project, please compare it with the project behind the following link:</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=lk5gn1vcsf19632d" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign Bean Validation</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
 <script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>

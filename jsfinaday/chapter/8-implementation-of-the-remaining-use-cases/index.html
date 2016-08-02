@@ -131,11 +131,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					<div class="entry-content">
 					  				    									
 					<p>Now we can return to our implementation and focus our attention on the rest of our use cases. To better understand their implementation, however, we recommend to take another <a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/" target="_blank">look back</a> at the input screen and the processing logic of the corresponding use cases before taking any practical steps. After that, you can continue to work in your own Codenvy workspace or you can use the following project state in a temporary workspace.</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=xihg0q6pq9i28ed5" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after Chapter 6 (First Use Case)</p>
 </div>
-<p>[/sociallocker]<br />
+<p><br />
 <!--https://codenvy.com/f?id=xwlxynotrpju2m42--></p>
 <h3>8.1 Editing Campaigns and Creating New Campaigns</h3>
 <p>The use cases <em>Edit campaigns</em> and <em>Create new campaign</em> have the same input screen and can therefore be managed with the same controller class. The only difference between the two use cases is that the first case involves the editing of the existing <code>Campaign</code> object, which means that the current values of the properties must be displayed in the input screen. If a new campaign is being set up, a new <code>Campaign</code> object must be created and its properties set with new values via the input screen. Furthermore, we must manage the processing mode that determines whether a new campaign should be created or an existing campaign edited. The management of the Campaign object and the processing mode is implemented in the class <code>CampaignProducer</code> (see ‎Listing  8-1).</p>

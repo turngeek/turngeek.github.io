@@ -130,11 +130,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					<div class="entry-content">
 					  				    									
 					<p>In this chapter, we get in touch with the most current bean technology in Java EE, namely <em>Contexts and Dependency Injection (CDI)</em>. Before we start, please verify again that your project is accessible in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project and by that to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-47-1" href="#footnote-47-1"><sup class="footnote">[1]</sup></a>.</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=uojnr12njo9j4p9v" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 4 (JSP MVC)" width="77" height="21" /></a>
 <p class="wp-caption-text">Project after Chapter 6 (EJB)</p>
 </div>
-<p>[/sociallocker]<br />
+<p><br />
 <!--https://codenvy.com/f?id=yh40q4edg5m22m6f--></p>
 <p>CDI is the newest Java component technology. CDI 1.1 is part of Java EE 7. CDI is a very modern managed bean technology providing an enhanced dependency mechanism together with several scopes for JSF applications. Furthermore, CDI supports loose coupling by event-based messaging within the same Java virtual machine. That means, CDI beans can fire events which other CDI beans may catch and process. CDI provides similar features as EJB. E.g. since CDI 1.1 it is possible to configure the same transactional behaviour as for EJB beans. Additionally, CDI provides a mechanism to extend its abilities. Several project use this mechanism to provide CDI extensions, e.g. <a href="https://deltaspike.apache.org/">Apache DeltaSpike</a> or <a href="http://seamframework.org/Community/CDIExtensions.html">Seam 3</a>. In the following, we will show how to replace JSF Managed Beans as well EJB in our sample application My-Memo by CDI.</p>
 <h3>7.1 Using CDI for Controllers</h3>
@@ -348,11 +348,11 @@ public class MemoController implements Serializable {
 <p>Although, we were able to replace EJB by CDI in our application, this is not always possible in general. Indeed, the CDI standard provides some features that are provided by EJB in the same way (e.g. transactional behaviour), but the EJB standard still has some features that are not supported by CDI out-of-the box (e.g. security or timers). On the other hand, more and more features are added to CDI by extensions, so that in the near future EJB might be replaced by CDI, too.</p>
 <p>In current projects, CDI and EJB are used together successfully. Nevertheless, it is recommendable in these cases not to mix bean technologies within one layer of the software architecture.</p>
 <p>If you are not happy with your own implementation, you can compare your implementation with ours by following the factory link below.</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=aq0lsrs69u2ijzs3" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 4 (JSP MVC)" width="77" height="21" /></a>
 <p class="wp-caption-text">Project after Chapter 7 (CDI)</p>
 </div>
-<p>[/sociallocker]<br />
+<p><br />
 <!--https://codenvy.com/f?id=zakggz87xsruasma--></p>
 <h3>7.4 Further Reading</h3>
 <p>Currently, there are only few books that address CDI exclusively. Below, you will find a reference to a book that gives an introduction to the reference implementation Weld. Further, there are several books about Java EE or Java EE technologies like EJB that provide single chapters about CDI. One example is listed below, too.</p>

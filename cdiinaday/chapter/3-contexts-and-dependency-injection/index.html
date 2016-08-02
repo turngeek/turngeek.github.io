@@ -156,11 +156,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 <p>The <em>DependentScope</em> is defined by the annotation <code>@Dependent</code> from the package <code>javax.enterprise.context</code>.</p>
 <h4>3.1.5 Setting the Scopes for Our Application</h4>
 <p>After all the theoretic background it is now time for the first code changes on the given sample application. Please click the link below and start the application as explained in <a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/" target="_blank">Chapter 2</a>:</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=3vd3voxnsovb61ib" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE</p>
 </div>
-<p>[/sociallocker]</p>
+
 <p>If you check the sample applications code, you see that <em>SessionScope</em> is used for all our beans. This means that our application functions as desired, but that its use of resources is not as good as it could be.</p>
 <p>To improve our use of resources, we can take advantage of the structure built up for the sample application:</p>
 <p>Data that must survive longer than the lifespan of a JSF view have been stored in the <code>CampaignListProducer</code> and <code>CampaignProducer</code> classes. These data must continue to use <em>SessionScope.</em></p>
@@ -171,11 +171,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 <p>This said, we must remember that the decision to permit data to be saved is a design one. As such, this condition could potentially be changed for any bean at a later date. We will therefore now set the scope of all controller beans to the <em>ViewScope</em>, including the <code>ListDonationsController</code>. While this admittedly results in less-than-optimal resource use, it does mean that all controller beans are now uniform in terms of their scope.</p>
 <p>The authors take the view that this results in a clear design whilst also avoiding potentially confusing future discussions about why one controller bean is <em>ViewScoped</em> and another is <em>RequestScoped</em>.</p>
 <p>For your convenience find below a link to our sample application with all the necessary scope changes done:<br />
-[sociallocker]
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=o34ly2anlngle2xm" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE (Scopes changed)</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>3.2 Referencing Beans Via Dependency Injection</h3>
 <p>So far, we have explained how a container instantiates and deletes a bean. What we’ve yet to discover is how a bean is referenced. This is done using the annotation <code>@Inject</code> from the package <code>javax.inject</code>. Consider the following snippet from the <code>EditCampaignController</code>:</p>
 <pre class="lang:java decode:true" >@Inject
@@ -232,11 +232,11 @@ public void init() {
     campaigns = createMockCampaigns();
 }</pre>
 <p>At this stage, this does not offer us any extra advantage; in a later stage, however, we might use the method <code>init</code> to reset the <code>CampaignListProducer</code>, to provide the initial data after injecting the bean. By carrying out this step now, we are making preparations for future steps in the development of our application.</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=0npd8g0qy862re58" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE (Lifecycle)</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h4>3.3.2 The <em>PreDestroy</em> Lifecycle Method</h4>
 <p>Methods of a bean annotated with <code>@PreDestroy</code> – from the package <code>javax.annotation</code> – are invoked by the container before the bean is deleted from storage. This enables the developer to free up resources that the bean has created – by deleting temporary files, for example.</p>
 <p>Since this functionality is not required in our sample application, we will not make any changes of this nature here.</p>
@@ -344,11 +344,11 @@ public boolean isAddMode() {
 }</pre>
 <p>Following this change, we can use the producer methods directly in the Facelets. To do this, we must replace all references to the getter in the files <code>editCampaign.xhtml</code> and <code>listDonations.xhtml</code>. As we do this, we need only to take the EL expressions – that is, everything inside <code>#{</code> and <code>}</code> – into account.</p>
 <p>In specific terms, this means that we must access the Facelets and replace the expressions <code>campaignProducer.selectedCampaign</code> and <code>campaignProducer.addMode</code> with <code>selectedCampaign</code> and <code>addMode</code> respectively. Since we are dealing with a few different references, our best option is to use the <em>Search and Replace</em> function in our editor. Lastly, it’s important to be careful while we work and to test any changes in order to avoid problems at a later stage. Worst case we have you covered with the following Cloud IDE link:</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=xqv36u01sr43xwt0" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE (End Contexts &#038; DI)</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
 <script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>

@@ -132,11 +132,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					  				    									
 					<p>In this chapter, we will run the iteration for the first time and store the entities transactionally in the database. To enable us to do this, we must first configure the data source. After running the iteration, we’ll then encounter a couple more “unexpected” minor issues. As with the configuration of the data source, we’ll tackle these in a step-by-step manner.</p>
 <p>We can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=6o9ca0tyjv1v6gpw" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after embedding EntityManager in Services</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>4.1 Configuring the Data Source</h3>
 <p>JPA requires its own XML configuration file. The data source to be used and the parameters for accessing it are set in this file. The configuration file for our sample application can be found in Listing 4-1. Please save it in the folder <code>src\main\resources\META-INF</code> under the name <code>persistence.xml</code>. If the <code>META-INF</code> folder does not exist, create it (case-sensitive!).</p>
 <pre class="lang:java decode:true">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
@@ -192,11 +192,11 @@ public class CampaignServiceBean implements CampaignService {
 <p><strong>Rerun the application. </strong>You should now find that the issue of the missing transaction has been solved, and the application can now be used.<strong> </strong>But be aware that we have just implemented the persistence of campaigns. All use cases of the application that involve donations will still lead to errors. This will change after the next chapter.</p>
 <p>By making this small change, we have changed a few things in the background: the lifecycle of the servce beans is now no longer managed by CDI, but by the EJB container. In the upcoming <em>Cloud Tutorial EJB in a Day</em> (available in march 2016), we’ll learn about other options – aside from transactions – that are opened up for services as a result of conversion to EJBs.</p>
 <p>If you have other problems with your project, please compare it with the project behind the following link:</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=q8f0jt6p68dq2532" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign Persist Campaigns</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
 <script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>

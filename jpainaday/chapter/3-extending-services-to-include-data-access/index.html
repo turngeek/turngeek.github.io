@@ -133,11 +133,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					<p>If we think of JPA as a database, then we have used the annotations from the last section to define the schema of our sample database. This means they correspond to the part of the SQL that describes the data structure, which is also known as DDL (Data Definition Language). This section is concerned with the processing of data, which means we’ll be dealing with the part of the SQL known by the acronym DML (Data Manipulation Language).</p>
 <p>This knowledge is essential for creating the services and methods that create, change or delete instances of entities.</p>
 <p>We can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=eq50gbdbln3j067j" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after adding JPA Annotations</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>3.1 Embed EntityManager</h3>
 <p>To process data, we require an instance of the class <code>EntityManager</code>. This is usually embedded in a class via dependency injection using the annotation <code>@PersistenceContext</code> from the package <code>javax.persistence</code>:</p>
 <pre class="lang:java decode:true">@PersistenceContext
@@ -307,11 +307,11 @@ public class CampaignListProducer {
 <p>Once this is done, the implementation of the <code>CampaignListProducer </code>for this iteration is complete. It should now successfully delegate the task of updating the list of <code>Campaign </code>objects to the <code>CampaignService</code>.</p>
 <p><strong>Please be patient!</strong> The current project is not deployable since we have not yet configured a data base. So if you run the project, you will always get a deployment error! We will solve this problem in the next chapter!</p>
 <p>If you have other problems with your project, please compare it with the project behind the following link:</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=6o9ca0tyjv1v6gpw" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after embedding EntityManager in Services</p>
 </div>
-<p>[/sociallocker]</p>
+
 <hr /><div class="footnotes"><ol><li id="footnote-67-1">Strictly speaking, this first happens when the flush method of the <code>EntityManager </code>object is invoked; however, this is invoked implicitly by the transaction. <a href="#return-footnote-67-1" class="return-footnote">&crarr;</a></li></ol></div>
 					</div><!-- .entry-content -->
 				</div><!-- #post-## -->

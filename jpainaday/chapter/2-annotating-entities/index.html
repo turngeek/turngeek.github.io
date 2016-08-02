@@ -137,11 +137,11 @@ During the design of the application, we defined several entity classes (see <a 
 <a href="http://www.amazon.com/gp/product/1617290459/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=9325&amp;creativeASIN=1617290459&amp;linkCode=as2&amp;tag=turpre-20&amp;linkId=EVYQPIUB5OIKQWAY" target="_blank" rel="nofollow">(Bauer, 2015)</a><img style="border: none !important; margin: 0px !important;" src="http://ir-na.amazon-adsystem.com/e/ir?t=turpre-20&amp;l=as2&amp;o=1&amp;a=1617290459" alt="" width="1" height="1" border="0" />.</p>
 <h3>2.1 Project Setup</h3>
 <p>You can continue with your final project after working off the <a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/" target="_blank">chapter 5 of the Cloud Tutorial CDI in a Day</a>. If you have already closed it or you are just beginning with JPA, you can start a temporary session by clicking the following link. Don’t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=5ve50ooxjpfonqdy" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>2.2 Marking as an Entity and Defining a Primary Key</h3>
 <p>Firstly, each of the classes that we wish to be managed as entities by JPA should be annotated as such using <code>@Entity</code> from the package <code>javax.persistence</code>. To begin with, we add the annotation only for the classes <code>Donation </code>and <code>Campaign</code> contained in the package <code>press.turngeek.mycampaign.model</code>:</p>
 <pre class="lang:java decode:true">@Entity                                      
@@ -246,11 +246,11 @@ private Account account;
 </pre>
 <p>The annotation contains a list of annotations of the type <code>@AttributeOverride</code>, which specifies that the name of an attribute to be persisted in the database table should take on a different name. In our case, we want the <code>name </code>attribute of the dependent entity <code>Account </code>to be persisted in the column <code>accountName</code>.</p>
 <p>Since we have only added meta data to our source code, our project should still be deployable and runnable without any change in functionalty. If you have problems with your project, please compare it with the project behind the following link:</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=eq50gbdbln3j067j" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after adding JPA Annotations</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
 <script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>

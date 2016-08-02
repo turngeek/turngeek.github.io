@@ -133,11 +133,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					<p>One of the most important functionalities offered by JSF is the <em>templating system</em>. Professional web applications require a uniform appearance, and <em>templates</em> are useful in helping us achieve this, since they allow us to define an application&#8217;s basic look and layout. Once this is done, the content areas of different pages can be created on a page-by-page basis.</p>
 <p>In light of the above, it&#8217;s important you have a clear picture of the templates to be used <em>before</em> you begin designing the actual content. For this reason, we will now spend some time taking a detailed look at JSF’s template technology. We&#8217;ll then design templates for (almost) all the pages of our application that are still to be created.</p>
 <p>You can continue with the project in your own Codenvy workspace, or you can use the following temporary workspace.</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=ltpqk7rgnzifdcnr" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after Chapter 4 (I18N)</p>
 </div>
-<p>[/sociallocker]<br />
+<p><br />
 <!--https://codenvy.com/f?id=rij3gl0dx07emuqa--></p>
 <h3>5.1 Templating with Facelets</h3>
 <p>The basic principle is easily explained. A template is an XHTML document that declares areas with special tags and furnishes them with unique names or place holders. The areas can have default content. Other XHTML documents (<em>template clients</em>) can refer to the template and populate the areas with their own content. Areas are identified by the names specified in the template. The templating system introduces special tags for definining and using templates. The tags belong to the namespace <code>xmlns:ui="http://xmlns.jcp.org/jsf/facelets"</code>. The most important tags are listed in the following table, ‎Tab. 5-1.</p>

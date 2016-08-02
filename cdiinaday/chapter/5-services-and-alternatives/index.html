@@ -128,11 +128,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					
 					<div class="entry-content">
 					  				    									
-					<p>[sociallocker]
+					<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=q12qn14zf8hywll5" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE (Start Services)</p>
 </div>
-<p>[/sociallocker]</p>
+
 <p>So far, we worked exclusively on the presentation layer. We now introduce a further layer of so-called <em>services</em> to implement the actual business logic. The use of services is a procedural approach whereby individual service calls modify the business objects (entities), while these business objects do not contain any business logic themselves.</p>
 <p>The individual service methods are grouped in service classes according to their theme. We will see in the following section, for example, how a <code>CampaignService</code> is introduced to process <code>Campaign</code> objects.</p>
 <p>Other aspects can be added to the service calls in later iterations. They can be used to persist entities, establish transaction control and safeguard the security of the application.</p>
@@ -310,11 +310,11 @@ public class MockCampaignServiceBean implements CampaignService {</pre>
 <p><em>Qualifiers</em> are used when multiple implementations of the same type are used during the runtime of the application. During the development stage, the programmer uses qualifiers to determine definitively which implementation should be used.</p>
 <p><em>Alternatives</em> are different in that implementations are defined per deployment. This has the result that only one implementation exists at runtime.</p>
 <p>We have now completed the development part of our CDI tutorial! We recommend you compare your results with the snapshot of the project in our Cloud IDE:</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=5ve50ooxjpfonqdy" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">Start Cloud IDE (End Services)</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
 <script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>

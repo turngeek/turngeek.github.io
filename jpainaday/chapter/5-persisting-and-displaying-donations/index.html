@@ -132,11 +132,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					  				    									
 					<p>Thus far, we have only created methods for persisting entities of the type <code>Campaign</code>. However, our application also requires us to be able to modify <code>Donation </code>objects. We’ll accomplish this step-by-step in the following section by applying the knowledge we have learned so far.</p>
 <p>Again, we can use the project from the last chapter. If you have already closed it, you can start another temporary session by clicking the following link. Don&#8217;t forget that the whole work is volatile unless you sign up to Codenvy and persist the project in your own workspace.</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=q8f0jt6p68dq2532" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign Persist Campaigns</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>5.1 Creating a Service to Handle Donations</h3>
 <p>To edit <code>Donation </code>objects, we first require a service, which we’ll name <code>DonationService </code>for the sake of consistency. This will provide two methods to our application: <code>getDonationList </code>and <code>addDonation</code>. Using the ID of a <code>Campaign</code> object, the method <code>getDonationList </code>returns a list of all the <code>Donation </code>objects that have been created for the associated campaign. Our application also contains the method <code>doDonation</code>, which allows a donation to be made to a campaign. This method requires the ID of the <code>Campaign </code>object and the the <code>Donation </code>object to be created as a parameter. The resulting service interface can be found in Listing 5-1; this should be stored in the package <code>press.turngeek.mycampaign.services</code>.</p>
 <pre class="lang:java decode:true">package press.turngeek.mycampaign.services;
@@ -301,11 +301,11 @@ Following a new build of the application (including a restart), we would expect 
 </pre>
 <p>Following a further build of the application, including a restart, (nearly) all errors will be rectified and the list of donations will finally be correctly displayed. One thing still does not work, i.e. deleting a campaign. We will come back to this later on.</p>
 <p>If you have other problems with your project, please compare it with the project behind the following link:</p>
-<p>[sociallocker]</p>
+
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=3vxd8ixcbyl2tsr2" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign Persist Donations</p>
 </div>
-<p>[/sociallocker]</p>
+
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
 <script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>

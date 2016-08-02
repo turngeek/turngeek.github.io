@@ -132,11 +132,11 @@ img.latex { vertical-align: middle; border: none; background: none; }
 					  				    									
 					<p>In this chapter, we address two main issues of our software project. First, we improve the software architecture by introducing separate layers for controller logic, business logic and data storage. Second, we implement the business logic and the data storage of our application with Java EE&#8217;s traditional and designated bean technology, namely <em>Enterprise JavaBeans (EJB)</em>.</p>
 <p>Before we start, please verify again that your project is accessable in Codenvy and is up to date, i.e. you finished the previous chapters successfully as described. If this is not the case you can follow the preceeding factory link that generates a project environment for you<a class="footnote" title="Remember, if you sign up to Codenvy, you will be able to persist the project in your workspace. This enables you to store intermediate states of your project and, by that, to make a break when ever you like. Otherwise, all your changes are volatile and will be lost after closing the browser." id="return-footnote-45-1" href="#footnote-45-1"><sup class="footnote">[1]</sup></a>.</p>
-<p>[sociallocker]
+<p>
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=6wob9ci9hdlmn2ru" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Project after Chapter 5 (JSF)" width="77" height="21" /></a>
 <p class="wp-caption-text">Project after Chapter 5 (JSF)</p>
 </div>
-<p>[/sociallocker]<br />
+<p><br />
 <!--https://codenvy.com/f?id=3e3ulvenj5l9uddf--></p>
 <h3>6.1 Software Architecture&#8217;s Review</h3>
 <p>Looking at our software architecture right now, we realize that the Controller Bean (<code>MemoController.java</code>) does not only realize the controller logic of our application. Additionally, it provides  the business logic (setting the current time to a new memo) and works as a data storage (list of memos is a property of the bean) which injures the design principle <a href="http://en.wikipedia.org/wiki/Separation_of_concerns">Separation of Concerns (SoC)</a>. In order to simplify development, extendability and maintenance, it is beneficial to separate concerns, like view, controller logic, business logic or data storage. The better we follow this principle, the more probable it is that we can later improve or modify one part of code without any influence to the others.</p>

@@ -17,12 +17,12 @@
 <meta itemprop='copyrightHolder' content='dpunkt.verlag GmbH. Authorized translation of the German edition titled "Workshop Java EE 7. Ein praktischer Einstieg in die Java Enterprise Edition mit dem Web Profile", 2nd edition. ISBN 978-3-86490-195-9' id='copyrightHolder'>
 <meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
 <meta itemprop='description' content='This Cloud Tutorial is the second of an upcoming series building a web application step by step with Java EE technology. It will see us improve the architecture and design of the sample application using CDI (Contexts and Dependency Injection).' id='description'>
-<meta itemprop='image' content='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/2015/10/cdiinaday_cover.jpg' id='image'>
+<meta itemprop='image' content='/cdiinaday/wp-content/uploads/sites/7/2015/10/cdiinaday_cover.jpg' id='image'>
 <meta itemprop='inLanguage' content='en' id='inLanguage'>
-<link rel="shortcut icon" href="http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<link rel="shortcut icon" href="/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
 <title>5 Services and Alternatives | Cloud Tutorial &#8211; CDI in a Day</title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="http://www.turngeek.press/cdiinaday/xmlrpc.php" />
+<link rel="pingback" href="/cdiinaday/xmlrpc.php" />
 
 		<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/cdiinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
@@ -42,19 +42,19 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
-<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/cdiinaday/wp-content/uploads/sites/7/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
-<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
-<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
-<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
-<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
-<link rel='https://api.w.org/' href='http://www.turngeek.press/cdiinaday/wp-json/' />
-<link rel='prev' title='4 Application Wide Messages' href='http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/' />
-<link rel='next' title='6 What’s Left to Discover?' href='http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/' />
+<link rel='stylesheet' id='pressbooks-book-css'  href='/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='/cdiinaday/wp-content/uploads/sites/7/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='/cdiinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='/cdiinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='/cdiinaday/wp-json/' />
+<link rel='prev' title='4 Application Wide Messages' href='/cdiinaday/chapter/4-application-wide-messages/' />
+<link rel='next' title='6 What’s Left to Discover?' href='/cdiinaday/chapter/6-whats-left-to-discover/' />
 <meta name="generator" content="WordPress 4.4" />
-<link rel='shortlink' href='http://www.turngeek.press/cdiinaday/?p=25' />
-<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F5-services-and-alternatives%2F" />
-<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F5-services-and-alternatives%2F&#038;format=xml" />
+<link rel='shortlink' href='/cdiinaday/?p=25' />
+<link rel="alternate" type="application/json+oembed" href="/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F5-services-and-alternatives%2F" />
+<link rel="alternate" type="text/xml+oembed" href="/cdiinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fcdiinaday%2Fchapter%2F5-services-and-alternatives%2F&#038;format=xml" />
 <style type="text/css">
 /* <![CDATA[ */
 img.latex { vertical-align: middle; border: none; background: none; }
@@ -85,13 +85,13 @@ img.latex { vertical-align: middle; border: none; background: none; }
 				<nav>
 			
 			 		<!-- Book Title -->
-				    <h1 class="book-title"><a href="http://www.turngeek.press/cdiinaday/" title="Cloud Tutorial &#8211; CDI in a Day" rel="home">Cloud Tutorial &#8211; CDI in a Day</a></h1>
+				    <h1 class="book-title"><a href="/cdiinaday/" title="Cloud Tutorial &#8211; CDI in a Day" rel="home">Cloud Tutorial &#8211; CDI in a Day</a></h1>
 			    
 			   
 			    
 					    <div class="sub-nav-left">
 							<!-- Logo -->
-							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+							<h2 class="pressbooks-logo"><a href="/">TurnGeek Books</a></h2>
 					    </div> <!-- end .sub-nav-left -->
 			    
 			    <div class="sub-nav-right">
@@ -121,9 +121,9 @@ img.latex { vertical-align: middle; border: none; background: none; }
 	 	
 							<h2 class="entry-title">5 Services and Alternatives</h2>
 					<div class="nav">
-  	<span class="previous"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">Previous</a></span>
+  	<span class="previous"><a href="/cdiinaday/chapter/4-application-wide-messages/">Previous</a></span>
   <!-- 	<h2 class="entry-title">5 Services and Alternatives</h2> -->
-  	<span class="next"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">Next</a></span>
+  	<span class="next"><a href="/cdiinaday/chapter/6-whats-left-to-discover/">Next</a></span>
     </div>				<div id="post-25" class="type-1 post-25 chapter type-chapter status-publish hentry">
 					
 					<div class="entry-content">
@@ -161,7 +161,7 @@ public void init() {
     campaigns = campaignService.getAllCampaigns();
 }
 </pre>
-<p>The annotation <code>@Inject</code> to add another bean of the type <code>CampaignService</code> as well as using the method <code>init</code> to invoke its method <code>getAllCampaigns</code>, the purpose being to obtain the list of <code>Campaign</code> objects. Now, it should hopefully be clear why we converted the constructor into a method with the annotation <code>@PostConstruct</code> in <a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">section 3.3.1</a>; if we hadn’t done this, the <code>CampaignService</code> bean would not be available to us now.</p>
+<p>The annotation <code>@Inject</code> to add another bean of the type <code>CampaignService</code> as well as using the method <code>init</code> to invoke its method <code>getAllCampaigns</code>, the purpose being to obtain the list of <code>Campaign</code> objects. Now, it should hopefully be clear why we converted the constructor into a method with the annotation <code>@PostConstruct</code> in <a href="/cdiinaday/chapter/3-contexts-and-dependency-injection/">section 3.3.1</a>; if we hadn’t done this, the <code>CampaignService</code> bean would not be available to us now.</p>
 <p>If we start the application, we’ll see that there is still a small problem: since we have so far only defined the interface of the service, and have not yet implemented a service class, the container cannot find an implementation. When deployed, it therefore shows the error message: <code>WELD-001408 Unsatisfied dependencies for type [CampaignService]</code>.</p>
 <p>In light of this, we now require an implementation of the <code>CampaignService</code>. This implementation will contain only the method <code>getAllCampaigns</code>, which we will take from the <code>createMockCampaigns</code> method of the <code>CampaignListProducer</code> bean. The complete implementation is shown in Listing 5-2; the class <code>MockCampaignServiceBean</code> must be stored in the package <code>press.turngeek.mycampaign.services</code>. After restarting the application, the dependency will be correctly resolved, which means that CDI, using the <code>MockCampaignServiceBean</code>, will find the correct implementation of the bean <code>CampaignService</code>.</p>
 <pre class="lang:java decode:true" >package press.turngeek.mycampaign.services;
@@ -242,7 +242,7 @@ public class CampaignServiceBean implements CampaignService {
 <p>This implementation returns only an empty list of <code>Campaign</code> objects. In later iterations we might add a delegation to a persistence layer here to retrieve the actual list of campaigns from the database. But for the time being, for explaining CDI, an empty list is totally sufficient.</p>
 <p>If we start the application again, a fresh error message will appear: <code>WELD-001409 Ambiguous dependencies for type [CampaignService]</code>.</p>
 <p>In contrast to the previous section, we now have the problem that CDI finds multiple implementations of the <code>CampaignService</code> bean and cannot decide for itself which one is to be used.</p>
-<p>As we did with the ambiguities in our messages (see <a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">section 4.2</a>), we can resolve this problem using a <em>qualifier</em>. This solution is not required for our application, since we will tackle the issue using an alternative approach. However, if we wish to see how the qualifier solution works, we can test it out by creating the class <code>TestQualifier</code> with the qualifier <code>@MyService</code> from Listing 5-4 and saving it in the package <code>press.turngeek.mycampaign.util</code>.</p>
+<p>As we did with the ambiguities in our messages (see <a href="/cdiinaday/chapter/4-application-wide-messages/">section 4.2</a>), we can resolve this problem using a <em>qualifier</em>. This solution is not required for our application, since we will tackle the issue using an alternative approach. However, if we wish to see how the qualifier solution works, we can test it out by creating the class <code>TestQualifier</code> with the qualifier <code>@MyService</code> from Listing 5-4 and saving it in the package <code>press.turngeek.mycampaign.util</code>.</p>
 <pre class="lang:java decode:true" >
 package press.turngeek.mycampaign.util;
 
@@ -274,7 +274,7 @@ private CampaignService campaignService;</pre>
 @MyService
 public class CampaignServiceBean implements CampaignService {</pre>
 <p>If we start the application once more, we will see that the ambiguities have now been resolved and that the application uses the implementation <code>CampaignServiceBean</code> for the <code>CampaignService</code>. The class diagram in Fig. 5-1 illustrates the classes involved.</p>
-<p><a target="_blank" href="http://www.turngeek.press/images/cdiinaday/chapter5/5-1.png"><img src="http://www.turngeek.press/images/cdiinaday/chapter5/5-1.png" alt="Relationships of the classes involved in the unambiguous injection of a bean" width="100%" /></a><br />
+<p><a target="_blank" href="/images/cdiinaday/chapter5/5-1.png"><img src="/images/cdiinaday/chapter5/5-1.png" alt="Relationships of the classes involved in the unambiguous injection of a bean" width="100%" /></a><br />
 <strong>Fig. 5-1     </strong>Relationships of the classes involved in the unambiguous injection of a bean</p>
 <p>We have now shown how ambiguities at the injection point can be resolved with the help of a qualifier. However, as mentioned above, we will not be using this approach for our application, and so the annotations and the class <code>TestQualifier</code> added in the last step should now be removed.</p>
 <p>Instead of resolving the ambiguities with qualifiers, we can choose to use the annotation <code>@Alternative</code> from the package <code>javax.enterprise.inject</code>.</p>
@@ -317,7 +317,7 @@ public class MockCampaignServiceBean implements CampaignService {</pre>
 
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
-<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<script src="/js/disqus.js" type="text/javascript"></script></p>
 
 					</div><!-- .entry-content -->
 				</div><!-- #post-## -->
@@ -344,10 +344,10 @@ public class MockCampaignServiceBean implements CampaignService {</pre>
 		<ul id="booknav">
 		<!-- If Logged in show ADMIN -->
 								
-				<li class="home-btn"><a href="http://www.turngeek.press/cdiinaday">Home</a></li>
+				<li class="home-btn"><a href="/cdiinaday">Home</a></li>
 
 		<!-- TOC button always there -->
-				<li class="toc-btn"><a href="http://www.turngeek.press/cdiinaday/table-of-contents">Table of Contents</a></li>
+				<li class="toc-btn"><a href="/cdiinaday/table-of-contents">Table of Contents</a></li>
 			</ul>
 
 		<!-- Pop out TOC only on READ pages -->
@@ -357,26 +357,26 @@ public class MockCampaignServiceBean implements CampaignService {</pre>
 				<li><h4><!-- Front-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="front-matter introduction"><a href="http://www.turngeek.press/cdiinaday/front-matter/introduction/">Introduction</a>
+																		<li class="front-matter introduction"><a href="/cdiinaday/front-matter/introduction/">Introduction</a>
               						</li>
 											</ul>
 				</li>
 								<li><h4>								Chapters								</h4></li>
 				<li>
 					<ul>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/1-why-cdi/">1 Why CDI?</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/1-why-cdi/">1 Why CDI?</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/2-getting-started/">2 Getting Started</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/2-getting-started/">2 Getting Started</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/3-contexts-and-dependency-injection/">3 Contexts and Dependency Injection</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/3-contexts-and-dependency-injection/">3 Contexts and Dependency Injection</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/4-application-wide-messages/">4 Application Wide Messages</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/4-application-wide-messages/">4 Application Wide Messages</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/5-services-and-alternatives/">5 Services and Alternatives</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/5-services-and-alternatives/">5 Services and Alternatives</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/6-whats-left-to-discover/">6 What’s Left to Discover?</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/6-whats-left-to-discover/">6 What’s Left to Discover?</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/cdiinaday/chapter/7-exercises/">7  Exercises</a>
+																				<li class="chapter type-1"><a href="/cdiinaday/chapter/7-exercises/">7  Exercises</a>
                 							</li>
 											</ul>
 				</li>
@@ -405,7 +405,7 @@ public class MockCampaignServiceBean implements CampaignService {</pre>
 	</div><!-- #inner -->
 </div><!-- #footer -->
 </span><!-- schema.org -->
-<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
-<script type='text/javascript' src='http://www.turngeek.press/cdiinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+<script type='text/javascript' src='/cdiinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='/cdiinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
 </body>
 </html>

@@ -143,14 +143,14 @@ body.home {
     width: 36.5%;
 }
 .stroke {
-	background: url(http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/book-info-stroke.png) 0 0 repeat-x;
+	background: url(/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/book-info-stroke.png) 0 0 repeat-x;
     display: block;
     height: 1px;
     margin: 0 auto 20px;
     width: 30%;
 }
 .detail {
-	background: url(http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/book-info-detail.png) 0 0 no-repeat;
+	background: url(/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/book-info-detail.png) 0 0 no-repeat;
     display: block;
 	height: 11px;
     margin: 0 auto 20px;
@@ -244,14 +244,14 @@ a:active.btn.black {
 	filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#313131', EndColorStr='#222222');
 }
 .buy-icon {
-	background: url(http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/sprite-book-info.png) -200px -200px no-repeat;
+	background: url(/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/sprite-book-info.png) -200px -200px no-repeat;
 	display: inline-block;
 	margin-right: 10px;
 	width: 16px;
 	height: 16px;
 }
 .read-icon {
-	background: url(http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/sprite-book-info.png) -400px -198px no-repeat;
+	background: url(/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/sprite-book-info.png) -400px -198px no-repeat;
 	display: inline-block;
 	margin-right: 10px;	
 	width: 16px;
@@ -501,7 +501,7 @@ a.button-black:active {
     padding-left: 15px; 	
 }
 #twitter .share:before {
-	background: url(http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/twitter-icon.png) 0 9px no-repeat;
+	background: url(/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/twitter-icon.png) 0 9px no-repeat;
 	content: "";
     display: block;
     height: 30px;
@@ -514,7 +514,7 @@ a.button-black:active {
     padding-left: 10px; 	
 }
 #facebook .share:before {
-	background: url(http://www.turngeek.press/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/facebook-icon.png) 7px 7px no-repeat;
+	background: url(/javaeeinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/images/facebook-icon.png) 7px 7px no-repeat;
 	content: "";
     display: block;
     height: 30px;

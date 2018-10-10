@@ -18,13 +18,13 @@
 <meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
 <meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
 <meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
-<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='image' content='/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
 <meta itemprop='inLanguage' content='en' id='inLanguage'>
 <meta itemprop='publisher' content='TurnGeek' id='publisher'>
-<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<link rel="shortcut icon" href="/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
 <title>8 Implementation of the Remaining Use Cases | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+<link rel="pingback" href="/jsfinaday/xmlrpc.php" />
 
 		<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
@@ -44,19 +44,19 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
-<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
-<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
-<link rel='prev' title='7 Additional JSF and Java EE Technologies' href='http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/' />
-<link rel='next' title='9 New Functionalities in JSF 2.2' href='http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/' />
+<link rel='stylesheet' id='pressbooks-book-css'  href='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='/jsfinaday/wp-json/' />
+<link rel='prev' title='7 Additional JSF and Java EE Technologies' href='/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/' />
+<link rel='next' title='9 New Functionalities in JSF 2.2' href='/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/' />
 <meta name="generator" content="WordPress 4.4" />
-<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=32' />
-<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F8-implementation-of-the-remaining-use-cases%2F" />
-<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F8-implementation-of-the-remaining-use-cases%2F&#038;format=xml" />
+<link rel='shortlink' href='/jsfinaday/?p=32' />
+<link rel="alternate" type="application/json+oembed" href="/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F8-implementation-of-the-remaining-use-cases%2F" />
+<link rel="alternate" type="text/xml+oembed" href="/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F8-implementation-of-the-remaining-use-cases%2F&#038;format=xml" />
 <style type="text/css">
 /* <![CDATA[ */
 img.latex { vertical-align: middle; border: none; background: none; }
@@ -87,13 +87,13 @@ img.latex { vertical-align: middle; border: none; background: none; }
 				<nav>
 			
 			 		<!-- Book Title -->
-				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+				    <h1 class="book-title"><a href="/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
 			    
 			   
 			    
 					    <div class="sub-nav-left">
 							<!-- Logo -->
-							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+							<h2 class="pressbooks-logo"><a href="/">TurnGeek Books</a></h2>
 					    </div> <!-- end .sub-nav-left -->
 			    
 			    <div class="sub-nav-right">
@@ -123,14 +123,14 @@ img.latex { vertical-align: middle; border: none; background: none; }
 	 	
 							<h2 class="entry-title">8 Implementation of the Remaining Use Cases</h2>
 					<div class="nav">
-  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">Previous</a></span>
+  	<span class="previous"><a href="/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">Previous</a></span>
   <!-- 	<h2 class="entry-title">8 Implementation of the Remaining Use Cases</h2> -->
-  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">Next</a></span>
+  	<span class="next"><a href="/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">Next</a></span>
     </div>				<div id="post-32" class="type-1 post-32 chapter type-chapter status-publish hentry">
 					
 					<div class="entry-content">
 					  				    									
-					<p>Now we can return to our implementation and focus our attention on the rest of our use cases. To better understand their implementation, however, we recommend to take another <a href="http://www.turngeek.press/javaee7/chapter/3-4-use-cases/" target="_blank">look back</a> at the input screen and the processing logic of the corresponding use cases before taking any practical steps. After that, you can continue to work in your own Codenvy workspace or you can use the following project state in a temporary workspace.</p>
+					<p>Now we can return to our implementation and focus our attention on the rest of our use cases. To better understand their implementation, however, we recommend to take another <a href="/javaee7/chapter/3-4-use-cases/" target="_blank">look back</a> at the input screen and the processing logic of the corresponding use cases before taking any practical steps. After that, you can continue to work in your own Codenvy workspace or you can use the following project state in a temporary workspace.</p>
 
 <div style="width: 87px" class="wp-caption aligncenter"><a href="https://codenvy.com/f?id=xihg0q6pq9i28ed5" target="_blank"><img src="https://codenvy.com/factory/resources/factory-white.png" alt="Start Cloud IDE" width="77" height="21" /></a>
 <p class="wp-caption-text">My-Campaign after Chapter 6 (First Use Case)</p>
@@ -217,7 +217,7 @@ public class EditCampaignController implements Serializable {
 <p>Our controller classes contain two methods for controlling the flow. On the one hand, after editing or creating a campaign, we must be able to save it. This is accomplished by the <code>doSave</code> method. The logic of the method must take the current mode into account. If we are editing an existing campaign, there is nothing more to be done. However, if a new campaign is created, this must be admitted to the list of campaigns via the available <code>ListCampaignProducer</code> bean. In both cases, the user is redirected to the view <code>LIST_CAMPAIGNS</code> afterwards.</p>
 <p>The option to cancel the process is also provided for. This is accomplished by the method <code>doCancel</code>. Here, all we need to is to navigate back to the view <code>campaignList</code>.</p>
 <p><strong>The <em>editCampaign.xhtml </em>Facelet</strong></p>
-<p>If we look at the layouts of the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-4-use-cases/" target="_blank">input screens</a>, we see that a tab panel  was provided. In the layout, we have arranged the general campaign data and the bank account details in different tabs. However, we have not yet talked about how such a component would work – and we would not find it in the JSF standard, even if we wanted to! This is a typical motive for using an additional JSF library. We will demonstrate the use of <em>PrimeFaces</em> for this purpose in <a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/" target="_blank">chapter 10</a>. For the moment, we’ll do without tabs and represent the two sets of data one under the other in two grids (tag <code>&lt;h:panelGrid&gt;</code>). As for every other Facelet of the application, we also require a number of texts, which will be displayed on the page according to the language preferences set in the browser. We will modify the properties file <code>messages_en.properties</code> with the following input:</p>
+<p>If we look at the layouts of the <a href="/javaee7inaweek/chapter/ii-4-use-cases/" target="_blank">input screens</a>, we see that a tab panel  was provided. In the layout, we have arranged the general campaign data and the bank account details in different tabs. However, we have not yet talked about how such a component would work – and we would not find it in the JSF standard, even if we wanted to! This is a typical motive for using an additional JSF library. We will demonstrate the use of <em>PrimeFaces</em> for this purpose in <a href="/jsfinaday/chapter/10-a-brief-venture-into-primefaces/" target="_blank">chapter 10</a>. For the moment, we’ll do without tabs and represent the two sets of data one under the other in two grids (tag <code>&lt;h:panelGrid&gt;</code>). As for every other Facelet of the application, we also require a number of texts, which will be displayed on the page according to the language preferences set in the browser. We will modify the properties file <code>messages_en.properties</code> with the following input:</p>
 <pre class="lang:default decode:true"># editCampaign.xhtml
 editCampaign.add_new_campaign=Add a new campaign
 editCampaign.edit_campaign=Edit campaign
@@ -387,10 +387,10 @@ public String doEditCampaign(Campaign campaign) {
 </pre>
 <p>When editing an existing campaign, the <code>Campaign</code> object to be edited is passed as an argument. When creating a campaign, a new object is created in the <code>prepareAddCampaign</code> method of the <code>CampaignProducer</code> class.</p>
 <p>The use cases <em>Edit campaign</em> and <em>Create new campaign</em> can now be run. Try them out for yourself! Please don’t forget that WildFly must be started and that we must redeploy the most recent version of the project with Maven. For comparison purposes, Fig. 8-1 shows the view that should appear for adding a new campaign. You can see the inline label in the Name input field.</p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter8/8-1.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter8/8-1.png" alt="View for creating a new campaign." width="100%" /></a><br />
+<p><a href="/images/jsfinaday/chapter8/8-1.png" target="_blank"><img src="/images/jsfinaday/chapter8/8-1.png" alt="View for creating a new campaign." width="100%" /></a><br />
 <strong>Fig. 8-1</strong>     View for creating a new campaign</p>
 <p>At this point, it’s essential for us to see how the page behaves when an input is entered incorrectly. In order to receive an error message, we will simply leave the input fields empty and click on the <em>Save</em> button. The result is shown in Fig. 8-2. Firstly, we see the standard error message (<code>j_idt8:*</code>). Secondly, we see the error messages that we set explicitly via the <code>validatorMessage</code> attribute when creating the text inputs (<code>&lt;h:inputText&gt;</code>). Naturally, the error messages are shown in the language set in the browser.</p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter8/8-2.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter8/8-2.png" alt="Displaying the list of donations." width="100%" /></a><br />
+<p><a href="/images/jsfinaday/chapter8/8-2.png" target="_blank"><img src="/images/jsfinaday/chapter8/8-2.png" alt="Displaying the list of donations." width="100%" /></a><br />
 <strong>Fig. 8-2</strong>     The form for creating a new campaign, with error messages</p>
 <h3>8.2 Displaying the List of Donations</h3>
 <p>With the next use case, <em>Display list of donors</em>, we want to see who has already donated to a campaign. If we look at our domain classes, we see the relationship between <em>campaign </em>and <em>donation </em>is particularly important for this use case. A campaign can have no donations or multiple donations and donations are managed as a list for each campaign. Let’s look first at the controller class and then the Facelet.</p>
@@ -547,7 +547,7 @@ listDonations.status.IN_PROCESS=in Bearbeitung</pre>
 }
 </pre>
 <p>Nothing more needs to be adjusted. We can try out the newly implemented use case immediately following the obligatory Maven build. As an example, ‎Fig.4-5 shows the list of donors for the first campaign. The donations are represented in tabular form as desired (tag <code>&lt;h:dataTable&gt;</code>).</p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter8/8-3.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter8/8-3.png" alt="View of the donor list for the campaign -Shirts for the U19 Team-." width="100%" /></a><br />
+<p><a href="/images/jsfinaday/chapter8/8-3.png" target="_blank"><img src="/images/jsfinaday/chapter8/8-3.png" alt="View of the donor list for the campaign -Shirts for the U19 Team-." width="100%" /></a><br />
 <strong>Fig. 8-3</strong>     View of the donor list for the campaign &#8220;Shirts for the U19 Team&#8221;</p>
 <h3>8.3 Editing a Donation Form</h3>
 <p>We’ll now look at the use case <em>Edit donation form. </em>This use case should enable the user to manage the address (URL) of the donation form and a number of settings pertaining to how it is displayed. The background color and the color of the text can be adjusted for the form and are included in the address as HTTP GET parameters. We will begin by re-implementing the controller. Once this is done, we’ll move to the Facelet.</p>
@@ -665,7 +665,7 @@ editDonationForm.form_url=URL des Formulars</pre>
 &lt;/html&gt;
 </pre>
 <p><strong>Listing 8-7</strong>     Facelet <em>editDonationForm.xhtml</em></p>
-<p>The Facelet presents data in tabular form using the <code>&lt;h:panelGrid&gt;</code> tag. The table has two columns. The first column contains the names of the fields (tag <code>&lt;h:outputText&gt;</code>), while the second contains the input components. For the colors, a <em>combo box</em> is used as a choice component (tag <code>&lt;h:selectOneMenu&gt;</code>). The URL is displayed in a text area (tag <code>&lt;h:textArea&gt;</code>) that cannot be changed manually (attribute <code>readonly="true"</code>). As explained earlier, we use the <code>&lt;f:ajax&gt;</code> tag within the color choice component to automatically adjust the URL in the text area in the event of a color change without having to reload the whole page. At the end of the form is the confirmation button (tag <code>&lt;h:commandButton&gt;</code>) that activates the controller method <code>doOk</code>. Notice here that the use of a <em>combo box</em> for color selection is suboptimal, because the colors must be selected by means of a Hexcode. A better option would be a choice component in which a range of colors are displayed for the user to choose from. A component like this, which is often referred to as a <em>color picker</em>, does not exist in the JSF standard. However, the extension PrimeFaces, which we’ll look at in<a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/" target="_blank"> chapter 10</a>, can help us in this regard.</p>
+<p>The Facelet presents data in tabular form using the <code>&lt;h:panelGrid&gt;</code> tag. The table has two columns. The first column contains the names of the fields (tag <code>&lt;h:outputText&gt;</code>), while the second contains the input components. For the colors, a <em>combo box</em> is used as a choice component (tag <code>&lt;h:selectOneMenu&gt;</code>). The URL is displayed in a text area (tag <code>&lt;h:textArea&gt;</code>) that cannot be changed manually (attribute <code>readonly="true"</code>). As explained earlier, we use the <code>&lt;f:ajax&gt;</code> tag within the color choice component to automatically adjust the URL in the text area in the event of a color change without having to reload the whole page. At the end of the form is the confirmation button (tag <code>&lt;h:commandButton&gt;</code>) that activates the controller method <code>doOk</code>. Notice here that the use of a <em>combo box</em> for color selection is suboptimal, because the colors must be selected by means of a Hexcode. A better option would be a choice component in which a range of colors are displayed for the user to choose from. A component like this, which is often referred to as a <em>color picker</em>, does not exist in the JSF standard. However, the extension PrimeFaces, which we’ll look at in<a href="/jsfinaday/chapter/10-a-brief-venture-into-primefaces/" target="_blank"> chapter 10</a>, can help us in this regard.</p>
 <p><strong>Adjust the Existing Classes</strong></p>
 <p>As with the previous use case, the editing of the donation form is dependent on the selected campaign. The selected campaign is stored in the <code>CampaignProducer</code> bean. This means that we need to adjust the controller class <code>ListCampaignsController</code>. We must modify the method <code>doEditDonationForm</code> in such a way that the selected campaign is set in the <code>CampaignProducer</code> bean.</p>
 <pre class="nums-toggle:false wrap:true wrap-toggle:false plain-toggle:false expand-toggle:false lang:default decode:true">public String doEditDonationForm(Campaign campaign) {
@@ -674,7 +674,7 @@ editDonationForm.form_url=URL des Formulars</pre>
 }
 </pre>
 <p>Following the obligatory re-run of our WildFly runner, we can now try out our newly implemented use case.  ‎Fig. 8-4 shows our screen for editing the donation form. Features we see here include the <em>combo box</em> choice component (tag <code>&lt;h:selectOneMenu&gt;</code>), the text area (tag <code>&lt;h:textarea&gt;</code>) and a button for submitting the form (tag <code>&lt;h:commandButton&gt;</code>).  At this point, we should briefly test out the Ajax functionality. To do this, change one of the choices in a combo box. The URL in the text area should adjust automatically to reflect the new value.</p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter8/8-4.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter8/8-4.png" alt="Screen for editing a donation form." width="100%" /></a><br />
+<p><a href="/images/jsfinaday/chapter8/8-4.png" target="_blank"><img src="/images/jsfinaday/chapter8/8-4.png" alt="Screen for editing a donation form." width="100%" /></a><br />
 <strong>Fig. 8-4</strong>     Screen for editing a donation form</p>
 <p><strong>Generating the Form URL</strong></p>
 <p>The controller <code>EditDonationFormController</code> supplies the URL using the method <code>getUrl()</code>.</p>
@@ -868,14 +868,14 @@ donateMoney.thank_you=Vielen Dank für die Spende!</pre>
 </pre>
 <p><strong>Listing 8-9</strong>     Facelet <em>donateMoney.</em><em>xhtml</em></p>
 <p>We do not have to make any adjustments to the already-programmed Facelets and classes. Again, we can try out the newly implemented use case directly after the obligatory Maven build. In order to obtain a donation form for a campaign in the browser, we must enter the URL from the form <em>Edit donation form </em>(see ‎Fig. 8-4 ) into the browser. As an example, Fig. 8-5 shows the form for the first campaign on the list. We have already filled out the form and clicked the button <em>Donate.</em></p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter8/8-5.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter8/8-5.png" alt="Filled-out donation form." width="50%" /></a><br />
+<p><a href="/images/jsfinaday/chapter8/8-5.png" target="_blank"><img src="/images/jsfinaday/chapter8/8-5.png" alt="Filled-out donation form." width="50%" /></a><br />
 <strong>Fig. 8-5</strong>     Filled-out donation form</p>
 <p>The page is reloaded and now displays the message generated by the controller (<code>FacesMessage</code>) underneath the title <em>Donate money</em> (see Fig. 8-6).</p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter8/8-6.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter8/8-6.png" alt="Response page with the FacesMessage after submitting a completed donation form." width="50%" /></a><br />
+<p><a href="/images/jsfinaday/chapter8/8-6.png" target="_blank"><img src="/images/jsfinaday/chapter8/8-6.png" alt="Response page with the FacesMessage after submitting a completed donation form." width="50%" /></a><br />
 <b>Fig. 8-6</b>     Response page with the FacesMessage after submitting a completed donation form</p>
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
-<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<script src="/js/disqus.js" type="text/javascript"></script></p>
 
 					</div><!-- .entry-content -->
 				</div><!-- #post-## -->
@@ -902,10 +902,10 @@ donateMoney.thank_you=Vielen Dank für die Spende!</pre>
 		<ul id="booknav">
 		<!-- If Logged in show ADMIN -->
 								
-				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+				<li class="home-btn"><a href="/jsfinaday">Home</a></li>
 
 		<!-- TOC button always there -->
-				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+				<li class="toc-btn"><a href="/jsfinaday/table-of-contents">Table of Contents</a></li>
 			</ul>
 
 		<!-- Pop out TOC only on READ pages -->
@@ -915,41 +915,41 @@ donateMoney.thank_you=Vielen Dank für die Spende!</pre>
 				<li><h4><!-- Front-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+																		<li class="front-matter introduction"><a href="/jsfinaday/front-matter/introduction-2/">Introduction</a>
               						</li>
 											</ul>
 				</li>
 								<li><h4>								Chapters								</h4></li>
 				<li>
 					<ul>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/1-outlook/">1 Outlook</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/11-exercises/">11 Exercises</a>
                 							</li>
 											</ul>
 				</li>
 								<li><h4><!-- Back-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+																		<li class="back-matter conclusion"><a href="/jsfinaday/back-matter/what-next/">What Next?</a>
               						</li>
 											</ul>
 				</li>
@@ -973,7 +973,7 @@ donateMoney.thank_you=Vielen Dank für die Spende!</pre>
 	</div><!-- #inner -->
 </div><!-- #footer -->
 </span><!-- schema.org -->
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+<script type='text/javascript' src='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
 </body>
 </html>

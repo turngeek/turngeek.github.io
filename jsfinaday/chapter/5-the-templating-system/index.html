@@ -18,13 +18,13 @@
 <meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
 <meta itemprop='datePublished' content='2015-10-13' id='datePublished'>
 <meta itemprop='description' content='This Cloud Tutorial is the first of an upcoming series building a web application step by step with Java EE technology. It will see us implement the user interface of the sample application using JavaServer Faces (JSF).' id='description'>
-<meta itemprop='image' content='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
+<meta itemprop='image' content='/jsfinaday/wp-content/uploads/sites/5/2015/10/jsfinaday_cover.png' id='image'>
 <meta itemprop='inLanguage' content='en' id='inLanguage'>
 <meta itemprop='publisher' content='TurnGeek' id='publisher'>
-<link rel="shortcut icon" href="http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<link rel="shortcut icon" href="/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
 <title>5 The Templating System | Cloud Tutorial &#8211; JavaServer Faces in a Day</title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="http://www.turngeek.press/jsfinaday/xmlrpc.php" />
+<link rel="pingback" href="/jsfinaday/xmlrpc.php" />
 
 		<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jsfinaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
@@ -44,19 +44,19 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
-<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
-<link rel='https://api.w.org/' href='http://www.turngeek.press/jsfinaday/wp-json/' />
-<link rel='prev' title='4 Internationalization' href='http://www.turngeek.press/jsfinaday/chapter/4-internationalization/' />
-<link rel='next' title='6 Our First Use Case: &#8220;Display and Edit Campaign&#8221;' href='http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/' />
+<link rel='stylesheet' id='pressbooks-book-css'  href='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='/jsfinaday/wp-content/uploads/sites/5/custom-css/web.css?ver=1441720892' type='text/css' media='screen' />
+<script type='text/javascript' src='/jsfinaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='/jsfinaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='/jsfinaday/wp-json/' />
+<link rel='prev' title='4 Internationalization' href='/jsfinaday/chapter/4-internationalization/' />
+<link rel='next' title='6 Our First Use Case: &#8220;Display and Edit Campaign&#8221;' href='/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/' />
 <meta name="generator" content="WordPress 4.4" />
-<link rel='shortlink' href='http://www.turngeek.press/jsfinaday/?p=26' />
-<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F" />
-<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F&#038;format=xml" />
+<link rel='shortlink' href='/jsfinaday/?p=26' />
+<link rel="alternate" type="application/json+oembed" href="/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F" />
+<link rel="alternate" type="text/xml+oembed" href="/jsfinaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjsfinaday%2Fchapter%2F5-the-templating-system%2F&#038;format=xml" />
 <style type="text/css">
 /* <![CDATA[ */
 img.latex { vertical-align: middle; border: none; background: none; }
@@ -87,13 +87,13 @@ img.latex { vertical-align: middle; border: none; background: none; }
 				<nav>
 			
 			 		<!-- Book Title -->
-				    <h1 class="book-title"><a href="http://www.turngeek.press/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
+				    <h1 class="book-title"><a href="/jsfinaday/" title="Cloud Tutorial &#8211; JavaServer Faces in a Day" rel="home">Cloud Tutorial &#8211; JavaServer Faces in a Day</a></h1>
 			    
 			   
 			    
 					    <div class="sub-nav-left">
 							<!-- Logo -->
-							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+							<h2 class="pressbooks-logo"><a href="/">TurnGeek Books</a></h2>
 					    </div> <!-- end .sub-nav-left -->
 			    
 			    <div class="sub-nav-right">
@@ -123,9 +123,9 @@ img.latex { vertical-align: middle; border: none; background: none; }
 	 	
 							<h2 class="entry-title">5 The Templating System</h2>
 					<div class="nav">
-  	<span class="previous"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">Previous</a></span>
+  	<span class="previous"><a href="/jsfinaday/chapter/4-internationalization/">Previous</a></span>
   <!-- 	<h2 class="entry-title">5 The Templating System</h2> -->
-  	<span class="next"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">Next</a></span>
+  	<span class="next"><a href="/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">Next</a></span>
     </div>				<div id="post-26" class="type-1 post-26 chapter type-chapter status-publish hentry">
 					
 					<div class="entry-content">
@@ -250,7 +250,7 @@ h2 {
 </pre>
 <p><strong> Listing 5-3</strong>     Facelet <em>index.xhtml </em></p>
 <p>We can test the page out by rerunning the WildFly runner and opening the browser by clicking on the provided link. The browser should display the page as it appears in Figure 5-1.</p>
-<p><a href="http://www.turngeek.press/images/jsfinaday/chapter5/5-1.png" target="_blank"><img src="http://www.turngeek.press/images/jsfinaday/chapter5/5-1.png" alt="The template in use." width="100%" /></a><br />
+<p><a href="/images/jsfinaday/chapter5/5-1.png" target="_blank"><img src="/images/jsfinaday/chapter5/5-1.png" alt="The template in use." width="100%" /></a><br />
 <strong>Fig. 5-1</strong>     The template in use</p>
 <div class="textbox shaded">
 <p><strong>Mapping a URL to a Facelet</strong></p>
@@ -258,7 +258,7 @@ h2 {
 <p>The first two cases involve <em>extension mapping</em>, while the last one involves <em>prefix mapping</em>. All three variants will work as long as as you have not explicitly set the mapping to the <code>Faces-Servlet</code> via the corresponding configuration in the file <code>src/main/webapp/WEB-INF/web.xml</code>.</p>
 </div>
 <h3>5.3 Resource Library Contracts</h3>
-<p>Attentive readers will no doubt be wondering why we have not localized the template in ‎Listing 5-1. Without doubt, this localization could have been carried out using the method described in the <a href="http://www.turngeek.press/javaee7/chapter/4-3-internationalization/" target="_blank">previous chapter</a> without any further adjustments being made. Since JSF 2, it is even possible to localize resources like CSS and graphics files, giving the application the ability to change its appearance depending on the <em>locale</em>. This approach is sufficient in most cases. If, however, you wish to enable the dynamic substitution of one application-specific template and its related resources for another in a whole then a different JSF concept should be used.</p>
+<p>Attentive readers will no doubt be wondering why we have not localized the template in ‎Listing 5-1. Without doubt, this localization could have been carried out using the method described in the <a href="/javaee7/chapter/4-3-internationalization/" target="_blank">previous chapter</a> without any further adjustments being made. Since JSF 2, it is even possible to localize resources like CSS and graphics files, giving the application the ability to change its appearance depending on the <em>locale</em>. This approach is sufficient in most cases. If, however, you wish to enable the dynamic substitution of one application-specific template and its related resources for another in a whole then a different JSF concept should be used.</p>
 <p>A mechanism called <em>Resource Library Contracts</em> (RLC), which was made available for the first time in JSF 2.2, provides a method by which Facelet templates and its related resources (e.g. graphics, CSS or JavaScript files) can be applied to the entire JSF application in the same way as a library and hence can be exchanged easily. The specification refers to the resource collections as <em>contracts</em> for short. The templates and resources are gathered in a directory named <code>contracts</code>. The directory can be directly incorporated into the <code>contracts</code> directory in the root of the WAR file or be inserted in the form of a JAR file in the <code>WEB-INFlib</code> directory of your JSF application.</p>
 <p>To enable the Facelets to be able to refer to a <em>contract</em>, the templates contained therein and their insertion points (<code>&lt;ui:insert&gt;</code>) must be known. Supplementary resources may also be known, but are optional. Informally, these three elements form the<em> resource library contract</em> between the user and the <em>contract</em> provider. So long as the contract remains unchanged, alternative contracts can be used without adjusting the Facelets by switching either the contract directory or the JAR file.</p>
 <p>Several such <em>contracts</em> can be deposited in each JSF application. By entering URL patterns in the configuration file <code>faces-config.xml</code>, you are able to define which area or view of the application should work with which template. The choice of usable templates can also be controlled dynamically at runtime. This makes it possible for the appearance of a JSF application to be changed in accordance with user input or other environmental data.</p>
@@ -313,7 +313,7 @@ h2 {
 <p>We have now completed all the necessary preliminary tasks and can begin working on our first use case!</p>
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
-<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<script src="/js/disqus.js" type="text/javascript"></script></p>
 <hr /><div class="footnotes"><ol><li id="footnote-26-1">Hint: Use the Copy&amp;Paste functinality of the context menu in the Codenvy IDE. <a href="#return-footnote-26-1" class="return-footnote">&crarr;</a></li></ol></div>
 					</div><!-- .entry-content -->
 				</div><!-- #post-## -->
@@ -340,10 +340,10 @@ h2 {
 		<ul id="booknav">
 		<!-- If Logged in show ADMIN -->
 								
-				<li class="home-btn"><a href="http://www.turngeek.press/jsfinaday">Home</a></li>
+				<li class="home-btn"><a href="/jsfinaday">Home</a></li>
 
 		<!-- TOC button always there -->
-				<li class="toc-btn"><a href="http://www.turngeek.press/jsfinaday/table-of-contents">Table of Contents</a></li>
+				<li class="toc-btn"><a href="/jsfinaday/table-of-contents">Table of Contents</a></li>
 			</ul>
 
 		<!-- Pop out TOC only on READ pages -->
@@ -353,41 +353,41 @@ h2 {
 				<li><h4><!-- Front-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jsfinaday/front-matter/introduction-2/">Introduction</a>
+																		<li class="front-matter introduction"><a href="/jsfinaday/front-matter/introduction-2/">Introduction</a>
               						</li>
 											</ul>
 				</li>
 								<li><h4>								Chapters								</h4></li>
 				<li>
 					<ul>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/1-outlook/">1 Outlook</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/1-outlook/">1 Outlook</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/2-project-setup/">2 Project Setup</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/3-domain-classes-as-javabeans/">3 Domain Classes as JavaBeans</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/4-internationalization/">4 Internationalization</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/5-the-templating-system/">5 The Templating System</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/6-our-first-use-case-display-and-edit-campaign/">6 Our First Use Case: "Display and Edit Campaign"</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/">7 Additional JSF and Java EE Technologies</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/">8 Implementation of the Remaining Use Cases</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/9-new-functionalities-in-java-ee-7/">9 New Functionalities in JSF 2.2</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/10-a-brief-venture-into-primefaces/">10 A Brief Venture into PrimeFaces</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jsfinaday/chapter/11-exercises/">11 Exercises</a>
+																				<li class="chapter type-1"><a href="/jsfinaday/chapter/11-exercises/">11 Exercises</a>
                 							</li>
 											</ul>
 				</li>
 								<li><h4><!-- Back-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="back-matter conclusion"><a href="http://www.turngeek.press/jsfinaday/back-matter/what-next/">What Next?</a>
+																		<li class="back-matter conclusion"><a href="/jsfinaday/back-matter/what-next/">What Next?</a>
               						</li>
 											</ul>
 				</li>
@@ -411,7 +411,7 @@ h2 {
 	</div><!-- #inner -->
 </div><!-- #footer -->
 </span><!-- schema.org -->
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+<script type='text/javascript' src='/jsfinaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='/jsfinaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
 </body>
 </html>

@@ -18,13 +18,13 @@
 <meta itemprop='copyrightYear' content='2015' id='copyrightYear'>
 <meta itemprop='datePublished' content='2016-02-24' id='datePublished'>
 <meta itemprop='description' content='This Cloud Tutorial is the third of a series building a web application with Java EE. It will see us implement the object-relational mapping of our data to a data base.' id='description'>
-<meta itemprop='image' content='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
+<meta itemprop='image' content='/jpainaday/wp-content/uploads/sites/8/2016/01/jpainaday_cover.jpg' id='image'>
 <meta itemprop='inLanguage' content='en' id='inLanguage'>
 <meta itemprop='publisher' content='TurnGeek' id='publisher'>
-<link rel="shortcut icon" href="http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
+<link rel="shortcut icon" href="/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-custom-css/favicon.ico" />
 <title>6 Checking Inputs Using Bean Validation | Cloud Tutorial &#8211; JPA in a Day</title>
 <link rel="profile" href="http://gmpg.org/xfn/11" />
-<link rel="pingback" href="http://www.turngeek.press/jpainaday/xmlrpc.php" />
+<link rel="pingback" href="/jpainaday/xmlrpc.php" />
 
 		<script type="text/javascript">
 			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.turngeek.press\/jpainaday\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
@@ -44,19 +44,19 @@ img.emoji {
 	padding: 0 !important;
 }
 </style>
-<link rel='stylesheet' id='pressbooks-book-css'  href='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
-<link rel='stylesheet' id='pressbooks-custom-css-css'  href='http://www.turngeek.press/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
-<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
-<link rel='https://api.w.org/' href='http://www.turngeek.press/jpainaday/wp-json/' />
-<link rel='prev' title='5 Persisting and Displaying Remaining Entities' href='http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/' />
-<link rel='next' title='7 What We Haven’t Covered' href='http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/' />
+<link rel='stylesheet' id='pressbooks-book-css'  href='/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/style.css' type='text/css' media='screen, print' />
+<link rel='stylesheet' id='pressbooks-custom-css-css'  href='/jpainaday/wp-content/uploads/sites/8/custom-css/web.css?ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='/jpainaday/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='/jpainaday/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/script.js?ver=1.0'></script>
+<script type='text/javascript' src='/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/pop-out.js?ver=1.0'></script>
+<link rel='https://api.w.org/' href='/jpainaday/wp-json/' />
+<link rel='prev' title='5 Persisting and Displaying Remaining Entities' href='/jpainaday/chapter/5-persisting-and-displaying-donations/' />
+<link rel='next' title='7 What We Haven’t Covered' href='/jpainaday/chapter/7-what-we-havent-covered/' />
 <meta name="generator" content="WordPress 4.4" />
-<link rel='shortlink' href='http://www.turngeek.press/jpainaday/?p=100' />
-<link rel="alternate" type="application/json+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F" />
-<link rel="alternate" type="text/xml+oembed" href="http://www.turngeek.press/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F&#038;format=xml" />
+<link rel='shortlink' href='/jpainaday/?p=100' />
+<link rel="alternate" type="application/json+oembed" href="/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F" />
+<link rel="alternate" type="text/xml+oembed" href="/jpainaday/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fwww.turngeek.press%2Fjpainaday%2Fchapter%2F6-checking-inputs-using-bean-validation%2F&#038;format=xml" />
 <style type="text/css">
 /* <![CDATA[ */
 img.latex { vertical-align: middle; border: none; background: none; }
@@ -87,13 +87,13 @@ img.latex { vertical-align: middle; border: none; background: none; }
 				<nav>
 			
 			 		<!-- Book Title -->
-				    <h1 class="book-title"><a href="http://www.turngeek.press/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
+				    <h1 class="book-title"><a href="/jpainaday/" title="Cloud Tutorial &#8211; JPA in a Day" rel="home">Cloud Tutorial &#8211; JPA in a Day</a></h1>
 			    
 			   
 			    
 					    <div class="sub-nav-left">
 							<!-- Logo -->
-							<h2 class="pressbooks-logo"><a href="http://www.turngeek.press/">TurnGeek Books</a></h2>
+							<h2 class="pressbooks-logo"><a href="/">TurnGeek Books</a></h2>
 					    </div> <!-- end .sub-nav-left -->
 			    
 			    <div class="sub-nav-right">
@@ -123,14 +123,14 @@ img.latex { vertical-align: middle; border: none; background: none; }
 	 	
 							<h2 class="entry-title">6 Checking Inputs Using Bean Validation</h2>
 					<div class="nav">
-  	<span class="previous"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">Previous</a></span>
+  	<span class="previous"><a href="/jpainaday/chapter/5-persisting-and-displaying-donations/">Previous</a></span>
   <!-- 	<h2 class="entry-title">6 Checking Inputs Using Bean Validation</h2> -->
-  	<span class="next"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">Next</a></span>
+  	<span class="next"><a href="/jpainaday/chapter/7-what-we-havent-covered/">Next</a></span>
     </div>				<div id="post-100" class="type-1 post-100 chapter type-chapter status-publish hentry">
 					
 					<div class="entry-content">
 					  				    									
-					<p>In the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> for the application, we specified a range of mandatory conditions for domain class attributes. There, we listed conditions such as the following:</p>
+					<p>In the <a href="/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> for the application, we specified a range of mandatory conditions for domain class attributes. There, we listed conditions such as the following:</p>
 <table>
 <tbody>
 <tr>
@@ -145,7 +145,7 @@ img.latex { vertical-align: middle; border: none; background: none; }
 </tr>
 </tbody>
 </table>
-<p>Up until this point, we have used JSF validators (see section about <a href="http://www.turngeek.press/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/" target="_blank">JSF Validation in Cloud Tutorial JSF in a Day</a>) to ensure (to some extent<a class="footnote" title="We purposefully implemented only a few conditions using the JSF validator, since we knew that this task would later be taken over by the Bean Validation API." id="return-footnote-100-1" href="#footnote-100-1"><sup class="footnote">[1]</sup></a>) that the user of the application does not make any inputs that would breach these conditions. However, this has two disadvantages:</p>
+<p>Up until this point, we have used JSF validators (see section about <a href="/jsfinaday/chapter/7-additional-jsf-and-java-ee-technologies/" target="_blank">JSF Validation in Cloud Tutorial JSF in a Day</a>) to ensure (to some extent<a class="footnote" title="We purposefully implemented only a few conditions using the JSF validator, since we knew that this task would later be taken over by the Bean Validation API." id="return-footnote-100-1" href="#footnote-100-1"><sup class="footnote">[1]</sup></a>) that the user of the application does not make any inputs that would breach these conditions. However, this has two disadvantages:</p>
 <ol>
 <li>The conditins can also be breached in other places in the program code – that is, outside the JSF view. This could occur as a result of a flawed business method or a third system linked via an interface.</li>
 <li>The conditions are properties of the domain classes, which means they would be better defined in the entities than in the view.</li>
@@ -167,7 +167,7 @@ img.latex { vertical-align: middle; border: none; background: none; }
 </div>
 
 <h3>6.1 Annotate Entities with Conditions</h3>
-<p>To prompt the entities to use Bean Validation, individual attributes of the entities must be annotated with annotations from the Bean Validation API. The annotations are generally located in the package <code>javax.validation.constraints</code>. In our sample application, we can transfer a definition of a condition from the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> directly into a corresponding annotation.</p>
+<p>To prompt the entities to use Bean Validation, individual attributes of the entities must be annotated with annotations from the Bean Validation API. The annotations are generally located in the package <code>javax.validation.constraints</code>. In our sample application, we can transfer a definition of a condition from the <a href="/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">requirements</a> directly into a corresponding annotation.</p>
 <p>Let’s start with the <code>targetAmount</code> attribute of type <code>Double</code> from the class <code>Campaign</code>.</p>
 <p>We’ll start here by adding a <code>@NotNull</code> annotation, which specifies that the value of the attribute can never be <code>null</code>. At runtime, JSF and JPA will then check that the condition has been adhered to.</p>
 <p>We’ll also add a <code>@DecimalMin</code> annotation, which makes sure that value of the attribute is greater than or equal to 10.</p>
@@ -199,7 +199,7 @@ private String name;
 <p>The authors of this book take the view that this represents an inconsistent interaction between JSF and Bean Validation &#8211; one that will hopefully be corrected in a future version.</p>
 <p>It is worth mentioning that with values of type <code>Double</code> we previously mentioned, this was not an issue – for these values, the converter specified in the view passes/forwards a <code>null</code> value for empty inputs. There is therefore no reason for a user-specific message to be identified.</p>
 </div>
-<p>Annotations for the class <code>Donation</code> present no new issues and are done in exactly the same way as those for the class <code>Campaign</code>. The simplest way to complete this task is to compare them with the <a href="http://www.turngeek.press/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">conditions</a> for the domain classes.</p>
+<p>Annotations for the class <code>Donation</code> present no new issues and are done in exactly the same way as those for the class <code>Campaign</code>. The simplest way to complete this task is to compare them with the <a href="/javaee7inaweek/chapter/ii-3-domain-classes/" target="_blank">conditions</a> for the domain classes.</p>
 <pre class="lang:java decode:true">@NotNull(message = "{donation.amount.notNull}")
 @DecimalMin(value = "1.00", message = "{donation.amount.decimalMin}")
 private Double amount;
@@ -279,7 +279,7 @@ account.iban.pattern=Eine IBAN besteht aus zwei Buchstaben, gefolgt von zwei Zif
 <p>After the properties file has been added, the application can be restarted. Try entering a couple of values that would violate the domain conditions. Concentrate on the use case <em>Donate money</em>, since this will not be validated by JSF validators in the view.</p>
 <p>You will see that the simple adding of annotations has allowed comprehensive validation of input values and that an appropriate message is displayed in the case of error. But this is not the only benefit: by checking the conditions of Bean Validation though JPA, we can prevent the entities more generally from saving any kind of invalid data.</p>
 <h3>6.2 Removing Validators From Views</h3>
-<p>To begin using Bean Validation with all views, any existing validators must be removed from these views. In <a href="http://www.turngeek.press/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/" target="_blank">earlier stages of the application development</a>, for example, we created a small number of validators in the views <code>editCampaign.xhtml</code> and <code>donateMoney.xhtml</code>. These are now obsolete and must be removed without exception save for the view parameter validators. View parameters are independent from the entities and will therefore not be validated by Bean Validation.</p>
+<p>To begin using Bean Validation with all views, any existing validators must be removed from these views. In <a href="/jsfinaday/chapter/8-implementation-of-the-remaining-use-cases/" target="_blank">earlier stages of the application development</a>, for example, we created a small number of validators in the views <code>editCampaign.xhtml</code> and <code>donateMoney.xhtml</code>. These are now obsolete and must be removed without exception save for the view parameter validators. View parameters are independent from the entities and will therefore not be validated by Bean Validation.</p>
 <p>To remove these parameters, we must delete the <code>validatorMessage</code> attributes and all tags beginning with <code>f:validate</code> from the above-mentioned views. However, tags within the <code>&lt;f:viewParam&gt;</code> remain unaffected, since this is a view parameter.</p>
 <p>The following example &#8211; for the input text control <code>a_targetAmount</code> from the view <code>editCampaign.xhtml</code> &#8211; demonstrates the process:</p>
 <pre class="lang:java decode:true">&lt;p:inputText id="a_targetAmount"
@@ -331,7 +331,7 @@ private List&lt;Donation&gt; donations;
 
 <h3>Discussion</h3>
 <p>Use the message board below to give the authors your feedback or to discuss this page&#8217;s topic with other readers (in English please!). Please don&#8217;t expect the authors to answer directly, but they might update the content of this site according to your feedback.<br />
-<script src="http://www.turngeek.press/js/disqus.js" type="text/javascript"></script></p>
+<script src="/js/disqus.js" type="text/javascript"></script></p>
 <hr /><div class="footnotes"><ol><li id="footnote-100-1">We purposefully implemented only a few conditions using the JSF validator, since we knew that this task would later be taken over by the Bean Validation API. <a href="#return-footnote-100-1" class="return-footnote">&crarr;</a></li><li id="footnote-100-2"><a href="http://www.hibernate.org/subprojects/validator/download" target="_blank">http://www.hibernate.org/subprojects/validator/download</a> <a href="#return-footnote-100-2" class="return-footnote">&crarr;</a></li><li id="footnote-100-3">Make sure that the validator only checks the format of the IBAN – not whether the two-digit checksum has been adhered to.  For this purpose, we need to develop a special validator; however, we will not address this during the course of this workshop. <a href="#return-footnote-100-3" class="return-footnote">&crarr;</a></li><li id="footnote-100-4"><a href="https://en.wikipedia.org/wiki/Class_diagram#Composition" target="_blank">https://en.wikipedia.org/wiki/Class_diagram#Composition</a> <a href="#return-footnote-100-4" class="return-footnote">&crarr;</a></li></ol></div>
 					</div><!-- .entry-content -->
 				</div><!-- #post-## -->
@@ -358,10 +358,10 @@ private List&lt;Donation&gt; donations;
 		<ul id="booknav">
 		<!-- If Logged in show ADMIN -->
 								
-				<li class="home-btn"><a href="http://www.turngeek.press/jpainaday">Home</a></li>
+				<li class="home-btn"><a href="/jpainaday">Home</a></li>
 
 		<!-- TOC button always there -->
-				<li class="toc-btn"><a href="http://www.turngeek.press/jpainaday/table-of-contents">Table of Contents</a></li>
+				<li class="toc-btn"><a href="/jpainaday/table-of-contents">Table of Contents</a></li>
 			</ul>
 
 		<!-- Pop out TOC only on READ pages -->
@@ -371,37 +371,37 @@ private List&lt;Donation&gt; donations;
 				<li><h4><!-- Front-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="front-matter introduction"><a href="http://www.turngeek.press/jpainaday/front-matter/introduction/">Introduction</a>
+																		<li class="front-matter introduction"><a href="/jpainaday/front-matter/introduction/">Introduction</a>
               						</li>
 											</ul>
 				</li>
 								<li><h4>								Chapters								</h4></li>
 				<li>
 					<ul>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/1-about-jpa/">1 About JPA</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/2-annotating-entities/">2 Annotating Entities</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/3-extending-services-to-include-data-access/">3 Extending Services to Include Data Access</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/4-storing-the-data-transactionally/">4 Storing the Data Transactionally</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/5-persisting-and-displaying-donations/">5 Persisting and Displaying Remaining Entities</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/6-checking-inputs-using-bean-validation/">6 Checking Inputs Using Bean Validation</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/7-what-we-havent-covered/">7 What We Haven’t Covered</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/8-new-functionalities-in-jpa-2-1-and-bv-1-1/">8 New Functionalities in JPA 2.1 and Bean Validation 1.1</a>
                 							</li>
-																				<li class="chapter type-1"><a href="http://www.turngeek.press/jpainaday/chapter/9-exercises/">9 Exercises</a>
+																				<li class="chapter type-1"><a href="/jpainaday/chapter/9-exercises/">9 Exercises</a>
                 							</li>
 											</ul>
 				</li>
 								<li><h4><!-- Back-matter --></h4></li>
 				<li>
 					<ul>
-																		<li class="back-matter suggested-reading"><a href="http://www.turngeek.press/jpainaday/back-matter/whatnext/">What Next?</a>
+																		<li class="back-matter suggested-reading"><a href="/jpainaday/back-matter/whatnext/">What Next?</a>
               						</li>
 											</ul>
 				</li>
@@ -425,7 +425,7 @@ private List&lt;Donation&gt; donations;
 	</div><!-- #inner -->
 </div><!-- #footer -->
 </span><!-- schema.org -->
-<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
-<script type='text/javascript' src='http://www.turngeek.press/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+<script type='text/javascript' src='/jpainaday/wp-content/plugins/pressbooks/themes-book/pressbooks-book/js/keyboard-nav.js?ver=20130306'></script>
+<script type='text/javascript' src='/jpainaday/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
 </body>
 </html>
